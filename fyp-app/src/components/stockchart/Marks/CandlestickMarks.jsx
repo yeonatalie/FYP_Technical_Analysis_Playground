@@ -55,6 +55,8 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
         var smaDates = data.map(d => d.date).slice(smaWindow-1)
         var smaValues = SMA.calculate({period: smaWindow, values: closePrices})
         var smaData = smaDates.map((x, i) => ({ date: x, sma: smaValues[i] }))
+        var smaDataOutput = {}
+        smaDates.forEach((date, idx) => smaDataOutput[date] = smaValues[idx])
 
         svg.append("path")
             .datum(smaData)
@@ -71,7 +73,7 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
             .style("fill", color)
             .text(`SMA - ${smaWindow} day`);
         
-        return smaData
+        return smaDataOutput
     }
 
     d3.select(".candlestick").remove()
@@ -105,8 +107,50 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
         .attr("y2", function(d) { return yScale(d.close); });
     
     annotateOHLCFn()
-    const sma_short = plotSmaFn(7, 'blue') // input SMA lookback window
-    const sma_long = plotSmaFn(14, 'brown') // input SMA lookback window
+    const smaShort = plotSmaFn(7, 'blue') // input SMA lookback window
+    const smaLong = plotSmaFn(14, 'brown') // input SMA lookback window
+
+    var shortSignalData = []
+    var longSignalData = []
+    var prev_position = 0
+    for (const [date, long] of Object.entries(smaLong)) {
+        var position = (smaShort[date] >= long) ? 1 : -1
+        var signal = ((position - prev_position) === 2) ? 1 : 
+                        ((position - prev_position) === -2) ? -1 : 0
+        if (signal === -1) {
+            shortSignalData.push({
+                'date': Date.parse(date),
+                'sma': long,
+                'position': position,
+                'signal': signal
+            })
+        } else if (signal === 1) {
+            longSignalData.push({
+                'date': Date.parse(date),
+                'sma': long,
+                'position': position,
+                'signal': signal
+            })
+        }
+        prev_position = position
+    }
+
+    svg.selectAll()
+        .data(longSignalData).enter()
+        .append("path")
+        .attr("class", "point")
+        .attr("d", d3.symbol().type(d3.symbolTriangle))
+        .attr("transform", function(d) { return "translate(" + xScale(d.date) + "," + yScale(d.sma) + ")"; })
+        .attr("fill", schemeSet1[2]);
+    
+    svg.selectAll()
+        .data(shortSignalData).enter()
+        .append("path")
+        .attr("class", "point")
+        .attr("d", d3.symbol().type(d3.symbolTriangle))
+        .attr("transform", function(d) { return "translate(" + xScale(d.date) + "," + yScale(d.sma) + ") rotate(180)"; })
+        .attr("fill", schemeSet1[0]);
+
 }
 
 export default CandlestickMarks;
