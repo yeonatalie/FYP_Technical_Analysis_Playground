@@ -50,6 +50,7 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
                 .attr("cy", function(d) { return yScale(d.close); });
         }
     }
+
     function plotSmaFn(smaWindow, color) {
         var closePrices = data.map(d => d.close)
         var smaDates = data.map(d => d.date).slice(smaWindow-1)
@@ -58,7 +59,7 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
         var smaDataOutput = {}
         smaDates.forEach((date, idx) => smaDataOutput[date] = smaValues[idx])
 
-        svg.append("path")
+        var smaPath = svg.append("path")
             .datum(smaData)
             .attr("fill", "none")
             .attr("stroke", color)
@@ -66,13 +67,28 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
             .attr("d", d3.line()
             .x(function(d) { return xScale(d.date) })
             .y(function(d) { return yScale(d.sma) }))
+
+        var delayTime = 0
+        if (smaWindow === 14) {
+            delayTime = 7
+        }
+        try {
+            const length = smaPath.node().getTotalLength()
+            smaPath.attr("stroke-dasharray", length)
+                .attr("stroke-dashoffset", length)
+                .transition()
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0)
+                .delay(delayTime * 100)
+                .duration(smaDates.length * 100)
+        } catch {}
         
         // label
         svg.append("text")
             .attr("transform", "translate(" + (xScale(smaData.at(-1).date) + 5) + "," + yScale(smaData.at(-1).sma) + ")")
             .style("fill", color)
             .text(`SMA - ${smaWindow} day`);
-        
+
         return smaDataOutput
     }
 
@@ -107,49 +123,64 @@ function CandlestickMarks({data, xScale, yScale, annotateOHLC}) {
         .attr("y2", function(d) { return yScale(d.close); });
     
     annotateOHLCFn()
-    const smaShort = plotSmaFn(7, 'blue') // input SMA lookback window
-    const smaLong = plotSmaFn(14, 'brown') // input SMA lookback window
 
-    var shortSignalData = []
-    var longSignalData = []
+
+    const smaShort = plotSmaFn(7, 'blue') 
+    const smaLong = plotSmaFn(14, 'brown') 
     var prev_position = 0
+    var count = 14-7
+
     for (const [date, long] of Object.entries(smaLong)) {
+        count += 1
         var position = (smaShort[date] >= long) ? 1 : -1
         var signal = ((position - prev_position) === 2) ? 1 : 
                         ((position - prev_position) === -2) ? -1 : 0
         if (signal === -1) {
-            shortSignalData.push({
+            var shortSignalData = [{
                 'date': Date.parse(date),
                 'sma': long,
                 'position': position,
                 'signal': signal
-            })
+            }]
+
+            const shortSignal = svg.selectAll()
+                .data(shortSignalData).enter()
+                .append("path")
+                .attr("class", "point")
+                .attr("d", d3.symbol().type(d3.symbolTriangle))
+                .attr("transform", function(d) { return "translate(" + xScale(d.date) + "," + yScale(d.sma) + ") rotate(180)"; })
+                .attr("fill", schemeSet1[0]);
+        
+            shortSignal.style("opacity", 0);
+            shortSignal.transition()
+                .delay(count * 100)
+                .transition()
+                .style("opacity", 1)
+
         } else if (signal === 1) {
-            longSignalData.push({
+            var longSignalData = [{
                 'date': Date.parse(date),
                 'sma': long,
                 'position': position,
                 'signal': signal
-            })
+            }]
+            
+            const longSignal = svg.selectAll()
+                .data(longSignalData).enter()
+                .append("path")
+                .attr("class", "point")
+                .attr("d", d3.symbol().type(d3.symbolTriangle))
+                .attr("transform", function(d) { return "translate(" + xScale(d.date) + "," + yScale(d.sma) + ")"; })
+                .attr("fill", schemeSet1[2])
+            
+            longSignal.style("opacity", 0);
+            longSignal.transition()
+                .delay(count * 100)
+                .transition()
+                .style("opacity", 1)
         }
         prev_position = position
     }
-
-    svg.selectAll()
-        .data(longSignalData).enter()
-        .append("path")
-        .attr("class", "point")
-        .attr("d", d3.symbol().type(d3.symbolTriangle))
-        .attr("transform", function(d) { return "translate(" + xScale(d.date) + "," + yScale(d.sma) + ")"; })
-        .attr("fill", schemeSet1[2]);
-    
-    svg.selectAll()
-        .data(shortSignalData).enter()
-        .append("path")
-        .attr("class", "point")
-        .attr("d", d3.symbol().type(d3.symbolTriangle))
-        .attr("transform", function(d) { return "translate(" + xScale(d.date) + "," + yScale(d.sma) + ") rotate(180)"; })
-        .attr("fill", schemeSet1[0]);
 
 }
 
