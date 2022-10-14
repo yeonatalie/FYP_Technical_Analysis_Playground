@@ -26,6 +26,7 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
         const text = svg.append("text")
             .text('Identify Close Prices')
             .attr("transform", "translate(20, 20)")
+            .style("font-weight", "bold")
             .style("opacity", 0);
         
         text.transition()
@@ -71,6 +72,7 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
             .attr("transform", "translate(" + (xScale(smaData.at(-1).date) + 5) + "," + yScale(smaData.at(-1).sma) + ")")
             .style("fill", color)
             .text(`SMA - ${smaWindow} day`)
+            .style("font-weight", "bold")
             .style("opacity", 0)
             .transition()
             .delay(delayTime + (windowDifference * 100) + (smaDates.length * 100))
@@ -137,10 +139,15 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
         }
     }
 
-    function smaCrossoverText(delayTime) {
-        const smaText = svg.append("text")
-            .text('Plot Short Term & Long Term SMA')
+    function smaCrossoverText(shortColor, longColor, delayTime) {
+        const smaText = svg.append("svg:text");
+        smaText.append("svg:tspan").text("Plot ");
+        smaText.append("svg:tspan").style("fill", shortColor).text("Short Term SMA");
+        smaText.append("svg:tspan").text(" & ");
+        smaText.append("svg:tspan").style("fill", longColor).text("Long Term SMA");
+        smaText
             .attr("transform", "translate(20, 20)")
+            .style("font-weight", "bold")
             .style("opacity", 0);
         
         smaText.transition()
@@ -148,23 +155,35 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
             .transition()
             .style("opacity", 1)
         
-        const longText = svg.append("text")
-            .text('Long when Short Term SMA Crosses Above Long Term SMA')
+        const longText = svg.append("svg:text");
+        longText.append("svg:tspan").style("fill", schemeSet1[2]).text("Long");
+        longText.append("svg:tspan").text(" when Short Term SMA");
+        longText.append("svg:tspan").style("fill", schemeSet1[2]).text(" Crosses Above ");
+        longText.append("svg:tspan").text("Long Term SMA");
+        
+        longText
             .attr("transform", "translate(20, 40)")
+            .style("font-weight", "bold")
             .style("opacity", 0);
         
         longText.transition()
-            .delay(delayTime+1000)
+            .delay(delayTime+1500)
             .transition()
             .style("opacity", 1)
         
-        const shortText = svg.append("text")
-            .text('Short when Short Term SMA Crosses Below Long Term SMA')
+        const shortText = svg.append("svg:text");
+        shortText.append("svg:tspan").style("fill", schemeSet1[0]).text("Short");
+        shortText.append("svg:tspan").text(" when Short Term SMA");
+        shortText.append("svg:tspan").style("fill", schemeSet1[0]).text(" Crosses Below ");
+        shortText.append("svg:tspan").text("Long Term SMA");
+
+        shortText
             .attr("transform", "translate(20, 60)")
+            .style("font-weight", "bold")
             .style("opacity", 0);
         
         shortText.transition()
-            .delay(delayTime+1000)
+            .delay(delayTime+2500)
             .transition()
             .style("opacity", 1)
     }
@@ -182,13 +201,15 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
         annotateClosePrices(closeDelayTime, closeDisplayTime)
 
         // Calculate SMA and Identify Crossovers
-        const shortWindow = 7
+        const shortWindow  = 7
         const longWindow = 14
+        const shortColor = 'darkblue'
+        const longColor = 'brown'
         const windowDifference = longWindow - shortWindow
         const smaDelayTime = closeDelayTime + closeDisplayTime + 500
-        smaCrossoverText(smaDelayTime)
-        const smaShort = plotSmaFn(shortWindow, 'blue', smaDelayTime, 0) 
-        const smaLong = plotSmaFn(longWindow, 'brown', smaDelayTime, windowDifference)
+        smaCrossoverText(shortColor, longColor, smaDelayTime)
+        const smaShort = plotSmaFn(shortWindow, shortColor, smaDelayTime, 0) 
+        const smaLong = plotSmaFn(longWindow, longColor, smaDelayTime, windowDifference)
         annotateLongShortSignals(smaShort, smaLong, smaDelayTime, windowDifference);
     }
 }
