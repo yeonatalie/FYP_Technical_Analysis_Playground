@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { AxisBottom } from './Axis/AxisBottom';
 import { AxisLeft } from './Axis/AxisLeft';
 import CandlestickMarks from './Marks/CandlestickMarks.jsx';
+import SmaCrossover from './Marks/SmaCrossover';
 const yAxisLabelOffset = 60;
 
 const leftAxisTickFormat = d3.format('$~f');
@@ -12,6 +13,7 @@ export const Main = ({
     data,
     specs: { width, height, margin },
     annotateOHLC,
+    smaCrossover,
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -59,7 +61,15 @@ export const Main = ({
                 data={data}
                 xScale={xScale}
                 yScale={yPriceScale}
+                tutorial={smaCrossover} // to lighten the candlestick when there is a tutorial
                 annotateOHLC={annotateOHLC}
+            />
+            <SmaCrossover
+                class='smacrossover'
+                data={data}
+                xScale={xScale}
+                yScale={yPriceScale}
+                smaCrossover={smaCrossover}
             />
         </g>
     )

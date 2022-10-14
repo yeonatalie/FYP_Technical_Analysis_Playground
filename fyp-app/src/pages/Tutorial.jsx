@@ -18,16 +18,23 @@ function Tutorial() {
 
     const [annotateOHLC, setAnnotateOHLC] = 
       useState({"open":false, "high":false, "low":false, "close":false});
+    
+    const [smaCrossover, setSmaCrossover] = useState(false)
+    var tutorial = " "
+    if (smaCrossover) {
+      tutorial = ": SMA Crossover"
+    }
 
     return (
         <div>
-            <h1>Tutorial Page</h1>
-            <StockChart specs={chartSpecs} annotateOHLC={annotateOHLC} />
+            <h1>Tutorial{tutorial}</h1>
+            <StockChart specs={chartSpecs} annotateOHLC={annotateOHLC} smaCrossover={smaCrossover} />
             <br></br>
             <button onClick={() => setAnnotateOHLC({"open": !annotateOHLC["open"]})}>Open Prices</button>
             <button onClick={() => setAnnotateOHLC({"high": !annotateOHLC["high"]})}>High Prices</button>
             <button onClick={() => setAnnotateOHLC({"low": !annotateOHLC["low"]})}>Low Prices</button>
             <button onClick={() => setAnnotateOHLC({"close": !annotateOHLC["close"]})}>Close Prices</button>
+            <button onClick={() => setSmaCrossover(!smaCrossover)}>SMA Crossover</button>
         </div>
     );
 }
