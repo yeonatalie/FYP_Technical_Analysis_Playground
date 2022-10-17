@@ -47,18 +47,30 @@ function BbandTutorial({data, xScale, yScale, bbandTutorial}) {
     //////////////////////////////////////////////
 
     if (bbandTutorial) {
-        // Plot Close Price Path
-        plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'middle', variableLabel:'Close Price',
-            color:"black", displayText:'Plot Close Prices', delayTime:500, displayTextTime:5000})
+        // Annotate Close Prices
+        annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
+            displayText:'Annotate Close Prices', delayTime:500, displayTime:3000, displayTextTime:2000})
 
-        const delayTime = (data.length * 100) + 1000 // lot close price finish plotting
         // Plot BBands
+        const bbandTime = (bbandTutData.length * 50) + 1000
         plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'middle', variableLabel:'Middle',
-            color:"lightgrey", displayText:'Plot 7 day Bollinger Bands', delayTime:delayTime, displayTextTime:2000})
+            color:"grey", displayText:'Plot 7 day Bollinger Bands', speed:50, delayTime:4000, displayTextTime:bbandTime})
         plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'upper', variableLabel:'Upper',
-            color:"blue", displayText:'Plot 7 day Bollinger Bands', delayTime:delayTime, displayTextTime:2000})
+            color:"darkred", displayText:'Plot 7 day Bollinger Bands', speed:50, delayTime:4000, displayTextTime:bbandTime})
         plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'lower', variableLabel:'Lower',
-            color:"blue", displayText:'Plot 7 day Bollinger Bands', delayTime:delayTime, displayTextTime:2000})
+            color:"darkgreen", displayText:'Plot 7 day Bollinger Bands', speed:50, delayTime:4000, displayTextTime:5000})
+
+        // Plot Close Price
+        plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', variableLabel:'Close Price',
+            color:"black", displayText:'Plot Close Prices', delayTime:12000, displayTextTime:3000})
+
+        // Annotate Buy Sell Points
+        // long signal when cross below lower
+        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'lower', longSignal:true, crossAbove:false, delayTime:12000,
+            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000}) 
+        // short signal when cross above upper
+        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'upper', longSignal:false, crossAbove:true, delayTime:12000,
+            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000}) 
     }
 
 }

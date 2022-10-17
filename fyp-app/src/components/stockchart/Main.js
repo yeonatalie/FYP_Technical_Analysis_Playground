@@ -16,7 +16,6 @@ export const Main = ({
     data,
     specs: { width, height, margin },
     lightenCandlestick,
-    annotateOHLC,
     smaCrossover,
     emaCrossover,
     rsiTutorial,
@@ -70,7 +69,6 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     lightenCandlestick={lightenCandlestick} // to lighten the candlestick when there is a tutorial
-                    annotateOHLC={annotateOHLC}
                 />
                 <SmaCrossover
                     class='smacrossover'

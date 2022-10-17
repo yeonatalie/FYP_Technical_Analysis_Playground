@@ -17,7 +17,7 @@ export const StockChart = ({
         brushSpecs,
         mainChartSpecs
     }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick
-    , annotateOHLC, smaCrossover, emaCrossover, rsiTutorial, bbandTutorial
+    , smaCrossover, emaCrossover, rsiTutorial, bbandTutorial
 }) => {
     const data = useData();
     const [brushExtent, setBrushExtent] = useState();
@@ -65,7 +65,6 @@ export const StockChart = ({
                         data={slicedData}
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
-                        annotateOHLC={annotateOHLC}
                         smaCrossover={smaCrossover}
                         emaCrossover={emaCrossover}
                         rsiTutorial={rsiTutorial}
@@ -100,7 +99,6 @@ export const StockChart = ({
                         data={slicedData}
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
-                        annotateOHLC={annotateOHLC}
                         smaCrossover={smaCrossover}
                         emaCrossover={emaCrossover}
                         rsiTutorial={rsiTutorial}

@@ -25,7 +25,7 @@ export const annotateChart = ({svg, data, xScale, yScale, variable, displayText,
     const points = svg.selectAll()
         .data(data).enter()
         .append("circle")
-        .attr("r", 3.5)
+        .attr("r", 2.5)
         .attr("cx", function(d) { return xScale(d.date); })
         .attr("cy", function(d) { return yScale(d[variable]); })
         .style("opacity", 0);
@@ -56,7 +56,7 @@ export const annotateUpDown = ({svg, data, xScale, yScale, variable, displayText
             .datum(plot_data)
             .attr("fill", "none")
             .attr("stroke", color)
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 2)
             .attr("d", d3.line()
             .x(function(d) { return xScale(d.date) })
             .y(function(d) { return yScale(d[variable]) }))
@@ -73,7 +73,7 @@ export const annotateUpDown = ({svg, data, xScale, yScale, variable, displayText
     displayTextFn(svg, displayText, delayTextTime, displayTextTime)
 }
 
-export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, color, animate=true, dashed=false, displayText, delayTime, displayTextTime}) => {
+export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, color, animate=true, dashed=false, displayText, speed=100, delayTime, displayTextTime}) => {
     var path = svg.append("path")
         .datum(data)
         .style("opacity", 0)
@@ -99,7 +99,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
                 .transition()
                 .ease(d3.easeLinear)
                 .attr("stroke-dashoffset", 0)
-                .duration(data.length * 100) 
+                .duration(data.length * speed) 
         })
     } else {
         path.transition()
@@ -115,7 +115,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
         .style("font-weight", "bold")
         .style("opacity", 0)
         .transition()
-        .delay(delayTime + (data.length * 100))
+        .delay(delayTime + (data.length * speed))
         .transition()
         .style("opacity", 1);
     
