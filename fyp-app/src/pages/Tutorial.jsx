@@ -5,9 +5,13 @@ function Tutorial() {
     const chartSpecs = {
         totalWidth: 1200,
         totalHeight: 500,
-        seperationRatio: 0.8,
+        indicatorHeight: 200,
+        mainChartRatio: 0.75,
         mainChartSpecs: {
           margin: { top: 20, right: 100, bottom: 40, left: 100 }
+        },
+        indicatorSpecs: {
+          margin: { top: 20, right: 100, bottom: 40, left: 100 },
         },
         brushSpecs: {
           brushSize: 130,
@@ -22,6 +26,11 @@ function Tutorial() {
     const [smaCrossover, setSmaCrossover] = useState(false)
     const [emaCrossover, setEmaCrossover] = useState(false)
     const [rsiTutorial, setRsiTutorial] = useState(false)
+    const [bbandTutorial, setBbandTutorial] = useState(false)
+    
+    const [lightenCandlestick, setLightenCandlestick] = useState(false)
+    const [indicatorChart, setIndicatorChart] = useState(false)
+
     var tutorial = " "
     if (smaCrossover) {
       tutorial = ": SMA Crossover"
@@ -32,19 +41,37 @@ function Tutorial() {
     if (rsiTutorial) {
       tutorial = ": RSI"
     }
+    if (bbandTutorial) {
+      tutorial = ": Bollinger Bands"
+    }
+
+    var indicatorChartLabel = "Indicator"
+    var indicatorRange = [0, 0]
+    if (rsiTutorial) {
+      indicatorChartLabel = "RSI"
+      indicatorRange = [0, 100]
+    }
 
     return (
         <div>
             <h1>Tutorial{tutorial}</h1>
-            <StockChart specs={chartSpecs} annotateOHLC={annotateOHLC} smaCrossover={smaCrossover} emaCrossover={emaCrossover} rsiTutorial={rsiTutorial} />
+            <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
+              indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} annotateOHLC={annotateOHLC} 
+              smaCrossover={smaCrossover} emaCrossover={emaCrossover} rsiTutorial={rsiTutorial} bbandTutorial={bbandTutorial}/>
+
             <br></br>
+            
             <button onClick={() => setAnnotateOHLC({"open": !annotateOHLC["open"]})}>Open Prices</button>
             <button onClick={() => setAnnotateOHLC({"high": !annotateOHLC["high"]})}>High Prices</button>
             <button onClick={() => setAnnotateOHLC({"low": !annotateOHLC["low"]})}>Low Prices</button>
             <button onClick={() => setAnnotateOHLC({"close": !annotateOHLC["close"]})}>Close Prices</button>
-            <button onClick={() => setSmaCrossover(!smaCrossover)}>SMA Crossover</button>
-            <button onClick={() => setEmaCrossover(!emaCrossover)}>EMA Crossover</button>
-            <button onClick={() => setRsiTutorial(!rsiTutorial)}>RSI</button>
+
+            <br></br>
+
+            <button onClick={() => {setSmaCrossover(!smaCrossover); setLightenCandlestick(!lightenCandlestick)}}>SMA Crossover</button>
+            <button onClick={() => {setEmaCrossover(!emaCrossover); setLightenCandlestick(!lightenCandlestick)}}>EMA Crossover</button>
+            <button onClick={() => {setRsiTutorial(!rsiTutorial); setIndicatorChart(!indicatorChart); setLightenCandlestick(!lightenCandlestick)}}>RSI</button>
+            <button onClick={() => {setBbandTutorial(!bbandTutorial); setLightenCandlestick(!lightenCandlestick)}}>Bollinger Band</button>
         </div>
     );
 }

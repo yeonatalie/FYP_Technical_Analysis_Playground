@@ -21,7 +21,7 @@ function displayTextFn(svg, displayText, delayTime, displayTime) {
         .style("opacity", 0);
 }
 
-export const annotateChart = ({svg, data, xScale, yScale, variable, displayText, delayTime, displayTime}) => {
+export const annotateChart = ({svg, data, xScale, yScale, variable, displayText, delayTime, displayTime=null, displayTextTime}) => {
     const points = svg.selectAll()
         .data(data).enter()
         .append("circle")
@@ -34,15 +34,46 @@ export const annotateChart = ({svg, data, xScale, yScale, variable, displayText,
         .delay(delayTime)
         .transition()
         .style("opacity", 1)
-        .transition()
-        .delay(displayTime)
-        .transition()
-        .style("opacity", 0); 
+        
+    if (displayTime !== null) {
+        points.transition()
+            .delay(displayTime)
+            .transition()
+            .style("opacity", 0); 
+    }
 
-    displayTextFn(svg, displayText, delayTime, displayTime)
+    displayTextFn(svg, displayText, delayTime, displayTextTime)
 }
 
-export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, color, displayText, delayTime, displayTextTime}) => {
+export const annotateUpDown = ({svg, data, xScale, yScale, variable, displayText, delayTime, delayTextTime, displayTextTime}) => {
+    var count = 0
+    var prev_d = data.at(0)
+    data.slice(1).forEach(function(d, index) {
+        count+=1
+        var color = (d[variable] > prev_d[variable]) ? schemeSet1[2] : (d[variable] < prev_d[variable]) ? schemeSet1[0] : schemeSet1[8]
+        var plot_data = [prev_d, d]
+        var up_down = svg.append("path")
+            .datum(plot_data)
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-width", 3)
+            .attr("d", d3.line()
+            .x(function(d) { return xScale(d.date) })
+            .y(function(d) { return yScale(d[variable]) }))
+        
+        up_down.style("opacity", 0);
+        up_down.transition()
+            .delay(delayTime + (count * 50))
+            .transition()
+            .style("opacity", 1);
+            
+        prev_d = d
+    })
+
+    displayTextFn(svg, displayText, delayTextTime, displayTextTime)
+}
+
+export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, color, animate=true, dashed=false, displayText, delayTime, displayTextTime}) => {
     var path = svg.append("path")
         .datum(data)
         .style("opacity", 0)
@@ -52,18 +83,29 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
         .attr("d", d3.line()
         .x(function(d) { return xScale(d.date) })
         .y(function(d) { return yScale(d[variable]) }))
-    $.get(path).done(function () {
-        const length = path.node().getTotalLength()
-        path.attr("stroke-dasharray", length)
-            .attr("stroke-dashoffset", length)
-            .transition()
+
+    if (dashed) {
+        path.style("stroke-dasharray", ("10,3"))
+    }
+
+    if (animate) {
+        $.get(path).done(function () {
+            const length = path.node().getTotalLength()
+            path.attr("stroke-dasharray", length)
+                .attr("stroke-dashoffset", length)
+                .transition()
+                .delay(delayTime)
+                .style("opacity", 1)
+                .transition()
+                .ease(d3.easeLinear)
+                .attr("stroke-dashoffset", 0)
+                .duration(data.length * 100) 
+        })
+    } else {
+        path.transition()
             .delay(delayTime)
             .style("opacity", 1)
-            .transition()
-            .ease(d3.easeLinear)
-            .attr("stroke-dashoffset", 0)
-            .duration(data.length * 100) 
-    })
+    }
 
     // label plot
     svg.append("text")

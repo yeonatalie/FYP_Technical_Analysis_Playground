@@ -5,7 +5,7 @@ const formatDate = utcFormat('%B %-d, %Y');
 const formatValue = format('.2f');
 const formatString = format('.3s');
 
-function CandlestickMarks({data, xScale, yScale, tutorial, annotateOHLC}) {
+function CandlestickMarks({data, xScale, yScale, lightenCandlestick, annotateOHLC}) {
     // Functions for Tutorial Chart
     function annotateOHLCFn() {
         // Annotate Open
@@ -78,7 +78,7 @@ function CandlestickMarks({data, xScale, yScale, tutorial, annotateOHLC}) {
         .attr("y1", function(d) { return yScale(d.open); })
         .attr("y2", function(d) { return yScale(d.close); })
     
-    if (tutorial) {
+    if (lightenCandlestick) {
         d3.select(".candlestick")
             .style("opacity", "0.3")
     }

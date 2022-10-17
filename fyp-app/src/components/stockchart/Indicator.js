@@ -2,25 +2,17 @@ import * as d3 from 'd3';
 
 import { AxisBottom } from './Axis/AxisBottom';
 import { AxisLeft } from './Axis/AxisLeft';
-import CandlestickMarks from './Marks/CandlestickMarks.jsx';
-import SmaCrossover from './Tutorials/SmaCrossoverTutorial';
-import EmaCrossover from './Tutorials/EmaCrossoverTutorial';
-import RsiTutorial from './Tutorials/RsiTutorial';
-import BbandTutorial from './Tutorials/BollingerBandTutorial';
+import RsiChartTutorial from './Tutorials/RsiChartTutorial';
 
 const yAxisLabelOffset = 60;
-const leftAxisTickFormat = d3.format('$~f');
+const leftAxisTickFormat = d3.format('~f');
 const bottomAxisTickFormat = d3.utcFormat('%-m/%-d');
 
-export const Main = ({
+export const Indicator = ({
     data,
     specs: { width, height, margin },
-    lightenCandlestick,
-    annotateOHLC,
-    smaCrossover,
-    emaCrossover,
-    rsiTutorial,
-    bbandTutorial
+    indicatorChartLabel, indicatorRange,
+    rsiTutorial
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -33,7 +25,7 @@ export const Main = ({
         .padding(0.2);
 
     const yPriceScale = d3.scaleLinear()
-        .domain([d3.min(data, d => d.low), d3.max(data, d => d.high)])
+        .domain(indicatorRange)
         .rangeRound([innerHeight, 0])
         .nice();
 
@@ -41,7 +33,7 @@ export const Main = ({
 
     return (
         <g>
-            <g className='candlestickchart' transform={`translate(${margin.left},${margin.top})`}>
+            <g className='indicatorchart' transform={`translate(${margin.left},${margin.top})`}>
                 <AxisBottom
                     xScale={xScale}
                     xLength={innerWidth}
@@ -62,43 +54,14 @@ export const Main = ({
                     textAnchor='middle'
                     transform={`translate(${-yAxisLabelOffset},${innerHeight / 2}) rotate(-90)`}
                 >
-                    Price
+                    {indicatorChartLabel}
                 </text>
-                <CandlestickMarks
-                    class='candlestick'
-                    data={data}
-                    xScale={xScale}
-                    yScale={yPriceScale}
-                    lightenCandlestick={lightenCandlestick} // to lighten the candlestick when there is a tutorial
-                    annotateOHLC={annotateOHLC}
-                />
-                <SmaCrossover
-                    class='smacrossover'
-                    data={data}
-                    xScale={xScale}
-                    yScale={yPriceScale}
-                    smaCrossover={smaCrossover}
-                />
-                <EmaCrossover
-                    class='emacrossover'
-                    data={data}
-                    xScale={xScale}
-                    yScale={yPriceScale}
-                    emaCrossover={emaCrossover}
-                />
-                <RsiTutorial
-                    class='rsi'
+                <RsiChartTutorial
+                    class='rsiChart'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
                     rsiTutorial={rsiTutorial}
-                />
-                <BbandTutorial
-                    class='bband'
-                    data={data}
-                    xScale={xScale}
-                    yScale={yPriceScale}
-                    bbandTutorial={bbandTutorial}
                 />
             </g>
         </g>

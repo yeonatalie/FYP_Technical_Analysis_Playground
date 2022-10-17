@@ -55,7 +55,7 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
     if (smaCrossover) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
-            displayText:'Identify Close Prices', delayTime:500, displayTime:3000})
+            displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})
         
         // Plot SMAs
         plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:'smaShort', variableLabel:'7 days', 
