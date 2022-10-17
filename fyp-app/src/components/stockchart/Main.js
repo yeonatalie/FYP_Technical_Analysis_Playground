@@ -7,6 +7,7 @@ import SmaCrossover from './Tutorials/SmaCrossoverTutorial';
 import EmaCrossover from './Tutorials/EmaCrossoverTutorial';
 import RsiTutorial from './Tutorials/RsiTutorial';
 import BbandTutorial from './Tutorials/BollingerBandTutorial';
+import MacdTutorial from './Tutorials/MacdTutorial';
 
 const yAxisLabelOffset = 60;
 const leftAxisTickFormat = d3.format('$~f');
@@ -19,6 +20,7 @@ export const Main = ({
     smaCrossover,
     emaCrossover,
     rsiTutorial,
+    macdTutorial,
     bbandTutorial
 }) => {
     const innerWidth = width - margin.left - margin.right;
@@ -90,6 +92,13 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     rsiTutorial={rsiTutorial}
+                />
+                <MacdTutorial
+                    class='macd'
+                    data={data}
+                    xScale={xScale}
+                    yScale={yPriceScale}
+                    macdTutorial={macdTutorial}
                 />
                 <BbandTutorial
                     class='bband'

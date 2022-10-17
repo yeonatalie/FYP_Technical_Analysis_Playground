@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { AxisBottom } from './Axis/AxisBottom';
 import { AxisLeft } from './Axis/AxisLeft';
 import RsiChartTutorial from './Tutorials/RsiChartTutorial';
+import MacdChartTutorial from './Tutorials/MacdChartTutorial';
 
 const yAxisLabelOffset = 60;
 const leftAxisTickFormat = d3.format('~f');
@@ -12,7 +13,7 @@ export const Indicator = ({
     data,
     specs: { width, height, margin },
     indicatorChartLabel, indicatorRange,
-    rsiTutorial
+    rsiTutorial, macdTutorial
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -62,6 +63,13 @@ export const Indicator = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     rsiTutorial={rsiTutorial}
+                />
+                <MacdChartTutorial
+                    class='macdChart'
+                    data={data}
+                    xScale={xScale}
+                    yScale={yPriceScale}
+                    macdTutorial={macdTutorial}
                 />
             </g>
         </g>

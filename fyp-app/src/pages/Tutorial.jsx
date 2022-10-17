@@ -26,6 +26,7 @@ function Tutorial() {
     const [smaCrossover, setSmaCrossover] = useState(false)
     const [emaCrossover, setEmaCrossover] = useState(false)
     const [rsiTutorial, setRsiTutorial] = useState(false)
+    const [macdTutorial, setMacdTutorial] = useState(false)
     const [bbandTutorial, setBbandTutorial] = useState(false)
     
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
@@ -41,6 +42,9 @@ function Tutorial() {
     if (rsiTutorial) {
       tutorial = ": RSI"
     }
+    if (macdTutorial) {
+      tutorial = ": MACD"
+    }
     if (bbandTutorial) {
       tutorial = ": Bollinger Bands"
     }
@@ -51,6 +55,10 @@ function Tutorial() {
       indicatorChartLabel = "RSI"
       indicatorRange = [0, 100]
     }
+    if (macdTutorial) {
+      indicatorChartLabel = "MACD"
+      indicatorRange = [-5, 5]
+    }
 
     return (
       <div>
@@ -58,8 +66,8 @@ function Tutorial() {
 
         <div style={{overflowY: 'scroll', height: '500px'}}>
           <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick}
-            smaCrossover={smaCrossover} emaCrossover={emaCrossover} rsiTutorial={rsiTutorial} bbandTutorial={bbandTutorial}/>
+            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} smaCrossover={smaCrossover} 
+            emaCrossover={emaCrossover} rsiTutorial={rsiTutorial} macdTutorial={macdTutorial} bbandTutorial={bbandTutorial}/>
         </div>
 
         <br></br>
@@ -67,6 +75,7 @@ function Tutorial() {
         <button style={{marginLeft: '30px'}} onClick={() => {setSmaCrossover(!smaCrossover); setLightenCandlestick(!lightenCandlestick)}}>SMA Crossover</button>
         <button style={{marginLeft: '10px'}} onClick={() => {setEmaCrossover(!emaCrossover); setLightenCandlestick(!lightenCandlestick)}}>EMA Crossover</button>
         <button style={{marginLeft: '10px'}} onClick={() => {setRsiTutorial(!rsiTutorial); setIndicatorChart(!indicatorChart); setLightenCandlestick(!lightenCandlestick)}}>RSI</button>
+        <button style={{marginLeft: '10px'}} onClick={() => {setMacdTutorial(!macdTutorial); setIndicatorChart(!indicatorChart); setLightenCandlestick(!lightenCandlestick)}}>MACD</button>
         <button style={{marginLeft: '10px'}} onClick={() => {setBbandTutorial(!bbandTutorial); setLightenCandlestick(!lightenCandlestick)}}>Bollinger Band</button>
       </div>
     );

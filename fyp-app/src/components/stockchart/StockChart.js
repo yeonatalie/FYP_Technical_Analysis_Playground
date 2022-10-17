@@ -17,7 +17,7 @@ export const StockChart = ({
         brushSpecs,
         mainChartSpecs
     }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick
-    , smaCrossover, emaCrossover, rsiTutorial, bbandTutorial
+    , smaCrossover, emaCrossover, rsiTutorial, macdTutorial, bbandTutorial
 }) => {
     const data = useData();
     const [brushExtent, setBrushExtent] = useState();
@@ -68,6 +68,7 @@ export const StockChart = ({
                         smaCrossover={smaCrossover}
                         emaCrossover={emaCrossover}
                         rsiTutorial={rsiTutorial}
+                        macdTutorial={macdTutorial}
                         bbandTutorial={bbandTutorial}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
@@ -77,6 +78,7 @@ export const StockChart = ({
                             indicatorChartLabel={indicatorChartLabel}
                             indicatorRange={indicatorRange}
                             rsiTutorial={rsiTutorial}
+                            macdTutorial={macdTutorial}
                         />
                     </g>
                     <g transform={`translate(0,${(totalHeight * mainChartRatio) + indicatorHeight})`}>
@@ -102,6 +104,7 @@ export const StockChart = ({
                         smaCrossover={smaCrossover}
                         emaCrossover={emaCrossover}
                         rsiTutorial={rsiTutorial}
+                        macdTutorial={macdTutorial}
                         bbandTutorial={bbandTutorial}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>

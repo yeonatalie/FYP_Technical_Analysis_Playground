@@ -109,7 +109,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
 
     // label plot
     svg.append("text")
-        .attr("transform", "translate(" + (xScale(data.at(-1).date) + 5) + "," + yScale(data.at(-1)[variable]) + ")")
+        .attr("transform", "translate(" + (xScale(data.at(-1).date) + 10) + "," + yScale(data.at(-1)[variable]) + ")")
         .style("fill", color)
         .text(variableLabel)
         .style("font-weight", "bold")
@@ -121,6 +121,26 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     
     // text
     displayTextFn(svg, displayText, delayTime, displayTextTime)
+}
+
+export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTime}) => {
+    var count = 0
+    data.forEach(function(d, index) {
+        count+=1
+        var color = (d[variable]>0) ? schemeSet1[2] : (d[variable]<0) ? schemeSet1[0] : schemeSet1[8]
+        var bar = svg.append("rect")
+            .attr("x", xScale(d.date))
+            .attr("y", yScale(d[variable]))
+            .attr("width", xScale.bandwidth())
+            .attr("height", Math.abs(yScale(d[variable]) - yScale(0)))
+            .attr("fill", color)
+        
+        bar.style("opacity", 0);
+        bar.transition()
+            .delay(delayTime + (count * speed))
+            .transition()
+            .style("opacity", 0.3);
+    })
 }
 
 export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, delayTextTime, displayTextTime}) => { 
