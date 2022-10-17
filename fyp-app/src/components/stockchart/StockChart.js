@@ -13,7 +13,7 @@ export const StockChart = ({
         seperationRatio,
         brushSpecs,
         mainChartSpecs
-    }, annotateOHLC, smaCrossover
+    }, annotateOHLC, smaCrossover, emaCrossover, rsiTutorial
 }) => {
     const data = useData();
     const [brushExtent, setBrushExtent] = useState();
@@ -55,6 +55,8 @@ export const StockChart = ({
                     specs={mainChartSpecs}
                     annotateOHLC={annotateOHLC}
                     smaCrossover={smaCrossover}
+                    emaCrossover={emaCrossover}
+                    rsiTutorial={rsiTutorial}
                 />
                 <g transform={`translate(0,${totalHeight * seperationRatio})`}>
                     <Brush

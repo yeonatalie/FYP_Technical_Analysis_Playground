@@ -3,9 +3,10 @@ import * as d3 from 'd3';
 import { AxisBottom } from './Axis/AxisBottom';
 import { AxisLeft } from './Axis/AxisLeft';
 import CandlestickMarks from './Marks/CandlestickMarks.jsx';
-import SmaCrossover from './Marks/SmaCrossover';
-const yAxisLabelOffset = 60;
+import SmaCrossover from './Tutorials/SmaCrossoverTutorial';
+import EmaCrossover from './Tutorials/EmaCrossoverTutorial';
 
+const yAxisLabelOffset = 60;
 const leftAxisTickFormat = d3.format('$~f');
 const bottomAxisTickFormat = d3.utcFormat('%-m/%-d');
 
@@ -14,6 +15,7 @@ export const Main = ({
     specs: { width, height, margin },
     annotateOHLC,
     smaCrossover,
+    emaCrossover
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -61,7 +63,7 @@ export const Main = ({
                 data={data}
                 xScale={xScale}
                 yScale={yPriceScale}
-                tutorial={smaCrossover} // to lighten the candlestick when there is a tutorial
+                tutorial={smaCrossover || emaCrossover} // to lighten the candlestick when there is a tutorial
                 annotateOHLC={annotateOHLC}
             />
             <SmaCrossover
@@ -70,6 +72,13 @@ export const Main = ({
                 xScale={xScale}
                 yScale={yPriceScale}
                 smaCrossover={smaCrossover}
+            />
+            <EmaCrossover
+                class='emacrossover'
+                data={data}
+                xScale={xScale}
+                yScale={yPriceScale}
+                emaCrossover={emaCrossover}
             />
         </g>
     )
