@@ -6,8 +6,9 @@ import CandlestickMarks from './Marks/CandlestickMarks.jsx';
 import SmaCrossover from './Tutorials/SmaCrossoverTutorial';
 import EmaCrossover from './Tutorials/EmaCrossoverTutorial';
 import RsiTutorial from './Tutorials/RsiTutorial';
-import BbandTutorial from './Tutorials/BollingerBandTutorial';
 import MacdTutorial from './Tutorials/MacdTutorial';
+import BbandTutorial from './Tutorials/BollingerBandTutorial';
+import PpTutorial from './Tutorials/PpTutorial'
 
 const yAxisLabelOffset = 60;
 const leftAxisTickFormat = d3.format('$~f');
@@ -21,7 +22,8 @@ export const Main = ({
     emaCrossover,
     rsiTutorial,
     macdTutorial,
-    bbandTutorial
+    bbandTutorial,
+    ppTutorial
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -106,6 +108,13 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     bbandTutorial={bbandTutorial}
+                />
+                <PpTutorial
+                    class='pp'
+                    data={data}
+                    xScale={xScale}
+                    yScale={yPriceScale}
+                    ppTutorial={ppTutorial}
                 />
             </g>
         </g>

@@ -28,6 +28,7 @@ function Tutorial() {
     const [rsiTutorial, setRsiTutorial] = useState(false)
     const [macdTutorial, setMacdTutorial] = useState(false)
     const [bbandTutorial, setBbandTutorial] = useState(false)
+    const [ppTutorial, setPpTutorial] = useState(false)
     
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
     const [indicatorChart, setIndicatorChart] = useState(false)
@@ -48,16 +49,19 @@ function Tutorial() {
     if (bbandTutorial) {
       tutorial = ": Bollinger Bands"
     }
+    if (ppTutorial) {
+      tutorial = ": Pivot Points"
+    }
 
     var indicatorChartLabel = "Indicator"
     var indicatorRange = [0, 0]
-    if (rsiTutorial) {
-      indicatorChartLabel = "RSI"
-      indicatorRange = [0, 100]
-    }
     if (macdTutorial) {
       indicatorChartLabel = "MACD"
       indicatorRange = [-5, 5]
+    }
+    if (rsiTutorial) {
+      indicatorChartLabel = "RSI"
+      indicatorRange = [0, 100]
     }
 
     return (
@@ -67,7 +71,8 @@ function Tutorial() {
         <div style={{overflowY: 'scroll', height: '500px'}}>
           <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
             indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} smaCrossover={smaCrossover} 
-            emaCrossover={emaCrossover} rsiTutorial={rsiTutorial} macdTutorial={macdTutorial} bbandTutorial={bbandTutorial}/>
+            emaCrossover={emaCrossover} rsiTutorial={rsiTutorial} macdTutorial={macdTutorial} bbandTutorial={bbandTutorial}
+            ppTutorial={ppTutorial}/>
         </div>
 
         <br></br>
@@ -77,6 +82,7 @@ function Tutorial() {
         <button style={{marginLeft: '10px'}} onClick={() => {setRsiTutorial(!rsiTutorial); setIndicatorChart(!indicatorChart); setLightenCandlestick(!lightenCandlestick)}}>RSI</button>
         <button style={{marginLeft: '10px'}} onClick={() => {setMacdTutorial(!macdTutorial); setIndicatorChart(!indicatorChart); setLightenCandlestick(!lightenCandlestick)}}>MACD</button>
         <button style={{marginLeft: '10px'}} onClick={() => {setBbandTutorial(!bbandTutorial); setLightenCandlestick(!lightenCandlestick)}}>Bollinger Band</button>
+        <button style={{marginLeft: '10px'}} onClick={() => {setPpTutorial(!ppTutorial); setLightenCandlestick(!lightenCandlestick)}}>Pivot Points</button>
       </div>
     );
 }

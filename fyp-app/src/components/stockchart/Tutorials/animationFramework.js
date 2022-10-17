@@ -21,13 +21,14 @@ function displayTextFn(svg, displayText, delayTime, displayTime) {
         .style("opacity", 0);
 }
 
-export const annotateChart = ({svg, data, xScale, yScale, variable, displayText, delayTime, displayTime=null, displayTextTime}) => {
+export const annotateChart = ({svg, data, xScale, yScale, variable, color="black", displayText, delayTime, displayTime=null, displayTextTime}) => {
     const points = svg.selectAll()
         .data(data).enter()
         .append("circle")
         .attr("r", 2.5)
         .attr("cx", function(d) { return xScale(d.date); })
         .attr("cy", function(d) { return yScale(d[variable]); })
+        .attr("fill", color)
         .style("opacity", 0);
     
     points.transition()
@@ -37,7 +38,7 @@ export const annotateChart = ({svg, data, xScale, yScale, variable, displayText,
         
     if (displayTime !== null) {
         points.transition()
-            .delay(displayTime)
+            .delay(delayTime + displayTime)
             .transition()
             .style("opacity", 0); 
     }
@@ -143,7 +144,7 @@ export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTi
     })
 }
 
-export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, delayTextTime, displayTextTime}) => { 
+export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, speed=100, delayTextTime, displayTextTime}) => { 
     // calculate and plot crossover
     var count = 0
     var prevPosition = 1
@@ -178,7 +179,7 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
 
             signalAnnotation.style("opacity", 0);
             signalAnnotation.transition()
-                .delay(delayTime + (count * 100))
+                .delay(delayTime + (count * speed))
                 .transition()
                 .style("opacity", 1);
         }

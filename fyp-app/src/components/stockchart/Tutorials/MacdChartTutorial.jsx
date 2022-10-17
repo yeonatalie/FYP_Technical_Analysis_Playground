@@ -1,6 +1,5 @@
 import * as d3 from "d3";
 import { plotPath, plotBar, crossoverSignal } from './animationFramework';
-import { schemeSet1 } from 'd3';
 
 function MacdChartTutorial({data, xScale, yScale, macdTutorial}) {
     
@@ -63,9 +62,9 @@ function MacdChartTutorial({data, xScale, yScale, macdTutorial}) {
 
         // MACD Signals
         crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:true, crossAbove:true, delayTime:500,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:5000, displayTextTime:7000}) // long signal
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:5000, displayTextTime:6000}) // long signal
         crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:false, crossAbove:false, delayTime:500,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:5000, displayTextTime:7000}) // short signal
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:5000, displayTextTime:6000}) // short signal
     }
 }
 
