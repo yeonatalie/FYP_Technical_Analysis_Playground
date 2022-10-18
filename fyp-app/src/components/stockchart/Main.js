@@ -9,6 +9,7 @@ import RsiTutorial from './Tutorials/RsiTutorial';
 import MacdTutorial from './Tutorials/MacdTutorial';
 import BbandTutorial from './Tutorials/BollingerBandTutorial';
 import PpTutorial from './Tutorials/PpTutorial'
+import CandlestickTooltip from './Marks/CandlestickTooltip';
 
 const yAxisLabelOffset = 60;
 const leftAxisTickFormat = d3.format('$~f');
@@ -115,6 +116,12 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     ppTutorial={ppTutorial}
+                />
+                <CandlestickTooltip
+                    class='candlestickTooltip'
+                    data={data}
+                    xScale={xScale}
+                    yScale={yPriceScale}
                 />
             </g>
         </>
