@@ -196,7 +196,9 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
 }
 
 export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=false}) => {
-    d3.select('.tooltip').remove() // Hide candlestick's tooltip. Only 1 tooltip shown at once
+    if (!indicatorChart) {
+        d3.select('.tooltip').remove() // Hide candlestick's tooltip. Only 1 tooltip shown at once
+    }
 
     var tooltipIndicatorLine = svg.append('line').attr('class', 'tooltipIndicatorLine').attr("stroke", "none")
 
@@ -259,7 +261,7 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
             // to account for when tooltip is at the corner of page
             var translateX = x_pos+10
             var translateY = y_pos-80
-            if (x_pos > 1050) {
+            if (x_pos > 1000) {
                 translateX += 1140 - x_pos - 125
             }
             if (y_pos < 80) {
