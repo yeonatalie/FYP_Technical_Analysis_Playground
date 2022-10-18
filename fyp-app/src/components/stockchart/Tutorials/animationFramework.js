@@ -193,8 +193,8 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
     displayTextFn(svg, displayText, delayTextTime, displayTextTime)
 }
 
-export const tooltipIndicator = ({svg, data, xScale}) => {
-    var tooltip = svg.append("foreignObject")
+export const tooltipIndicator = ({svg, data, xScale, yScale}) => {
+    var tooltipIndicator = svg.append("foreignObject")
         .attr("class", "tooltipIndicator")
         .attr("width", 125)
         .attr("height", 200)
@@ -237,21 +237,31 @@ export const tooltipIndicator = ({svg, data, xScale}) => {
             d3.select('.tooltip').style("opacity", 0) // Hide candlestick's tooltip. Only 1 tooltip shown at once
 
             d3.select('.tooltipIndicator')
-            .transition()
-            .duration(0) // cancel any pending transition
-            .style("opacity", 1)
-            .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+                .style("opacity", 1)
+                .attr("transform", "translate(" + (x_pos+10) + "," + (y_pos-80) + ")")
             d3.select('.tooltipIndicatorText').attr("height", 200)
 
-            tooltip.html(text)
+            tooltipIndicator.html(text)
+
+            // Line across the chart
+            d3.selectAll('.tooltipIndicatorLine')
+                .attr("stroke", "none")
+            const tooltipIndicatorLine = svg.append('line').attr('class', 'tooltipIndicatorLine');
+
+            tooltipIndicatorLine
+                .attr('stroke', 'black')
+                .attr('x1', xScale(dateTooltipParsed))
+                .attr('x2', xScale(dateTooltipParsed))
+                .attr('y1', 315)
+                .attr('y2', 30);
         }
     }
 
     const mouseout = function(event) {
         d3.select('.tooltipIndicator')
-            .transition()
-            .delay(100)
             .style("opacity", 0)
+        d3.selectAll('.tooltipIndicatorLine')
+            .attr("stroke", "none")
     }
 
     d3.selectAll(".smacrossover")

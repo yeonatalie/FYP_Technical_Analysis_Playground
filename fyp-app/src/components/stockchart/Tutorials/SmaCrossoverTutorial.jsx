@@ -74,7 +74,7 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000}) // short signal
         
         // Tooltip
-        tooltipIndicator({svg:svg, data:smaData, xScale:xScale})
+        tooltipIndicator({svg:svg, data:smaData, xScale:xScale, yScale:yScale})
     }
 }
 
