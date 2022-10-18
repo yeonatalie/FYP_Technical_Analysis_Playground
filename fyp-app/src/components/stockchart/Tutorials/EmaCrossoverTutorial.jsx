@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 
 function EmaCrossover({data, xScale, yScale, emaCrossover}) {
     
@@ -52,23 +52,26 @@ function EmaCrossover({data, xScale, yScale, emaCrossover}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    // Plot and Animate SMA Crossover
+    // Plot and Animate EMA Crossover
     if (emaCrossover) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})
         
-        // Plot SMAs
+        // Plot EMAs
         plotPath({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable:'emaShort', variableLabel:'7 days', 
             color:"darkblue", displayText:'Plot 7 & 14 day EMAs', delayTime:4000, displayTextTime:3000})
         plotPath({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable:'emaLong', variableLabel:'14 days', 
             color:"brown", displayText:'Plot 7 & 14 day EMAs', delayTime:4000, displayTextTime:3000})
 
-        // SMA crossover
+        // EMA crossover
         crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', delayTime:4000,
             displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:8000, displayTextTime:5000}) // long signal
         crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', longSignal:false, crossAbove:false, delayTime:4000,
             displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:8000, displayTextTime:5000}) // short signal
+
+        // Tooltip
+        tooltipIndicator({svg:svg, data:emaData, xScale:xScale, yScale:yScale})
     }
 }
 

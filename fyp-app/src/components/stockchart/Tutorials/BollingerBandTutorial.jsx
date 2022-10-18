@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 
 const BBand = require('technicalindicators').BollingerBands;
 
@@ -71,6 +71,9 @@ function BbandTutorial({data, xScale, yScale, bbandTutorial}) {
         // short signal when cross above upper
         crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'upper', longSignal:false, crossAbove:true, delayTime:12000,
             displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000}) 
+
+        // Tooltip
+        tooltipIndicator({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale})
     }
 
 }

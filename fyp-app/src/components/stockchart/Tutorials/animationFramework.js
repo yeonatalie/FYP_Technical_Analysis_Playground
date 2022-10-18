@@ -114,14 +114,16 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
 
     // label plot
     const label = svg.append("text").text(variableLabel).style("opacity", 0)
-    const textLength = label.node().getComputedTextLength()    
-    label.attr("transform", "translate(" + (xScale(data.at(-1).date) - textLength - 10) + "," + yScale(data.at(-1)[variable]) + ")")
-        .style("fill", color)
-        .style("font-weight", "bold")
-        .transition()
-        .delay(delayTime + (data.length * speed))
-        .transition()
-        .style("opacity", 1);
+    $.get(label).done(function () {
+        const textLength = label.node().getComputedTextLength()    
+        label.attr("transform", "translate(" + (xScale(data.at(-1).date) - textLength - 10) + "," + yScale(data.at(-1)[variable]) + ")")
+            .style("fill", color)
+            .style("font-weight", "bold")
+            .transition()
+            .delay(delayTime + (data.length * speed))
+            .transition()
+            .style("opacity", 1);
+    })
     
     // text
     displayTextFn(svg, displayText, delayTime, displayTextTime)
@@ -193,11 +195,15 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
     displayTextFn(svg, displayText, delayTextTime, displayTextTime)
 }
 
-export const tooltipIndicator = ({svg, data, xScale, yScale}) => {
+export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=false}) => {
+    d3.select('.tooltip').remove() // Hide candlestick's tooltip. Only 1 tooltip shown at once
+
+    var tooltipIndicatorLine = svg.append('line').attr('class', 'tooltipIndicatorLine').attr("stroke", "none")
+
     var tooltipIndicator = svg.append("foreignObject")
         .attr("class", "tooltipIndicator")
         .attr("width", 125)
-        .attr("height", 200)
+        .attr("height", 300)
         .style("opacity", 0)
         .style("pointer-events", "none")
         .append("xhtml:div")
@@ -225,46 +231,61 @@ export const tooltipIndicator = ({svg, data, xScale, yScale}) => {
         var fulldataTooltip = {}
         data.map((dict, i) => (fulldataTooltip[dict.date] = dict))
 
-        const dataTooltip = fulldataTooltip[dateTooltipParsed]
+        var dataTooltip = fulldataTooltip[dateTooltipParsed]
+        if (dataTooltip == null) {
+            dataTooltip = fulldataTooltip[dateTooltip]
+        }
         if (dataTooltip != null) { // data present
-            var text = `<b>${formatDate(dateTooltip)}</b>`
-            for (const [key, value] of Object.entries(dataTooltip)) {
-                if (key !== 'date') {
-                    text += `<br /> ${key}: ${formatValue(value)}`
-                }
-            }
-
-            d3.select('.tooltip').style("opacity", 0) // Hide candlestick's tooltip. Only 1 tooltip shown at once
-
-            d3.select('.tooltipIndicator')
-                .style("opacity", 1)
-                .attr("transform", "translate(" + (x_pos+10) + "," + (y_pos-80) + ")")
-            d3.select('.tooltipIndicatorText').attr("height", 200)
-
-            tooltipIndicator.html(text)
-
             // Line across the chart
             d3.selectAll('.tooltipIndicatorLine')
                 .attr("stroke", "none")
-            const tooltipIndicatorLine = svg.append('line').attr('class', 'tooltipIndicatorLine');
 
             tooltipIndicatorLine
                 .attr('stroke', 'black')
                 .attr('x1', xScale(dateTooltipParsed))
                 .attr('x2', xScale(dateTooltipParsed))
-                .attr('y1', 315)
+                .attr('y1', indicatorChart ? 140: 315)
                 .attr('y2', 30);
+
+            // Tooltip
+            var text = `<u><b>${formatDate(dateTooltip)}</b></u>`
+
+            for (const [key, value] of Object.entries(dataTooltip)) {
+                if (key !== 'date') {
+                    text += `<br /><b>${key}:</b> ${formatValue(value)}`
+                }
+            }
+
+            // to account for when tooltip is at the corner of page
+            var translateX = x_pos+10
+            var translateY = y_pos-80
+            if (x_pos > 1050) {
+                translateX += 1140 - x_pos - 125
+            }
+            if (y_pos < 80) {
+                translateY += 80 - y_pos
+            }
+
+            d3.select('.tooltipIndicator')
+                .transition()
+                .duration(0) // cancel any pending transition
+                .style("opacity", 1)
+                .attr("transform", "translate(" + translateX + "," + translateY + ")")
+
+            tooltipIndicator.html(text)
         }
     }
 
     const mouseout = function(event) {
-        d3.select('.tooltipIndicator')
-            .style("opacity", 0)
         d3.selectAll('.tooltipIndicatorLine')
             .attr("stroke", "none")
+        d3.select('.tooltipIndicator')
+            .transition()
+            .delay(100)
+            .style("opacity", 0)
     }
 
-    d3.selectAll(".smacrossover")
+    svg
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
     }

@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { plotPath, crossoverSignal } from './animationFramework';
+import { plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 
 function RsiChartTutorial({data, xScale, yScale, rsiTutorial}) {
     
@@ -61,6 +61,9 @@ function RsiChartTutorial({data, xScale, yScale, rsiTutorial}) {
             displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000}) // long signal
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'overbought', longSignal:false, crossAbove:true, delayTime:delayTime,
             displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000}) // short signal
+        
+        // Tooltip
+        tooltipIndicator({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
     }
 }
 

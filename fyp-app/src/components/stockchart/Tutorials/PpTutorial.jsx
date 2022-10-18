@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 import { schemePastel1 } from 'd3';
 
 function PpTutorial({data, xScale, yScale, ppTutorial}) {
@@ -13,6 +13,8 @@ function PpTutorial({data, xScale, yScale, ppTutorial}) {
 
     data = data.slice(1)
     data.forEach(function(d, index) {
+        delete d.adjClose
+        delete d.volume
         d['tp'] = (prevHigh + prevLow + prevClose) / 3
         d['r1'] = (prevTp * 2) - prevLow
         d['r2'] = prevTp + (prevHigh - prevLow)
@@ -73,6 +75,10 @@ function PpTutorial({data, xScale, yScale, ppTutorial}) {
             displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000}) // long signal
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'r2', longSignal:false, crossAbove:true, delayTime:9000,
             displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000}) // short signal
+        
+        // Tooltip
+        console.log(data)
+        tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale})
     }
 }
 

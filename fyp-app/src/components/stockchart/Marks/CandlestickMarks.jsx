@@ -66,6 +66,8 @@ function CandlestickMarks({data, xScale, yScale, lightenCandlestick}) {
         const y_pos = ele.attr("y") !== null ? ele.attr("y") : ele.attr("y1")
 
         d3.select('.tooltip')
+            .transition()
+            .duration(0) // cancel any pending transition
             .style("opacity", 1)
             .attr("x", x_pos)
             .attr("y", (y_pos-100))
@@ -97,6 +99,8 @@ function CandlestickMarks({data, xScale, yScale, lightenCandlestick}) {
         const y_pos = ele.attr("y") !== null ? ele.attr("y") : ele.attr("y1")
 
         d3.select('.tooltip')
+            .transition()
+            .duration(0) // cancel any pending transition
             .style("opacity", 1)
             .attr("x", x_pos)
             .attr("y", (y_pos-100))
@@ -105,6 +109,8 @@ function CandlestickMarks({data, xScale, yScale, lightenCandlestick}) {
 
     const mouseout = function(event) {
         d3.select('.tooltip')
+            .transition()
+            .delay(100)
             .style("opacity", 0)
     }
 
