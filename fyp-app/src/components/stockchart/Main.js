@@ -43,8 +43,8 @@ export const Main = ({
     const getOnlyMonday = d => d.getUTCDay() === 1;
 
     return (
-        <g>
-            <g className='candlestickchart' transform={`translate(${margin.left},${margin.top})`}>
+        <>
+            <g className='candlestickchart' style={{pointerEvents:"all"}} transform={`translate(${margin.left},${margin.top})`}>
                 <AxisBottom
                     xScale={xScale}
                     xLength={innerWidth}
@@ -117,6 +117,6 @@ export const Main = ({
                     ppTutorial={ppTutorial}
                 />
             </g>
-        </g>
+        </>
     )
 }

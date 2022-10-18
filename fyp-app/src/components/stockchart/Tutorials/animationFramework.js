@@ -109,12 +109,14 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     }
 
     // label plot
-    svg.append("text")
-        .attr("transform", "translate(" + (xScale(data.at(-1).date) + 10) + "," + yScale(data.at(-1)[variable]) + ")")
+    const label = svg.append("text").text(variableLabel).style("opacity", 0)
+    const textLength = label.node().getComputedTextLength()
+
+    //const width = label.getComputedTextLength()
+    
+    label.attr("transform", "translate(" + (xScale(data.at(-1).date) - textLength - 10) + "," + yScale(data.at(-1)[variable]) + ")")
         .style("fill", color)
-        .text(variableLabel)
         .style("font-weight", "bold")
-        .style("opacity", 0)
         .transition()
         .delay(delayTime + (data.length * speed))
         .transition()

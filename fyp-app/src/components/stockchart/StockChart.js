@@ -72,7 +72,7 @@ export const StockChart = ({
                         bbandTutorial={bbandTutorial}
                         ppTutorial={ppTutorial}
                     />
-                    <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
+                    <svg transform={`translate(0,${totalHeight * mainChartRatio})`}>
                         <Indicator
                             data={slicedData}
                             specs={indicatorSpecs}
@@ -81,7 +81,7 @@ export const StockChart = ({
                             rsiTutorial={rsiTutorial}
                             macdTutorial={macdTutorial}
                         />
-                    </g>
+                    </svg>
                     <g transform={`translate(0,${(totalHeight * mainChartRatio) + indicatorHeight})`}>
                         <Brush
                             data={data}

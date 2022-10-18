@@ -2,7 +2,7 @@
 
 body {
     margin: 0;
-    overflow: hidden;
+    overflow: scroll;
     font-family: 'Poppins', sans-serif;
 }
 

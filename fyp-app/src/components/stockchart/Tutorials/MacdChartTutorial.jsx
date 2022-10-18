@@ -51,11 +51,11 @@ function MacdChartTutorial({data, xScale, yScale, macdTutorial}) {
     if (macdTutorial) {
         // Plot MACD
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'macd', variableLabel:'MACD', 
-            color:"black", displayText:'Plot 12 / 26 day MACD', delayTime:500, displayTextTime:3000})
+            color:"black", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:500, displayTextTime:3000})
         
         // Plot Signal Line
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'signal', variableLabel:'Signal', 
-            color:"orange", displayText:'Plot 12 / 26 day MACD', delayTime:500, displayTextTime:3000})
+            color:"orange", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:500, displayTextTime:3000})
         
         // Plot Histogram
         plotBar({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'histogram', delayTime:500})
