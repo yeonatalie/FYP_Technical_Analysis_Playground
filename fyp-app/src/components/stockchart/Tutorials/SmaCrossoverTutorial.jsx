@@ -1,7 +1,11 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal } from './animationFramework';
+import { utcFormat, format, schemePastel1, style } from 'd3';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 
 const SMA = require('technicalindicators').SMA;
+const formatDate = utcFormat('%B %-d, %Y');
+const formatValue = format('.2f');
+const formatString = format('.3s');
 
 function SmaCrossover({data, xScale, yScale, smaCrossover}) {
     
@@ -68,6 +72,9 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000}) // long signal
         crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000}) // short signal
+        
+        // Tooltip
+        tooltipIndicator({svg:svg, data:smaData, xScale:xScale})
     }
 }
 

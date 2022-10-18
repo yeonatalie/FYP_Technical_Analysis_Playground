@@ -64,7 +64,6 @@ function CandlestickMarks({data, xScale, yScale, lightenCandlestick}) {
         const ele = d3.select(this)
         const x_pos = ele.attr("x") !== null ? ele.attr("x") : ele.attr("x1") // account for if no open close bar
         const y_pos = ele.attr("y") !== null ? ele.attr("y") : ele.attr("y1")
-        console.log(y_pos)
 
         d3.select('.tooltip')
             .transition()

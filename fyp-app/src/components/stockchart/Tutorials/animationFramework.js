@@ -1,6 +1,9 @@
 import $ from 'jquery'; 
 import * as d3 from "d3";
-import { schemeSet1 } from 'd3';
+import { utcFormat, format, schemeSet1, schemePastel1} from 'd3';
+
+const formatDate = utcFormat('%B %-d, %Y');
+const formatValue = format('.2f');
 
 // data is a list of dictionaries
 
@@ -76,6 +79,7 @@ export const annotateUpDown = ({svg, data, xScale, yScale, variable, displayText
 
 export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, color, animate=true, dashed=false, displayText, speed=100, delayTime, displayTextTime}) => {
     var path = svg.append("path")
+        .attr("class", "path")
         .datum(data)
         .style("opacity", 0)
         .attr("fill", "none")
@@ -110,10 +114,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
 
     // label plot
     const label = svg.append("text").text(variableLabel).style("opacity", 0)
-    const textLength = label.node().getComputedTextLength()
-
-    //const width = label.getComputedTextLength()
-    
+    const textLength = label.node().getComputedTextLength()    
     label.attr("transform", "translate(" + (xScale(data.at(-1).date) - textLength - 10) + "," + yScale(data.at(-1)[variable]) + ")")
         .style("fill", color)
         .style("font-weight", "bold")
@@ -191,3 +192,69 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
     // text
     displayTextFn(svg, displayText, delayTextTime, displayTextTime)
 }
+
+export const tooltipIndicator = ({svg, data, xScale}) => {
+    var tooltip = svg.append("foreignObject")
+        .attr("class", "tooltipIndicator")
+        .attr("width", 125)
+        .attr("height", 200)
+        .style("opacity", 0)
+        .style("pointer-events", "none")
+        .append("xhtml:div")
+        .attr("class", "tooltipIndicatorText")
+        .attr("height", "100%")
+        .style("pointer-events", "none")
+        .style("font-size", "12px")
+        .style("padding", "5px")
+        .style("background-color", schemePastel1[8])
+        .style("border", "solid")
+        .style("border-width", "0.5px")
+        .style("border-radius", "5px")
+
+    const mouseover = function(event) {
+        var coords = d3.pointer(event);
+        const x_pos = coords[0]
+        const y_pos = coords[1]
+
+        // map x position to date
+        var eachBand = xScale.step();
+        var indexTooltip = Math.round((x_pos / eachBand));
+        var dateTooltip = xScale.domain()[indexTooltip];
+        var dateTooltipParsed = Date.parse(dateTooltip);
+
+        var fulldataTooltip = {}
+        data.map((dict, i) => (fulldataTooltip[dict.date] = dict))
+
+        const dataTooltip = fulldataTooltip[dateTooltipParsed]
+        if (dataTooltip != null) { // data present
+            var text = `<b>${formatDate(dateTooltip)}</b>`
+            for (const [key, value] of Object.entries(dataTooltip)) {
+                if (key !== 'date') {
+                    text += `<br /> ${key}: ${formatValue(value)}`
+                }
+            }
+
+            d3.select('.tooltip').style("opacity", 0) // Hide candlestick's tooltip. Only 1 tooltip shown at once
+
+            d3.select('.tooltipIndicator')
+            .transition()
+            .duration(0) // cancel any pending transition
+            .style("opacity", 1)
+            .attr("transform", "translate(" + x_pos + "," + y_pos + ")")
+            d3.select('.tooltipIndicatorText').attr("height", 200)
+
+            tooltip.html(text)
+        }
+    }
+
+    const mouseout = function(event) {
+        d3.select('.tooltipIndicator')
+            .transition()
+            .delay(100)
+            .style("opacity", 0)
+    }
+
+    d3.selectAll(".smacrossover")
+        .on("mouseover", mouseover)
+        .on("mouseout", mouseout)
+    }
