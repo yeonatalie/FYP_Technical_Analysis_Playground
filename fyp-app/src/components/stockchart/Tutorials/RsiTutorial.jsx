@@ -24,7 +24,7 @@ function RsiTutorial({data, xScale, yScale, tutorial}) {
         
         // Annotate Up Down Price Movements
         annotateUpDown({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
-            displayText:'Identify Up/Down Price Movements', delayTime:500, delayTextTime:3000, displayTextTime:5000})
+            displayText:'Identify Up/Down Price Movements. Calculate Average Gain/Loss (%)', delayTime:500, delayTextTime:3000, displayTextTime:5000})
     }
 }
 

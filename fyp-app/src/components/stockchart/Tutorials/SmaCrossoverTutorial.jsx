@@ -1,11 +1,7 @@
 import * as d3 from "d3";
-import { utcFormat, format, schemePastel1, style } from 'd3';
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
 
 const SMA = require('technicalindicators').SMA;
-const formatDate = utcFormat('%B %-d, %Y');
-const formatValue = format('.2f');
-const formatString = format('.3s');
 
 function SmaCrossover({data, xScale, yScale, tutorial}) {
     
@@ -75,6 +71,11 @@ function SmaCrossover({data, xScale, yScale, tutorial}) {
         
         // Tooltip
         tooltipIndicator({svg:svg, data:smaData, xScale:xScale, yScale:yScale})
+
+        // Annotate Path
+        annotatePath({svg:svg, variable:'smaShort', displayTime:3000, displayText:'Simple Moving Average of Close Prices the Last 7 Days'})
+        annotatePath({svg:svg, variable:'smaLong', displayTime:3000, displayText:'Simple Moving Average of Close Prices the Last 14 Days'})
+
     }
 }
 

@@ -59,7 +59,6 @@ function CandlestickTooltip({data, xScale, yScale}) {
             `High: $${formatValue(d.high)}<br />` 
 
         tooltip.html(text)
-        console.log(text)
     }
 
     const mousemove = function(event) {

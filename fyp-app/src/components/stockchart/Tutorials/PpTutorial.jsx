@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
 import { schemePastel1 } from 'd3';
 
 function PpTutorial({data, xScale, yScale, tutorial}) {
@@ -58,9 +58,9 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
 
         // Plot Support and Resistance
         plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'r1', variableLabel:'R1', 
-            color:schemePastel1[2], displayText:'Plot Support and Resistance using Previous Day Data', speed:200, delayTime:9000, displayTextTime:3000})
-        plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'s1', variableLabel:'S1', 
             color:schemePastel1[0], displayText:'Plot Support and Resistance using Previous Day Data', speed:200, delayTime:9000, displayTextTime:3000})
+        plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'s1', variableLabel:'S1', 
+            color:schemePastel1[2], displayText:'Plot Support and Resistance using Previous Day Data', speed:200, delayTime:9000, displayTextTime:3000})
         plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'r2', variableLabel:'R2', 
             color:'red', displayText:'Plot Support and Resistance using Previous Day Data', speed:200, delayTime:9000, displayTextTime:3000})
         plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'s2', variableLabel:'S2', 
@@ -77,8 +77,13 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
             displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000}) // short signal
         
         // Tooltip
-        console.log(data)
         tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale})
+
+        // Annotate Path
+        annotatePath({svg:svg, variable:'r1', displayTime:3000, displayText:"Resistance 1: (Typical Price X 2) - Low Price"})
+        annotatePath({svg:svg, variable:'s1', displayTime:3000, displayText:"Support 1: (Typical Price X 2) - High Price"})
+        annotatePath({svg:svg, variable:'r2', displayTime:3000, displayText:"Resistance 2: Typical Price + (High Price - Low Price)"})
+        annotatePath({svg:svg, variable:'s2', displayTime:3000, displayText:"Support 2: Typical Price - (High Price - Low Price)"})
     }
 }
 

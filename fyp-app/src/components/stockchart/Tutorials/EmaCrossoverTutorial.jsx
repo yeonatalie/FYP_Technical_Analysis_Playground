@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
 
 function EmaCrossover({data, xScale, yScale, tutorial}) {
     
@@ -60,9 +60,9 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
         
         // Plot EMAs
         plotPath({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable:'emaShort', variableLabel:'7 days', 
-            color:"darkblue", displayText:'Plot 7 & 14 day EMAs', delayTime:4000, displayTextTime:3000})
+            color:"darkblue", displayText:'Plot 7 & 14 day EMAs. EMAs are more Reactive to Price Changes than SMAs', delayTime:4000, displayTextTime:3000})
         plotPath({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable:'emaLong', variableLabel:'14 days', 
-            color:"brown", displayText:'Plot 7 & 14 day EMAs', delayTime:4000, displayTextTime:3000})
+            color:"brown", displayText:'Plot 7 & 14 day EMAs. EMAs are more Reactive to Price Changes than SMAs', delayTime:4000, displayTextTime:3000})
 
         // EMA crossover
         crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', delayTime:4000,
@@ -72,6 +72,10 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
 
         // Tooltip
         tooltipIndicator({svg:svg, data:emaData, xScale:xScale, yScale:yScale})
+
+        // Annotate Path
+        annotatePath({svg:svg, variable:'emaShort', displayTime:3000, displayText:'Exponential Moving Average of Close Prices the Last 7 Days'})
+        annotatePath({svg:svg, variable:'emaLong', displayTime:3000, displayText:'Exponential Moving Average of Close Prices the Last 14 Days'})
     }
 }
 

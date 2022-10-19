@@ -80,6 +80,7 @@ export const annotateUpDown = ({svg, data, xScale, yScale, variable, displayText
 export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, color, animate=true, dashed=false, displayText, speed=100, delayTime, displayTextTime}) => {
     var path = svg.append("path")
         .attr("class", "path")
+        .attr("id", variable+"-path")
         .datum(data)
         .style("opacity", 0)
         .attr("fill", "none")
@@ -117,6 +118,8 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     $.get(label).done(function () {
         const textLength = label.node().getComputedTextLength()    
         label.attr("transform", "translate(" + (xScale(data.at(-1).date) - textLength - 10) + "," + yScale(data.at(-1)[variable]) + ")")
+            .attr("class", "pathlabel")
+            .attr("id", variable+"-pathlabel")
             .style("fill", color)
             .style("font-weight", "bold")
             .transition()
@@ -175,7 +178,7 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
             const signalAnnotation = svg.selectAll()
                 .data(signalData).enter()
                 .append("path")
-                .attr("class", "point")
+                .attr("class", "signal")
                 .attr("d", d3.symbol().type(d3.symbolTriangle))
                 .attr("transform", function (d) { return longSignal ?
                     "translate(" + xScale(d.date) + "," + yScale(d.yPoint) + ")" :
@@ -290,4 +293,34 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
     svg
         .on("mouseover", mouseover)
         .on("mouseout", mouseout)
-    }
+}
+
+export const annotatePath = ({svg, variable, displayTime, displayText}) => {
+    const pathClicked = d3.select(`#${variable}-path`)
+    pathClicked.on('click',function(){ 
+        svg.selectAll('.path') // make other paths translucent
+            .style("opacity", 0.3)
+            .transition()
+            .delay(displayTime)
+            .transition()
+            .style("opacity", 1)
+        svg.selectAll('.pathlabel') 
+            .style("opacity", 0.3)
+            .transition()
+            .delay(displayTime)
+            .transition()
+            .style("opacity", 1)
+
+        pathClicked // bold path
+            .style("opacity", 1)
+            .attr("stroke-width", 3)
+            .transition()
+            .delay(displayTime)
+            .transition()
+            .attr("stroke-width", 1)
+        d3.select(`#${variable}-pathlabel`)
+            .style("opacity", 1)
+
+        displayTextFn(svg, displayText, 0, displayTime)
+    })
+}
