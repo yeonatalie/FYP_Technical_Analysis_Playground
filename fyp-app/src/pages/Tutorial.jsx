@@ -66,17 +66,17 @@ function Tutorial() {
 
             <Dropdown.Menu style={{width: '83%'}}>
               <Dropdown.Header>Trend Indicators</Dropdown.Header>
-              <Dropdown.Item onClick={() => {setTutorial("sma"); setLightenCandlestick(true)}}>SMA Crossover</Dropdown.Item>
-              <Dropdown.Item onClick={() => {setTutorial("ema"); setLightenCandlestick(true)}}>EMA Crossover</Dropdown.Item>
+              <Dropdown.Item onClick={() => {setTutorial("sma"); setLightenCandlestick(true); setIndicatorChart(false)}}>SMA Crossover</Dropdown.Item>
+              <Dropdown.Item onClick={() => {setTutorial("ema"); setLightenCandlestick(true); setIndicatorChart(false)}}>EMA Crossover</Dropdown.Item>
               <Dropdown.Header>Momentum Indicators</Dropdown.Header>
               <Dropdown.Item onClick={() => {setTutorial("rsi"); setLightenCandlestick(true); setIndicatorChart(true)}}>RSI</Dropdown.Item>
               <Dropdown.Item onClick={() => {setTutorial("macd"); setLightenCandlestick(true); setIndicatorChart(true)}}>MACD</Dropdown.Item>
               <Dropdown.Header>Volatility Indicators</Dropdown.Header>
-              <Dropdown.Item onClick={() => {setTutorial("bband"); setLightenCandlestick(true)}}>Bollinger Band</Dropdown.Item>
+              <Dropdown.Item onClick={() => {setTutorial("bband"); setLightenCandlestick(true); setIndicatorChart(false)}}>Bollinger Band</Dropdown.Item>
               <Dropdown.Header>Support/Resistance</Dropdown.Header>
-              <Dropdown.Item onClick={() => {setTutorial("pp"); setLightenCandlestick(true)}}>Pivot Points</Dropdown.Item>
+              <Dropdown.Item onClick={() => {setTutorial("pp"); setLightenCandlestick(true); setIndicatorChart(false)}}>Pivot Points</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={() => {setTutorial(null); setLightenCandlestick(false)}}>Candlestick Chart</Dropdown.Item>
+              <Dropdown.Item onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 import { schemePastel1 } from 'd3';
 
 function PpTutorial({data, xScale, yScale, tutorial}) {
@@ -84,6 +84,9 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
         annotatePath({svg:svg, variable:'s1', displayTime:3000, displayText:"Support 1: (Typical Price X 2) - High Price"})
         annotatePath({svg:svg, variable:'r2', displayTime:3000, displayText:"Resistance 2: Typical Price + (High Price - Low Price)"})
         annotatePath({svg:svg, variable:'s2', displayTime:3000, displayText:"Support 2: Typical Price - (High Price - Low Price)"})
+
+        // Annotate Signal
+        annotateSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal} from './animationFramework';
 
 const SMA = require('technicalindicators').SMA;
 
@@ -76,6 +76,8 @@ function SmaCrossover({data, xScale, yScale, tutorial}) {
         annotatePath({svg:svg, variable:'smaShort', displayTime:3000, displayText:'Simple Moving Average of Close Prices the Last 7 Days'})
         annotatePath({svg:svg, variable:'smaLong', displayTime:3000, displayText:'Simple Moving Average of Close Prices the Last 14 Days'})
 
+        // Annotate Signal
+        annotateSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
 const BBand = require('technicalindicators').BollingerBands;
 
@@ -80,6 +80,9 @@ function BbandTutorial({data, xScale, yScale, tutorial}) {
         annotatePath({svg:svg, variable:'upper', displayTime:3000, displayText:'Upper Bollinger Band'})
         annotatePath({svg:svg, variable:'lower', displayTime:3000, displayText:'Lower Bollinger Band'})
         annotatePath({svg:svg, variable:'close', displayTime:3000, displayText:'Close Price'})
+
+        // Annotate Signal
+        annotateSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 
 }

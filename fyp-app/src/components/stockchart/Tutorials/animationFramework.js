@@ -179,6 +179,7 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
                 .data(signalData).enter()
                 .append("path")
                 .attr("class", "signal")
+                .attr("id", "long_signal_"+longSignal)
                 .attr("d", d3.symbol().type(d3.symbolTriangle))
                 .attr("transform", function (d) { return longSignal ?
                     "translate(" + xScale(d.date) + "," + yScale(d.yPoint) + ")" :
@@ -207,7 +208,7 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
 
     var tooltipIndicator = svg.append("foreignObject")
         .attr("class", "tooltipIndicator")
-        .attr("width", 125)
+        .attr("width", 130)
         .attr("height", 300)
         .style("opacity", 0)
         .style("pointer-events", "none")
@@ -249,7 +250,7 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
                 .attr('stroke', 'black')
                 .attr('x1', xScale(dateTooltipParsed))
                 .attr('x2', xScale(dateTooltipParsed))
-                .attr('y1', indicatorChart ? 140: 315)
+                .attr('y1', indicatorChart ? 140: 353)
                 .attr('y2', 30);
 
             // Tooltip
@@ -265,7 +266,7 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
             var translateX = x_pos+10
             var translateY = y_pos-80
             if (x_pos > 1000) {
-                translateX += 1140 - x_pos - 125
+                translateX += 1000 - x_pos 
             }
             if (y_pos < 80) {
                 translateY += 80 - y_pos
@@ -322,5 +323,78 @@ export const annotatePath = ({svg, variable, displayTime, displayText}) => {
             .style("opacity", 1)
 
         displayTextFn(svg, displayText, 0, displayTime)
+    })
+}
+
+export const annotateSignal = ({svg, data, xScale, yScale, displayTime}) => {
+    var tooltipSignal = svg.append("foreignObject")
+            .attr("class", "tooltipSignal")
+            .attr("width", 160)
+            .attr("height", 68)
+            .style("opacity", 0)
+            .style("pointer-events", "none")
+            .style("background-color", "#F9F9F9")
+            .append("xhtml:div")
+            .attr("class", "tooltipSignalText")
+            .attr("height", "100%")
+            .style("pointer-events", "none")
+            .style("font-size", "12px")
+            .style("padding", "5px")
+            .style("border", "solid")
+            .style("border-width", "2px")
+            .style("border-radius", "5px")
+        
+
+    const signalClicked = d3.selectAll('.signal')
+    signalClicked.on('click',function(event, d){
+        const signalDate = new Date(d.date)
+        // long or short
+        const id = d3.select(this).attr("id")
+        var signalText = ""
+        if (id === "long_signal_true") {
+            signalText = "Long"
+            tooltipSignal.style("border-color", "green")
+        } else {
+            signalText = "Short"
+            tooltipSignal.style("border-color", "darkred")
+        }
+
+        // find close price
+        var dataDict = {}
+        data.map((dict, i) => (dataDict[dict.date] = dict))
+        var signalClose = null
+
+        try {
+            signalClose  = dataDict[d.date].close
+        } catch {
+            console.log(signalDate)
+            signalClose = dataDict[signalDate].close
+        }
+
+        // tooltip position
+        var x_pos = xScale(d.date) + 10
+        var y_pos = yScale(d.yPoint) - 50
+        // to account for when tooltip is at the corner of page
+        if (x_pos > 1000) {
+            x_pos -= x_pos - 1000
+        }
+
+        // tooltip text
+        var text = `<u><b>${signalText}</b></u></br>`
+        text += `<b>Date: </b>${formatDate(signalDate)}</br>`
+        text += `<b>Close Price: </b>$${formatValue(signalClose)}`
+
+        // display tooltip
+        d3.select('.tooltipSignal')
+            .attr("x", x_pos)
+            .attr("y", y_pos)
+            .transition()
+            .duration(0) // cancel any pending transition
+            .style("opacity", 1)
+            .transition()
+            .delay(displayTime)
+            .style("opacity", 0)
+        
+        tooltipSignal.html(text)
     })
 }

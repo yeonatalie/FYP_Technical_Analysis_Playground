@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { plotPath, plotBar, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
+import { plotPath, plotBar, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
 function MacdChartTutorial({data, xScale, yScale, tutorial}) {
     
@@ -72,6 +72,9 @@ function MacdChartTutorial({data, xScale, yScale, tutorial}) {
         // Annotate Path
         annotatePath({svg:svg, variable:'macd', displayTime:3000, displayText:'Difference betweenn 12 day EMA and 26 day EMA'})
         annotatePath({svg:svg, variable:'signal', displayTime:3000, displayText:'Signal Line calculated using a 9 day EMA of the MACD.'})
+
+        // Annotate Signal
+        annotateSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

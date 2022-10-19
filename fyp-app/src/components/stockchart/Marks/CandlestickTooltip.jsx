@@ -12,7 +12,7 @@ function CandlestickTooltip({data, xScale, yScale}) {
 
     var tooltip = svg.append("foreignObject")
                     .attr("class", "tooltip")
-                    .attr("width", 125)
+                    .attr("width", 130)
                     .attr("height", 300)
                     .style("opacity", 0)
                     .style("pointer-events", "none")
@@ -43,7 +43,7 @@ function CandlestickTooltip({data, xScale, yScale}) {
         // to account for when tooltip is at the corner of page
         var translateX = 0
         var translateY = 0
-        if (x_pos > 1050) {
+        if (x_pos > 1000) {
             translateX = 1140 - x_pos -125
         }
         if (y_pos < 80) {

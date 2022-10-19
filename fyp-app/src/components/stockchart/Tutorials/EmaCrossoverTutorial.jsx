@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
 function EmaCrossover({data, xScale, yScale, tutorial}) {
     
@@ -76,6 +76,9 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
         // Annotate Path
         annotatePath({svg:svg, variable:'emaShort', displayTime:3000, displayText:'Exponential Moving Average of Close Prices the Last 7 Days'})
         annotatePath({svg:svg, variable:'emaLong', displayTime:3000, displayText:'Exponential Moving Average of Close Prices the Last 14 Days'})
+
+        // Annotate Signal
+        annotateSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

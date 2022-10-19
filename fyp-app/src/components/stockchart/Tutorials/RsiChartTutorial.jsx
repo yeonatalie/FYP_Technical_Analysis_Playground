@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { plotPath, crossoverSignal, tooltipIndicator, annotatePath } from './animationFramework';
+import { plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
 function RsiChartTutorial({data, xScale, yScale, tutorial}) {
     
@@ -67,6 +67,9 @@ function RsiChartTutorial({data, xScale, yScale, tutorial}) {
 
         // Annotate Path
         annotatePath({svg:svg, variable:'rsi', displayTime:3000, displayText:'Relative Strength Index is a Momentum Indicator. Assumes Mean Reversion.'})
+
+        // Annotate Signal
+        annotateSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 
