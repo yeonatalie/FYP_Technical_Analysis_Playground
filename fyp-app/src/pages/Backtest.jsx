@@ -1,7 +1,7 @@
 function Backtest() {
     return (
         <div>
-            <h1>Backtest Page</h1>
+            <h2 style={{paddingLeft: '30px'}}>Backtesting</h2>
         </div>
     );
 }

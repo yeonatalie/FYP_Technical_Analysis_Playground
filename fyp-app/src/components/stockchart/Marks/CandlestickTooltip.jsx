@@ -43,12 +43,12 @@ function CandlestickTooltip({data, xScale, yScale}) {
         // to account for when tooltip is at the corner of page
         var translateX = 0
         var translateY = 0
-        // if (x_pos > 1050) {
-        //     translateX = 1140 - x_pos -125
-        // }
-        // if (y_pos < 80) {
-        //     translateY = 80 - y_pos
-        // }
+        if (x_pos > 1050) {
+            translateX = 1140 - x_pos -125
+        }
+        if (y_pos < 80) {
+            translateY = 80 - y_pos
+        }
         d3.select('.tooltip').attr("transform", "translate(" + translateX + "," + translateY + ")")
 
         const text =                     

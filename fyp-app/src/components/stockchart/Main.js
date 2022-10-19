@@ -19,12 +19,7 @@ export const Main = ({
     data,
     specs: { width, height, margin },
     lightenCandlestick,
-    smaCrossover,
-    emaCrossover,
-    rsiTutorial,
-    macdTutorial,
-    bbandTutorial,
-    ppTutorial
+    tutorial
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -80,42 +75,42 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    smaCrossover={smaCrossover}
+                    tutorial={tutorial}
                 />
                 <EmaCrossover
                     class='emacrossover'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    emaCrossover={emaCrossover}
+                    tutorial={tutorial}
                 />
                 <RsiTutorial
                     class='rsi'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    rsiTutorial={rsiTutorial}
+                    tutorial={tutorial}
                 />
                 <MacdTutorial
                     class='macd'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    macdTutorial={macdTutorial}
+                    tutorial={tutorial}
                 />
                 <BbandTutorial
                     class='bband'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    bbandTutorial={bbandTutorial}
+                    tutorial={tutorial}
                 />
                 <PpTutorial
                     class='pp'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    ppTutorial={ppTutorial}
+                    tutorial={tutorial}
                 />
                 <CandlestickTooltip
                     class='candlestickTooltip'

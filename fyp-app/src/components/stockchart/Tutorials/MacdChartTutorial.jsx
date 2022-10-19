@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { plotPath, plotBar, crossoverSignal, tooltipIndicator } from './animationFramework';
 
-function MacdChartTutorial({data, xScale, yScale, macdTutorial}) {
+function MacdChartTutorial({data, xScale, yScale, tutorial}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -48,7 +48,7 @@ function MacdChartTutorial({data, xScale, yScale, macdTutorial}) {
     // //////////////////////////////////////////////
 
     // Plot and Animate MACD
-    if (macdTutorial) {
+    if (tutorial === "macd") {
         // Plot MACD
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'macd', variableLabel:'MACD', 
             color:"black", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:500, displayTextTime:3000})

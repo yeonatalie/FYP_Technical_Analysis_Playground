@@ -7,7 +7,7 @@ const formatDate = utcFormat('%B %-d, %Y');
 const formatValue = format('.2f');
 const formatString = format('.3s');
 
-function SmaCrossover({data, xScale, yScale, smaCrossover}) {
+function SmaCrossover({data, xScale, yScale, tutorial}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -56,7 +56,7 @@ function SmaCrossover({data, xScale, yScale, smaCrossover}) {
     //////////////////////////////////////////////
 
     // Plot and Animate SMA Crossover
-    if (smaCrossover) {
+    if (tutorial === "sma") {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})

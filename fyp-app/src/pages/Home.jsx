@@ -1,7 +1,7 @@
 function Home() {
   return (
       <div>
-          <h1>Home Page</h1>
+          <h2 style={{paddingLeft: '30px'}}>Home</h2>
       </div>
   );
 }

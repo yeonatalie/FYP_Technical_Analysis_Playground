@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 
-function EmaCrossover({data, xScale, yScale, emaCrossover}) {
+function EmaCrossover({data, xScale, yScale, tutorial}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -53,7 +53,7 @@ function EmaCrossover({data, xScale, yScale, emaCrossover}) {
     //////////////////////////////////////////////
 
     // Plot and Animate EMA Crossover
-    if (emaCrossover) {
+    if (tutorial === 'ema') {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})

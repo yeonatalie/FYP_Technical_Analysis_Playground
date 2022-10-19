@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { annotateChart, annotateUpDown } from './animationFramework';
 
-function RsiTutorial({data, xScale, yScale, rsiTutorial}) {
+function RsiTutorial({data, xScale, yScale, tutorial}) {
 
     //////////////////////////////////////////////
     ////////////// CHART PREPARATION /////////////
@@ -17,7 +17,7 @@ function RsiTutorial({data, xScale, yScale, rsiTutorial}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    if (rsiTutorial) {
+    if (tutorial === "rsi") {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTextTime:2000})

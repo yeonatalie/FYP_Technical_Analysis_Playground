@@ -4,10 +4,11 @@ import styled from "styled-components";
   
 export const Nav = styled.nav`
   background: #01164f;
-  height: 85px;
+  height: 10vh;
   display: flex;
   justify-content: space-between;
-  padding: 0.2rem calc((100vw - 1000px) / 2);
+  padding: 0.1rem 1.5vw;
+  margin-bottom: 20px;
   z-index: 12;
 `;
   
@@ -21,6 +22,7 @@ export const NavLink = styled(Link)`
   cursor: pointer;
   &.active {
     color: #ffffff;
+    // text-decoration: underline;
   }
 `;
   

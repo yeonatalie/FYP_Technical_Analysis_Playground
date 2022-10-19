@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { annotateChart } from './animationFramework';
 
-function MacdTutorial({data, xScale, yScale, macdTutorial}) {
+function MacdTutorial({data, xScale, yScale, tutorial}) {
 
     //////////////////////////////////////////////
     ////////////// CHART PREPARATION /////////////
@@ -17,7 +17,7 @@ function MacdTutorial({data, xScale, yScale, macdTutorial}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    if (macdTutorial) {
+    if (tutorial === "macd") {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTextTime:2000})

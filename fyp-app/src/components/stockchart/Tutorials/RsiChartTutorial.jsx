@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 
-function RsiChartTutorial({data, xScale, yScale, rsiTutorial}) {
+function RsiChartTutorial({data, xScale, yScale, tutorial}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -45,7 +45,7 @@ function RsiChartTutorial({data, xScale, yScale, rsiTutorial}) {
     // //////////////////////////////////////////////
 
     // Plot and Animate RSI filter levels
-    if (rsiTutorial) {
+    if (tutorial === "rsi") {
         const delayTime = (data.length * 50) + 1000 // wait for up down price mvoements to be animated
         // Plot RSI
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'rsi', variableLabel:'', 

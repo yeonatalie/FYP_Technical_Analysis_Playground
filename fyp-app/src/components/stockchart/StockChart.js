@@ -16,8 +16,7 @@ export const StockChart = ({
         indicatorSpecs,
         brushSpecs,
         mainChartSpecs
-    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick
-    , smaCrossover, emaCrossover, rsiTutorial, macdTutorial, bbandTutorial, ppTutorial
+    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, tutorial
 }) => {
     const data = useData();
     const [brushExtent, setBrushExtent] = useState();
@@ -65,12 +64,7 @@ export const StockChart = ({
                         data={slicedData}
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
-                        smaCrossover={smaCrossover}
-                        emaCrossover={emaCrossover}
-                        rsiTutorial={rsiTutorial}
-                        macdTutorial={macdTutorial}
-                        bbandTutorial={bbandTutorial}
-                        ppTutorial={ppTutorial}
+                        tutorial={tutorial}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
                         <Indicator
@@ -78,8 +72,7 @@ export const StockChart = ({
                             specs={indicatorSpecs}
                             indicatorChartLabel={indicatorChartLabel}
                             indicatorRange={indicatorRange}
-                            rsiTutorial={rsiTutorial}
-                            macdTutorial={macdTutorial}
+                            tutorial={tutorial}
                         />
                     </g>
                     <g transform={`translate(0,${(totalHeight * mainChartRatio) + indicatorHeight})`}>
@@ -102,12 +95,7 @@ export const StockChart = ({
                         data={slicedData}
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
-                        smaCrossover={smaCrossover}
-                        emaCrossover={emaCrossover}
-                        rsiTutorial={rsiTutorial}
-                        macdTutorial={macdTutorial}
-                        bbandTutorial={bbandTutorial}
-                        ppTutorial={ppTutorial}
+                        tutorial={tutorial}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
                         <Brush

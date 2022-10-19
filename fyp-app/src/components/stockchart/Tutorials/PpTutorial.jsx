@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './animationFramework';
 import { schemePastel1 } from 'd3';
 
-function PpTutorial({data, xScale, yScale, ppTutorial}) {
+function PpTutorial({data, xScale, yScale, tutorial}) {
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
@@ -41,7 +41,7 @@ function PpTutorial({data, xScale, yScale, ppTutorial}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    if (ppTutorial) {
+    if (tutorial === "pp") {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:1500, displayTextTime:1000})

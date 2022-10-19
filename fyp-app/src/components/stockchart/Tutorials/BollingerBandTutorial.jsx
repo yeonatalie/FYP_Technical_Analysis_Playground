@@ -3,7 +3,7 @@ import { annotateChart, plotPath, crossoverSignal, tooltipIndicator } from './an
 
 const BBand = require('technicalindicators').BollingerBands;
 
-function BbandTutorial({data, xScale, yScale, bbandTutorial}) {
+function BbandTutorial({data, xScale, yScale, tutorial}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -46,7 +46,7 @@ function BbandTutorial({data, xScale, yScale, bbandTutorial}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    if (bbandTutorial) {
+    if (tutorial === "bband") {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Annotate Close Prices', delayTime:500, displayTime:3000, displayTextTime:2000})

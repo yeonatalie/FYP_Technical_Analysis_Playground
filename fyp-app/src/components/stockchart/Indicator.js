@@ -12,8 +12,7 @@ const bottomAxisTickFormat = d3.utcFormat('%-m/%-d');
 export const Indicator = ({
     data,
     specs: { width, height, margin },
-    indicatorChartLabel, indicatorRange,
-    rsiTutorial, macdTutorial
+    indicatorChartLabel, indicatorRange, tutorial
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -62,14 +61,14 @@ export const Indicator = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    rsiTutorial={rsiTutorial}
+                    tutorial={tutorial}
                 />
                 <MacdChartTutorial
                     class='macdChart'
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
-                    macdTutorial={macdTutorial}
+                    tutorial={tutorial}
                 />
             </g>
         </g>
