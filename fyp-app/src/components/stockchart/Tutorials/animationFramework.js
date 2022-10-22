@@ -201,7 +201,7 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
 
 export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=false}) => {
     if (!indicatorChart) {
-        d3.select('.tooltip').remove() // Hide candlestick's tooltip. Only 1 tooltip shown at once
+        d3.selectAll('.tooltip').remove() // Hide candlestick's tooltip. Only 1 tooltip shown at once
     }
 
     var tooltipIndicatorLine = svg.append('line').attr('class', 'tooltipIndicatorLine').attr("stroke", "none")
