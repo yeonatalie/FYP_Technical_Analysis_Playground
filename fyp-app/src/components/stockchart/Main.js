@@ -9,6 +9,7 @@ import RsiTutorial from './Tutorials/RsiTutorial';
 import MacdTutorial from './Tutorials/MacdTutorial';
 import BbandTutorial from './Tutorials/BollingerBandTutorial';
 import PpTutorial from './Tutorials/PpTutorial'
+import CustomTutorial from './Tutorials/CustomTutorial';
 import CandlestickTooltip from './Marks/CandlestickTooltip';
 
 const yAxisLabelOffset = 60;
@@ -19,7 +20,8 @@ export const Main = ({
     data,
     specs: { width, height, margin },
     lightenCandlestick,
-    tutorial
+    tutorial,
+    customData
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -111,6 +113,14 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                />
+                <CustomTutorial
+                    class='custom'
+                    data={data}
+                    xScale={xScale}
+                    yScale={yPriceScale}
+                    tutorial={tutorial}
+                    customData={customData}
                 />
                 <CandlestickTooltip
                     class='candlestickTooltip'

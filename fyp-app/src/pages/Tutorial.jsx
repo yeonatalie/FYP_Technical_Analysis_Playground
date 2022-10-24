@@ -1,9 +1,8 @@
 import { StockChart } from '../components/stockchart/StockChart'
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { color } from 'd3';
+import {useNavigate} from 'react-router-dom';
 
 function Tutorial() {
     const chartSpecs = {
@@ -53,7 +52,15 @@ function Tutorial() {
 
     } else if (tutorial === 'pp') {
       tutorialHeader = ": Pivot Points"
+    } else if (tutorial === 'custom') {
+      tutorialHeader = ": Custom Tutorial"
     }
+
+    const navigate = useNavigate();
+    const navigateCustom = () => {
+      // 👇️ navigate to /
+      navigate('/custom-tutorial');
+    };
 
     return (
       <div>
@@ -75,6 +82,8 @@ function Tutorial() {
               <Dropdown.Item onClick={() => {setTutorial("bband"); setLightenCandlestick(true); setIndicatorChart(false)}}>Bollinger Band</Dropdown.Item>
               <Dropdown.Header>Support/Resistance</Dropdown.Header>
               <Dropdown.Item onClick={() => {setTutorial("pp"); setLightenCandlestick(true); setIndicatorChart(false)}}>Pivot Points</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={navigateCustom}>Custom Tutorial</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
             </Dropdown.Menu>

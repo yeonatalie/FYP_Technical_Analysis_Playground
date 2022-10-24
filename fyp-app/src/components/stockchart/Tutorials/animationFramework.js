@@ -175,6 +175,8 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
                 'signal': signal
             }];
 
+            console.log(signalData)
+
             const signalAnnotation = svg.selectAll()
                 .data(signalData).enter()
                 .append("path")
@@ -367,7 +369,6 @@ export const annotateSignal = ({svg, data, xScale, yScale, displayTime}) => {
         try {
             signalClose  = dataDict[d.date].close
         } catch {
-            console.log(signalDate)
             signalClose = dataDict[signalDate].close
         }
 

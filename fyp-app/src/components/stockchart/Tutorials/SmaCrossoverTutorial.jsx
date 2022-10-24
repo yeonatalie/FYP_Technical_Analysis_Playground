@@ -1,10 +1,8 @@
 import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal} from './animationFramework';
-
 const SMA = require('technicalindicators').SMA;
 
 function SmaCrossover({data, xScale, yScale, tutorial}) {
-    
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
