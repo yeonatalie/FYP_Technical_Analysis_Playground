@@ -93,7 +93,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Text Time" onChange={e => {setAnnotateChart({...annotateChart, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotateChart({...annotateChart, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -119,7 +119,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control id='plot1Displaytexttime' type='text' placeholder="Display Text Time" onChange={e => {setPlotLine1({...plotLine1, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setPlotLine1({...plotLine1, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -145,7 +145,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control id='plot2Displaytexttime' type='text' placeholder="Display Text Time" onChange={e => {setPlotLine2({...plotLine2, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setPlotLine2({...plotLine2, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -177,7 +177,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control id='longDisplayTextTime' type='text' placeholder="Display Text Time" onChange={e => setLongSignal({...longSignal, 'displayTextTime': e.target.value})}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setLongSignal({...longSignal, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -209,7 +209,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control id='shortDisplayTextTime' type='text' placeholder="Display Text Time" onChange={e => setShortSignal({...shortSignal, 'displayTextTime': e.target.value})}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setShortSignal({...shortSignal, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -232,7 +232,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Text Time" onChange={e => {setAnnotateUpDown({...annotateUpDown, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotateUpDown({...annotateUpDown, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -249,7 +249,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Time" onChange={e => {setAnnotatePath1({...annotatePath1, 'displayTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotatePath1({...annotatePath1, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -266,7 +266,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Time" onChange={e => {setAnnotatePath2({...annotatePath2, 'displayTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotatePath2({...annotatePath2, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -277,7 +277,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Time" onChange={e => {setAnnotateSignal({...annotateSignal, 'displayTime':e.target.value})}}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotateSignal({...annotateSignal, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -285,7 +285,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
 
     if (childAnimationState.animationList.at(-1) === "Tooltip for Indicators") {
         animationForm =  <div id='tooltip'>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setTooltipIndicator({...tooltipIndicator, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
@@ -299,7 +299,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Delay Time" onChange={e => setPlotBar({...plotBar, 'delayTime': e.target.value})}/>
             </Form.Group>
-            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+            <Form.Group className="mb-3">
                 <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setPlotBar({...plotBar, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
