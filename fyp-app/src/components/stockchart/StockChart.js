@@ -26,7 +26,7 @@ export const StockChart = ({
     });
 
     if (!data) {
-        return <pre>Loading...</pre>;
+        return <pre style={{margin: "30px"}}>Loading...</pre>;
     }
 
     mainChartSpecs = {

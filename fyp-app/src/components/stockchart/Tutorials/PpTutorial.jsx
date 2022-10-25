@@ -56,7 +56,7 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'tp', 
         color:'blue', displayText:'Calculate Typical Price', delayTime:6500, displayTime:2000, displayTextTime:1500})
 
-        // Plot Support and Resistance
+        // Plot  Support and Resistance 
         plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'r1', variableLabel:'R1', 
             color:schemePastel1[0], displayText:'Plot Support and Resistance using Previous Day Data', speed:200, delayTime:9000, displayTextTime:3000})
         plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'s1', variableLabel:'S1', 
@@ -80,10 +80,10 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
         tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale})
 
         // Annotate Path
-        annotatePath({svg:svg, variable:'r1', displayTime:3000, displayText:"Resistance 1: (Typical Price X 2) - Low Price"})
-        annotatePath({svg:svg, variable:'s1', displayTime:3000, displayText:"Support 1: (Typical Price X 2) - High Price"})
         annotatePath({svg:svg, variable:'r2', displayTime:3000, displayText:"Resistance 2: Typical Price + (High Price - Low Price)"})
         annotatePath({svg:svg, variable:'s2', displayTime:3000, displayText:"Support 2: Typical Price - (High Price - Low Price)"})
+        annotatePath({svg:svg, variable:'r1', displayTime:3000, displayText:"Resistance 1: (Typical Price X 2) - Low Price"})
+        annotatePath({svg:svg, variable:'s1', displayTime:3000, displayText:"Support 1: (Typical Price X 2) - High Price"})
 
         // Annotate Signal
         annotateSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})
