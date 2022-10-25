@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
 const SMA = require('technicalindicators').SMA;
 function CustomTutorial({data, xScale, yScale, tutorial, customData}) {
@@ -95,6 +95,32 @@ function CustomTutorial({data, xScale, yScale, tutorial, customData}) {
                 crossAbove:(shortSignalData['crossAbove'] === 'Cross Above'), delayTime:parseInt(shortSignalData['delayTime']), 
                 displayText:shortSignalData['displayText'], delayTextTime:parseInt(shortSignalData['delayTextTime']), 
                 displayTextTime:parseInt(shortSignalData['displayTextTime'])})
+        }
+
+        if (customData['annotateUpDown'].variable !== "") {
+            const annotateUpDownData = customData['annotateUpDown']
+            annotateUpDown({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:annotateUpDownData['variable'],
+            displayText:annotateUpDownData['displayText'], delayTime:parseInt(annotateUpDownData['delayTime']), 
+            delayTextTime:parseInt(annotateUpDownData['delayTextTime']), displayTextTime:parseInt(annotateUpDownData['displayTextTime'])})
+        }
+
+        if (customData['tooltipIndicator'] === true) {
+            tooltipIndicator({svg:svg, data:smaData, xScale:xScale, yScale:yScale, indicatorChart:false})
+        }
+
+        if (customData['annotatePath1'].variable !== "") {
+            const annotatePathData1 = customData['annotatePath1']
+            annotatePath({svg:svg, variable:annotatePathData1['variable'], displayTime:parseInt(annotatePathData1['displayTime']), displayText:annotatePathData1['displayText']})
+        }
+        
+        if (customData['annotatePath2'].variable !== "") {
+            const annotatePathData2 = customData['annotatePath2']
+            annotatePath({svg:svg, variable:annotatePathData2['variable'], displayTime:parseInt(annotatePathData2['displayTime']), displayText:annotatePathData2['displayText']})
+        }
+
+        if (customData['annotateSignal'].displayTime !== "") {
+            const annotateSignalData = customData['annotateSignal']
+            annotateSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:parseInt(annotateSignalData['displayTime'])})
         }
     }
 }

@@ -16,6 +16,11 @@ function Custom() {
     const [plotLineData2, setPlotLineData2] = useState({variable:""})
     const [longSignalData, setLongSignalData] = useState({variable1:"", variable2:"", longSignal:true, crossAbove:'Cross Above'})
     const [shortSignalData, setShortSignalData] = useState({variable1:"", variable2:"", longSignal:false, crossAbove:'Cross Above'})
+    const [annotateUpDownData, setAnnotateUpDownData] = useState({variable: ""})
+    const [tooltipIndicatorData, setTooltipIndicatorData] = useState(false)
+    const [annotatePathData1, setAnnotatePathData1] = useState({variable: ""})
+    const [annotatePathData2, setAnnotatePathData2] = useState({variable: ""})
+    const [annotateSignalData, setAnnotateSignalData] = useState({displayTime: ""})
 
     const [customData, setCustomData] = useState(null)
 
@@ -27,7 +32,12 @@ function Custom() {
             'plotLine1': plotLineData1,
             'plotLine2': plotLineData2,
             'longSignal': longSignalData,
-            'shortSignal': shortSignalData
+            'shortSignal': shortSignalData,
+            'annotateUpDown': annotateUpDownData,
+            'tooltipIndicator': tooltipIndicatorData,
+            'annotatePath1': annotatePathData1,
+            'annotatePath2': annotatePathData2,
+            'annotateSignal': annotateSignalData,
         })
     };
 
@@ -39,7 +49,12 @@ function Custom() {
             plotLineData1={plotLineData1} setPlotLineData1={setPlotLineData1} 
             plotLineData2={plotLineData2} setPlotLineData2={setPlotLineData2} 
             longSignalData={longSignalData} setLongSignalData={setLongSignalData}
-            shortSignalData={shortSignalData} setShortSignalData={setShortSignalData}>
+            shortSignalData={shortSignalData} setShortSignalData={setShortSignalData}
+            annotateUpDownData={annotateUpDownData} setAnnotateUpDownData={setAnnotateUpDownData}
+            tooltipIndicatorData={tooltipIndicatorData} setTooltipIndicatorData={setTooltipIndicatorData}
+            annotatePathData1={annotatePathData1} setAnnotatePathData1={setAnnotatePathData1}
+            annotatePathData2={annotatePathData2} setAnnotatePathData2={setAnnotatePathData2}
+            annotateSignalData={annotateSignalData} setAnnotateSignalData={setAnnotateSignalData}>
         </AnimationForm>)
     }
     return (
@@ -67,16 +82,14 @@ function Custom() {
                     {animationFormList}
                 </span>
 
-                <Button variant="primary" style={{marginBottom: '10px'}} onClick={e => {setNumAnimations(numAnimations+1)}}>
-                    Add Animation
-                </Button>
-                
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                </Form.Group>
-                <Button variant="primary" onClick={onSubmit}>
-                    Generate Tutorial
-                </Button>
+                <div style={{marginBottom:"70px"}}>
+                    <Button variant="outline-secondary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={e => {setNumAnimations(numAnimations+1)}}>
+                        Add Animation
+                    </Button>
+                    <Button variant="primary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={onSubmit}>
+                        Generate Tutorial
+                    </Button>
+                </div>
             </Form>
 
             <CustomisedTutorial customData={customData}></CustomisedTutorial>

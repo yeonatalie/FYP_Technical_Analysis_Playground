@@ -35,7 +35,7 @@ const CustomisedTutorial = ({customData}) => {
     } else {
       return (
         <div>
-          <h2 style={{paddingTop: '30px', paddingLeft:'30px'}}>Tutorial: {customData['tutorialName']}</h2>
+          <h2 style={{paddingLeft:'30px'}}>Tutorial: {customData['tutorialName']}</h2>
           <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
             <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
               indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} customData={customData} />
