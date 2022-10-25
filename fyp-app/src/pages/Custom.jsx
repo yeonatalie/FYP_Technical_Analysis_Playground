@@ -10,17 +10,22 @@ function Custom() {
     const [numAnimations, setNumAnimations] = useState(0)
     
     const [animation, setAnimation] = useState({'animationList': []})
+    const [indicatorChart, setIndicatorChart] = useState(false)
+    const [indicatorChartLabel, setIndicatorChartLabel] = useState("Indicator")
+    const [indicatorChartLower, setIndicatorChartLower] = useState(0)
+    const [indicatorChartUpper, setIndicatorChartUpper] = useState(0)
 
     const [annotateChartData, setAnnotateChartData] = useState({variable:""})
-    const [plotLineData1, setPlotLineData1] = useState({variable:""})
-    const [plotLineData2, setPlotLineData2] = useState({variable:""})
-    const [longSignalData, setLongSignalData] = useState({variable1:"", variable2:"", longSignal:true, crossAbove:'Cross Above'})
-    const [shortSignalData, setShortSignalData] = useState({variable1:"", variable2:"", longSignal:false, crossAbove:'Cross Above'})
+    const [plotLineData1, setPlotLineData1] = useState({variable:"", indicatorChart:false})
+    const [plotLineData2, setPlotLineData2] = useState({variable:"", indicatorChart:false})
+    const [longSignalData, setLongSignalData] = useState({variable1:"", variable2:"", longSignal:true, crossAbove:'Cross Above', indicatorChart:false})
+    const [shortSignalData, setShortSignalData] = useState({variable1:"", variable2:"", longSignal:false, crossAbove:'Cross Above', indicatorChart:false})
     const [annotateUpDownData, setAnnotateUpDownData] = useState({variable: ""})
     const [tooltipIndicatorData, setTooltipIndicatorData] = useState(false)
     const [annotatePathData1, setAnnotatePathData1] = useState({variable: ""})
     const [annotatePathData2, setAnnotatePathData2] = useState({variable: ""})
     const [annotateSignalData, setAnnotateSignalData] = useState({displayTime: ""})
+    const [plotBarData, setPlotBarData] = useState({variable:"", indicatorChart:false})
 
     const [customData, setCustomData] = useState(null)
 
@@ -38,6 +43,7 @@ function Custom() {
             'annotatePath1': annotatePathData1,
             'annotatePath2': annotatePathData2,
             'annotateSignal': annotateSignalData,
+            'plotBar': plotBarData,
         })
     };
 
@@ -54,9 +60,20 @@ function Custom() {
             tooltipIndicatorData={tooltipIndicatorData} setTooltipIndicatorData={setTooltipIndicatorData}
             annotatePathData1={annotatePathData1} setAnnotatePathData1={setAnnotatePathData1}
             annotatePathData2={annotatePathData2} setAnnotatePathData2={setAnnotatePathData2}
-            annotateSignalData={annotateSignalData} setAnnotateSignalData={setAnnotateSignalData}>
+            annotateSignalData={annotateSignalData} setAnnotateSignalData={setAnnotateSignalData}
+            plotBarData={plotBarData} setPlotBarData={setPlotBarData}>
         </AnimationForm>)
     }
+
+    var indicatorChartForm = null
+    if (indicatorChart) {
+        indicatorChartForm = <Form.Group className="mb-3">
+            <Form.Control style={{marginBottom: "10px"}} type='text' placeholder="Label" onChange={e => setIndicatorChartLabel(e.target.value)}/>
+            <Form.Control style={{marginBottom: "10px"}} type='text' placeholder="Lower bound" onChange={e => setIndicatorChartLower(parseInt(e.target.value))}/>
+            <Form.Control type='text' placeholder="Upper bound" onChange={e => setIndicatorChartUpper(parseInt(e.target.value))}/>
+        </Form.Group>
+    }
+
     return (
         <div>
             <h2 style={{paddingLeft: '30px'}}>Customise Tutorial</h2>
@@ -64,7 +81,7 @@ function Custom() {
             <Form style={{padding: '10px 30px'}}>
                 <Form.Group className="mb-3">
                     <Form.Label>Tutorial Name</Form.Label>
-                    <Form.Control id='tutorialName' type='text' placeholder="Enter Tutorial Name" onChange={e => setTutorialName(e.target.value)}/>
+                    <Form.Control id='tutorialName' type='text' placeholder="Tutorial name" onChange={e => setTutorialName(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group controlId="formFile" className="mb-3">
@@ -78,13 +95,19 @@ function Custom() {
                         }}/>
                 </Form.Group>
 
+                <Form.Label>Indicator Chart</Form.Label>
+                <Form.Group className="mb-3">
+                    <Form.Check type="switch" label="Separate Indicator Chart" onChange={e => {setIndicatorChart(e.target.checked)}}/>
+                </Form.Group>
+                {indicatorChartForm}
+
                 <span id='animationForm'>
                     {animationFormList}
                 </span>
 
-                <div style={{marginBottom:"70px"}}>
+                <div style={{marginTop:"20px", marginBottom:"70px"}}>
                     <Button variant="outline-secondary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={e => {setNumAnimations(numAnimations+1)}}>
-                        Add Animation
+                        Add Interactivity
                     </Button>
                     <Button variant="primary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={onSubmit}>
                         Generate Tutorial
@@ -92,7 +115,9 @@ function Custom() {
                 </div>
             </Form>
 
-            <CustomisedTutorial customData={customData}></CustomisedTutorial>
+            <CustomisedTutorial customData={customData} indicatorChartState={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
+            indicatorChartLower={indicatorChartLower} indicatorChartUpper={indicatorChartUpper}>
+            </CustomisedTutorial>
         </div>
     );
 

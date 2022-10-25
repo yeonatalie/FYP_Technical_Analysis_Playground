@@ -85,7 +85,7 @@ function Tutorial() {
               <Dropdown.Divider />
               <Dropdown.Item onClick={navigateCustom}>Custom Tutorial</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
+              <Dropdown.Item style={{color: "#6C757D"}} onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </div>

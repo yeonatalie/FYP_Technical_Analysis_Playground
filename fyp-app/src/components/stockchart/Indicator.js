@@ -4,6 +4,7 @@ import { AxisBottom } from './Axis/AxisBottom';
 import { AxisLeft } from './Axis/AxisLeft';
 import RsiChartTutorial from './Tutorials/RsiChartTutorial';
 import MacdChartTutorial from './Tutorials/MacdChartTutorial';
+import CustomChartTutorial from './Tutorials/CustomChartTutorial';
 
 const yAxisLabelOffset = 60;
 const leftAxisTickFormat = d3.format('~f');
@@ -12,7 +13,7 @@ const bottomAxisTickFormat = d3.utcFormat('%-m/%-d');
 export const Indicator = ({
     data,
     specs: { width, height, margin },
-    indicatorChartLabel, indicatorRange, tutorial
+    indicatorChartLabel, indicatorRange, tutorial, customData
 }) => {
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
@@ -69,6 +70,14 @@ export const Indicator = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                />
+                <CustomChartTutorial
+                    class='customChart'
+                    data={data}
+                    xScale={xScale}
+                    yScale={yPriceScale}
+                    tutorial={tutorial}
+                    customData={customData}
                 />
             </g>
         </g>

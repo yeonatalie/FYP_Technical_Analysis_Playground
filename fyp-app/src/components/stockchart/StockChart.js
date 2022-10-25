@@ -65,6 +65,7 @@ export const StockChart = ({
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
                         tutorial={tutorial}
+                        customData={customData}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
                         <Indicator
@@ -73,6 +74,7 @@ export const StockChart = ({
                             indicatorChartLabel={indicatorChartLabel}
                             indicatorRange={indicatorRange}
                             tutorial={tutorial}
+                            customData={customData}
                         />
                     </g>
                     <g transform={`translate(0,${(totalHeight * mainChartRatio) + indicatorHeight})`}>

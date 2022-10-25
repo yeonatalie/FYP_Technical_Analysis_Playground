@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const CustomisedTutorial = ({customData}) => {
+const CustomisedTutorial = ({customData, indicatorChartState, indicatorChartLabel, indicatorChartLower, indicatorChartUpper}) => {
   const chartSpecs = {
       totalWidth: 1250,
       totalHeight: 550,
@@ -25,10 +25,12 @@ const CustomisedTutorial = ({customData}) => {
 
     const [tutorial, setTutorial] = useState("custom")
     const [lightenCandlestick, setLightenCandlestick] = useState(true)
-    const [indicatorChart, setIndicatorChart] = useState(false)
+    // const [indicatorChart, setIndicatorChart] = useState(indicatorChartState)
 
-    var indicatorChartLabel = "Indicator"
-    var indicatorRange = [0, 0]
+    var indicatorRange = [indicatorChartLower, indicatorChartUpper]
+
+    console.log('**** STATE *****')
+    console.log(indicatorChartState)
 
     if (customData == null) {
       return (<div></div>)
@@ -37,7 +39,7 @@ const CustomisedTutorial = ({customData}) => {
         <div>
           <h2 style={{paddingLeft:'30px'}}>Tutorial: {customData['tutorialName']}</h2>
           <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
-            <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
+            <StockChart specs={chartSpecs} indicatorChart={indicatorChartState} indicatorChartLabel={indicatorChartLabel} 
               indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} customData={customData} />
           </div>
         </div>

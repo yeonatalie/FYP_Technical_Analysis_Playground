@@ -129,8 +129,6 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     })
     
     // text
-    console.log("DISPLAY TEXT")
-    console.log(displayText)
     displayTextFn(svg, displayText, delayTime, displayTextTime)
 }
 
