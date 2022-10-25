@@ -95,22 +95,22 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
     if (childAnimationState.animationList.at(-1) === "Plot 1st Line Graph") {
         animationForm =  <div id='plotLine1'>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Variable Name" onChange={e => setPlotLine1({...plotLine1, 'variable': e.target.value})}/>
+                <Form.Control id='plot1Var' type='text' placeholder="Variable Name" onChange={e => setPlotLine1({...plotLine1, 'variable': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Plot Label" onChange={e => setPlotLine1({...plotLine1, 'variableLabel': e.target.value})}/>
+                <Form.Control id='plot1Varlabel' type='text' placeholder="Plot Label" onChange={e => setPlotLine1({...plotLine1, 'variableLabel': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Color" onChange={e => setPlotLine1({...plotLine1, 'color': e.target.value})}/>
+                <Form.Control id='plot1Color' type='text' placeholder="Color" onChange={e => setPlotLine1({...plotLine1, 'color': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text" onChange={e => setPlotLine1({...plotLine1, 'displayText': e.target.value})}/>
+                <Form.Control id='plot1Text' type='text' placeholder="Display Text" onChange={e => setPlotLine1({...plotLine1, 'displayText': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Delay Time" onChange={e => setPlotLine1({...plotLine1, 'delayTime': e.target.value})}/>
+                <Form.Control id='plot1Delaytime' type='text' placeholder="Delay Time" onChange={e => setPlotLine1({...plotLine1, 'delayTime': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text Time" onChange={e => {setPlotLine1({...plotLine1, 'displayTextTime':e.target.value})}}/>
+                <Form.Control id='plot1Displaytexttime' type='text' placeholder="Display Text Time" onChange={e => {setPlotLine1({...plotLine1, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
         </div>
     } 
@@ -118,22 +118,22 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
     if (childAnimationState.animationList.at(-1) === "Plot 2nd Line Graph") {
         animationForm =  <div id='plotLine2'>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Variable Name" onChange={e => setPlotLine2({...plotLine2, 'variable': e.target.value})}/>
+                <Form.Control id='plot2Var' type='text' placeholder="Variable Name" onChange={e => setPlotLine2({...plotLine2, 'variable': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Plot Label" onChange={e => setPlotLine2({...plotLine2, 'variableLabel': e.target.value})}/>
+                <Form.Control id='plot2Varlabel' type='text' placeholder="Plot Label" onChange={e => setPlotLine2({...plotLine2, 'variableLabel': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Color" onChange={e => setPlotLine2({...plotLine2, 'color': e.target.value})}/>
+                <Form.Control id='plot2Color' type='text' placeholder="Color" onChange={e => setPlotLine2({...plotLine2, 'color': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text" onChange={e => setPlotLine2({...plotLine2, 'displayText': e.target.value})}/>
+                <Form.Control id='plot2Text' type='text' placeholder="Display Text" onChange={e => setPlotLine2({...plotLine2, 'displayText': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Delay Time" onChange={e => setPlotLine2({...plotLine2, 'delayTime': e.target.value})}/>
+                <Form.Control id='plot2Delaytime' type='text' placeholder="Delay Time" onChange={e => setPlotLine2({...plotLine2, 'delayTime': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text Time" onChange={e => {setPlotLine2({...plotLine2, 'displayTextTime':e.target.value})}}/>
+                <Form.Control id='plot2Displaytexttime' type='text' placeholder="Display Text Time" onChange={e => {setPlotLine2({...plotLine2, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
         </div>
     } 
@@ -141,10 +141,10 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
     if (childAnimationState.animationList.at(-1) === "Long Signal") {
         animationForm =  <div id='longSignal'>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Variable 1" onChange={e => setLongSignal({...longSignal, 'variable1': e.target.value})}/>
+                <Form.Control id='longVar1' type='text' placeholder="Variable 1" onChange={e => setLongSignal({...longSignal, 'variable1': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Variable 2" onChange={e => setLongSignal({...longSignal, 'variable2': e.target.value})}/>
+                <Form.Control id='longVar2' type='text' placeholder="Variable 2" onChange={e => setLongSignal({...longSignal, 'variable2': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Select onChange={e => setLongSignal({...longSignal, 'crossAbove': e.target.value})}>
@@ -153,16 +153,16 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Delay Time" onChange={e => setLongSignal({...longSignal, 'delayTime': e.target.value})}/>
+                <Form.Control id='longDelaytime' type='text' placeholder="Delay Time" onChange={e => setLongSignal({...longSignal, 'delayTime': e.target.value})}/>
             </Form.Group>                
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text" onChange={e => setLongSignal({...longSignal, 'displayText': e.target.value})}/>
+                <Form.Control id='longDisplayText' type='text' placeholder="Display Text" onChange={e => setLongSignal({...longSignal, 'displayText': e.target.value})}/>
             </Form.Group>                
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Delay Text Time" onChange={e => setLongSignal({...longSignal, 'delayTextTime': e.target.value})}/>
+                <Form.Control id='longDelayTextTime' type='text' placeholder="Delay Text Time" onChange={e => setLongSignal({...longSignal, 'delayTextTime': e.target.value})}/>
             </Form.Group>                
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text Time" onChange={e => setLongSignal({...longSignal, 'displayTextTime': e.target.value})}/>
+                <Form.Control id='longDisplayTextTime' type='text' placeholder="Display Text Time" onChange={e => setLongSignal({...longSignal, 'displayTextTime': e.target.value})}/>
             </Form.Group>
         </div>
     } 
@@ -170,10 +170,10 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
     if (childAnimationState.animationList.at(-1) === "Short Signal") {
         animationForm =  <div id='shortSignal'>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Variable 1" onChange={e => setShortSignal({...shortSignal, 'variable1': e.target.value})}/>
+                <Form.Control id='shortVar1' type='text' placeholder="Variable 1" onChange={e => setShortSignal({...shortSignal, 'variable1': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Variable 2" onChange={e => setShortSignal({...shortSignal, 'variable2': e.target.value})}/>
+                <Form.Control id='shortVar2' type='text' placeholder="Variable 2" onChange={e => setShortSignal({...shortSignal, 'variable2': e.target.value})}/>
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Select onChange={e => setShortSignal({...shortSignal, 'crossAbove': e.target.value})}>
@@ -182,16 +182,16 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
                 </Form.Select>
             </Form.Group>
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Delay Time" onChange={e => setShortSignal({...shortSignal, 'delayTime': e.target.value})}/>
+                <Form.Control id='shortDelaytime' type='text' placeholder="Delay Time" onChange={e => setShortSignal({...shortSignal, 'delayTime': e.target.value})}/>
             </Form.Group>                
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text" onChange={e => setShortSignal({...shortSignal, 'displayText': e.target.value})}/>
+                <Form.Control id='shortDisplayText' type='text' placeholder="Display Text" onChange={e => setShortSignal({...shortSignal, 'displayText': e.target.value})}/>
             </Form.Group>                
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Delay Text Time" onChange={e => setShortSignal({...shortSignal, 'delayTextTime': e.target.value})}/>
+                <Form.Control id='shortDelayTextTime' type='text' placeholder="Delay Text Time" onChange={e => setShortSignal({...shortSignal, 'delayTextTime': e.target.value})}/>
             </Form.Group>                
             <Form.Group className="mb-3">
-                <Form.Control type='text' placeholder="Display Text Time" onChange={e => setShortSignal({...shortSignal, 'displayTextTime': e.target.value})}/>
+                <Form.Control id='shortDisplayTextTime' type='text' placeholder="Display Text Time" onChange={e => setShortSignal({...shortSignal, 'displayTextTime': e.target.value})}/>
             </Form.Group>
         </div>
     } 
@@ -283,5 +283,3 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData}) => {
 };
   
 export default AnimationForm;
-
-// crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, speed=100, delayTextTime, displayTextTime})

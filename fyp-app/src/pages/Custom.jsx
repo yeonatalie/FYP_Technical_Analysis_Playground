@@ -64,17 +64,17 @@ function Custom() {
             <Form style={{padding: '10px 30px'}}>
                 <Form.Group className="mb-3">
                     <Form.Label>Tutorial Name</Form.Label>
-                    <Form.Control type='text' placeholder="Enter Tutorial Name" onChange={e => setTutorialName(e.target.value)}/>
+                    <Form.Control id='tutorialName' type='text' placeholder="Enter Tutorial Name" onChange={e => setTutorialName(e.target.value)}/>
                 </Form.Group>
 
                 <Form.Group controlId="formFile" className="mb-3">
                     <Form.Label>Data File</Form.Label>
-                    <Form.Control type="file" accept='.txt' onChange={e => {
+                    <Form.Control type="file" accept='.csv' onChange={e => {
                             var fr=new FileReader();
                             fr.onload=function(){
                                 setData(fr.result);
                             }
-                            fr.readAsText(e.target.files[0]);
+                            fr.readAsBinaryString(e.target.files[0]);
                         }}/>
                 </Form.Group>
 
