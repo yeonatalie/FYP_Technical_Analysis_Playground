@@ -93,6 +93,9 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Text Time" onChange={e => {setAnnotateChart({...annotateChart, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotateChart({...annotateChart, 'indicatorChart':e.target.checked})}}/>
+            </Form.Group>
         </div>
     } 
     
@@ -229,6 +232,9 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Text Time" onChange={e => {setAnnotateUpDown({...annotateUpDown, 'displayTextTime':e.target.value})}}/>
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotateUpDown({...annotateUpDown, 'indicatorChart':e.target.checked})}}/>
+            </Form.Group>
         </div>
     } 
 
@@ -242,6 +248,9 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             </Form.Group>
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Time" onChange={e => {setAnnotatePath1({...annotatePath1, 'displayTime':e.target.value})}}/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotatePath1({...annotatePath1, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
     } 
@@ -257,6 +266,9 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Time" onChange={e => {setAnnotatePath2({...annotatePath2, 'displayTime':e.target.value})}}/>
             </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotatePath2({...annotatePath2, 'indicatorChart':e.target.checked})}}/>
+            </Form.Group>
         </div>
     } 
 
@@ -264,6 +276,17 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
         animationForm =  <div id='annotateSignal'>
             <Form.Group className="mb-3">
                 <Form.Control type='text' placeholder="Display Time" onChange={e => {setAnnotateSignal({...annotateSignal, 'displayTime':e.target.value})}}/>
+            </Form.Group>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setAnnotateSignal({...annotateSignal, 'indicatorChart':e.target.checked})}}/>
+            </Form.Group>
+        </div>
+    } 
+
+    if (childAnimationState.animationList.at(-1) === "Tooltip for Indicators") {
+        animationForm =  <div id='tooltip'>
+            <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Check type="checkbox" label="Display on Separate Indicator Chart" onChange={e => {setTooltipIndicator({...tooltipIndicator, 'indicatorChart':e.target.checked})}}/>
             </Form.Group>
         </div>
     } 
@@ -282,6 +305,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
         </div>
     } 
 
+
     //////////////////////////////////////////
 
     return (
@@ -290,7 +314,7 @@ setAnnotatePathData2, annotateSignalData, setAnnotateSignalData, plotBarData, se
                 <Form.Label>Animation / Plot / Tooltip</Form.Label>
                 <Form.Select ref={childAnimationRef} onChange={e => {
                     setChildAnimationState({'animationList': childAnimationState.animationList.concat(e.target.value)}); 
-                    (e.target.value === 'Tooltip for Indicators') && setTooltipIndicator(true)}
+                    (e.target.value === 'Tooltip for Indicators') && setTooltipIndicator({...tooltipIndicator, 'tooltip': true})}
                 } style={{marginBottom: '15px'}}>
 
                     <option>Select</option>

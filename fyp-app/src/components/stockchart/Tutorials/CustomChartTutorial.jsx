@@ -61,7 +61,7 @@ function CustomChartTutorial({data, xScale, yScale, tutorial, customData}) {
         ////////////////// ANIMATIONS ////////////////
         //////////////////////////////////////////////
 
-        if (customData['annotate'].variable !== "") {
+        if (customData['annotate'].variable !== "" && customData['annotate'].indicatorChart) {
             const annotateData = customData['annotate']
             annotateChart({svg:svg, data:slicedData, xScale:xScale, yScale:yScale, variable:annotateData['variable'], color:annotateData['color'],
                 displayText:annotateData['displayText'], delayTime:parseInt(annotateData['delayTime']), displayTime:parseInt(annotateData['displayTime']), 
@@ -101,28 +101,28 @@ function CustomChartTutorial({data, xScale, yScale, tutorial, customData}) {
                 displayTextTime:parseInt(shortSignalData['displayTextTime'])})
         }
 
-        if (customData['annotateUpDown'].variable !== "") {
+        if (customData['annotateUpDown'].variable !== "" && customData['annotateUpDown'].indicatorChart) {
             const annotateUpDownData = customData['annotateUpDown']
             annotateUpDown({svg:svg, data:slicedData, xScale:xScale, yScale:yScale, variable:annotateUpDownData['variable'],
             displayText:annotateUpDownData['displayText'], delayTime:parseInt(annotateUpDownData['delayTime']), 
             delayTextTime:parseInt(annotateUpDownData['delayTextTime']), displayTextTime:parseInt(annotateUpDownData['displayTextTime'])})
         }
 
-        if (customData['tooltipIndicator'] === true) {
-            tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale, indicatorChart:false})
+        if (customData['tooltipIndicator'].tooltip === true && customData['tooltipIndicator'].indicatorChart) {
+            tooltipIndicator({svg:svg, data:slicedData, xScale:xScale, yScale:yScale, indicatorChart:true})
         }
 
-        if (customData['annotatePath1'].variable !== "") {
+        if (customData['annotatePath1'].variable !== "" && customData['annotatePath1'].indicatorChart) {
             const annotatePathData1 = customData['annotatePath1']
             annotatePath({svg:svg, variable:annotatePathData1['variable'], displayTime:parseInt(annotatePathData1['displayTime']), displayText:annotatePathData1['displayText']})
         }
         
-        if (customData['annotatePath2'].variable !== "") {
+        if (customData['annotatePath2'].variable !== "" && customData['annotatePath2'].indicatorChart) {
             const annotatePathData2 = customData['annotatePath2']
             annotatePath({svg:svg, variable:annotatePathData2['variable'], displayTime:parseInt(annotatePathData2['displayTime']), displayText:annotatePathData2['displayText']})
         }
 
-        if (customData['annotateSignal'].displayTime !== "") {
+        if (customData['annotateSignal'].displayTime !== "" && customData['annotateSignal'].indicatorChart) {
             const annotateSignalData = customData['annotateSignal']
             annotateSignal({svg:svg, data:slicedData, xScale:xScale, yScale:yScale, displayTime:parseInt(annotateSignalData['displayTime'])})
         }
