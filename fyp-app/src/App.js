@@ -13,11 +13,13 @@ function App() {
     <Router>
       <Navbar />
         <Routes>
-          <Route path="/" element={<Navigate replace to="/home" />} />
+          <Route exact path='/' element={<Tutorial />} />
+          <Route exact path='/custom-tutorial' element={<Custom />} />
+          {/* <Route path="/" element={<Navigate replace to="/home" />} />
           <Route exact path='/home' element={<Home />} />
           <Route exact path='/tutorial' element={<Tutorial />} />
           <Route exact path='/custom-tutorial' element={<Custom />} />
-          <Route exact path='/backtest' element={<Backtest />} />
+          <Route exact path='/backtest' element={<Backtest />} /> */}
         </Routes>
     </Router>
   );

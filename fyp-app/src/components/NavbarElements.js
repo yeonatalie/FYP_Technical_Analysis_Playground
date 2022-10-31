@@ -7,9 +7,12 @@ export const Nav = styled.nav`
   height: 10vh;
   display: flex;
   justify-content: space-between;
-  padding: 0.1rem 1.5vw;
+  padding: 0.6rem 1.5vw;
   margin-bottom: 20px;
   z-index: 12;
+  font-size: 24pt;
+  font-weight: bold;
+  letter-spacing: 3px;
 `;
   
 export const NavLink = styled(Link)`
@@ -43,12 +46,6 @@ export const Bars = styled(FaBars)`
 export const NavMenu = styled.div`
   display: flex;
   align-items: center;
-  margin-right: -24px;
-  /* Second Nav */
-  /* margin-right: 24px; */
-  /* Third Nav */
-  /* width: 100vw;
-white-space: nowrap; */
   @media screen and (max-width: 768px) {
     display: none;
   }

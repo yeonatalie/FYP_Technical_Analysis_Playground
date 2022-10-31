@@ -27,33 +27,33 @@ function Tutorial() {
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
     const [indicatorChart, setIndicatorChart] = useState(false)
 
-    var tutorialHeader = " "
+    var tutorialHeader = "Candlestick Chart"
     var indicatorChartLabel = "Indicator"
     var indicatorRange = [0, 0]
     
     if (tutorial === 'sma') {
-      tutorialHeader = ": SMA Crossover"
+      tutorialHeader = "SMA Crossover"
 
     } else if (tutorial === 'ema') {
-      tutorialHeader = ": EMA Crossover"
+      tutorialHeader = "EMA Crossover"
 
     } else if (tutorial === 'rsi') {
-      tutorialHeader = ": RSI"
+      tutorialHeader = "RSI"
       indicatorChartLabel = "RSI"
       indicatorRange = [0, 100]
 
     } else if (tutorial === 'macd') {
-      tutorialHeader = ": MACD"
+      tutorialHeader = "MACD"
       indicatorChartLabel = "MACD"
       indicatorRange = [-5, 5]
 
     } else if (tutorial === 'bband') {
-      tutorialHeader = ": Bollinger Bands"
+      tutorialHeader = "Bollinger Bands"
 
     } else if (tutorial === 'pp') {
-      tutorialHeader = ": Pivot Points"
+      tutorialHeader = "Pivot Points"
     } else if (tutorial === 'custom') {
-      tutorialHeader = ": Custom Tutorial"
+      tutorialHeader = "Custom Tutorial"
     }
 
     const navigate = useNavigate();
@@ -65,7 +65,7 @@ function Tutorial() {
     return (
       <div>
         <div>
-          <h2 style={{float: 'left', width: '80%', paddingLeft: '30px'}}>Tutorial{tutorialHeader}</h2>
+          <h2 style={{float: 'left', width: '80%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
           <Dropdown style={{float: 'right', width: '18%'}}>
             <Dropdown.Toggle style={{padding: '5px 20px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary">
               Technical Indicator
