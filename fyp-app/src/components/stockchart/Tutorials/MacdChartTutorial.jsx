@@ -51,26 +51,26 @@ function MacdChartTutorial({data, xScale, yScale, tutorial}) {
     if (tutorial === "macd") {
         // Plot MACD
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'macd', variableLabel:'MACD', 
-            color:"black", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:500, displayTextTime:3000})
+            color:"black", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:10000, displayTextTime:15000})
         
         // Plot Signal Line
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'signal', variableLabel:'Signal', 
-            color:"orange", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:500, displayTextTime:3000})
+            color:"orange", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:10000, displayTextTime:15000})
         
         // Plot Histogram
-        plotBar({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'histogram', delayTime:500})
+        plotBar({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'histogram', delayTime:10000})
 
         // MACD Signals
-        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:true, crossAbove:true, delayTime:500,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:5000, displayTextTime:6000}) // long signal
-        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:false, crossAbove:false, delayTime:500,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:5000, displayTextTime:6000}) // short signal
+        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:true, crossAbove:true, delayTime:10000,
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:30000, displayTextTime:15000}) // long signal
+        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:false, crossAbove:false, delayTime:10000,
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:30000, displayTextTime:15000}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
 
         // Annotate Path
-        annotatePath({svg:svg, variable:'macd', displayTime:3000, displayText:'Difference betweenn 12 day EMA and 26 day EMA'})
+        annotatePath({svg:svg, variable:'macd', displayTime:3000, displayText:'Difference between 12 day EMA and 26 day EMA'})
         annotatePath({svg:svg, variable:'signal', displayTime:3000, displayText:'Signal Line calculated using a 9 day EMA of the MACD.'})
 
         // Annotate Signal

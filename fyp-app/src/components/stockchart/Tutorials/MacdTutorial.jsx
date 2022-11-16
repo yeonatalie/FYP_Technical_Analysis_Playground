@@ -20,7 +20,7 @@ function MacdTutorial({data, xScale, yScale, tutorial}) {
     if (tutorial === "macd") {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
-            displayText:'Identify Close Prices', delayTime:500, displayTextTime:2000})
+            displayText:'Identify Close Prices', delayTime:5000, displayTextTime:5000})
     }
 }
 
