@@ -83,7 +83,7 @@ function Tutorial() {
               <Dropdown.Header>Support/Resistance</Dropdown.Header>
               <Dropdown.Item onClick={() => {setTutorial("pp"); setLightenCandlestick(true); setIndicatorChart(false)}}>Pivot Points</Dropdown.Item>
               <Dropdown.Divider />
-              <Dropdown.Item onClick={navigateCustom}>Custom Tutorial</Dropdown.Item>
+              <Dropdown.Item onClick={navigateCustom}>Create Tutorial</Dropdown.Item>
               <Dropdown.Divider />
               <Dropdown.Item style={{color: "#6C757D"}} onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
             </Dropdown.Menu>

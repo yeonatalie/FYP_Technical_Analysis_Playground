@@ -76,7 +76,7 @@ function Custom() {
 
     return (
         <div>
-            <h2 style={{paddingLeft: '30px'}}>Customise Tutorial</h2>
+            <h2 style={{paddingLeft: '30px'}}>Create Tutorial</h2>
 
             <Form style={{padding: '10px 30px'}}>
                 <Form.Group className="mb-3">
