@@ -152,7 +152,7 @@ export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTi
     })
 }
 
-export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, speed=100, delayTextTime, displayTextTime}) => { 
+export function crossoverSignal({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, speed=100, delayTextTime, displayTextTime, allSignalData}) { 
     // calculate and plot crossover
     var count = 0
     var prevPosition = 1
@@ -175,7 +175,13 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
                 'signal': signal
             }];
 
-            console.log(signalData)
+            allSignalData.push({
+                'date': d.date,
+                'dateFormatted': formatDate(d.date),
+                'signal': longSignal ? 1 : -1,
+                'close': d['close'],
+                'yPoint': d[variable1],
+            })
 
             const signalAnnotation = svg.selectAll()
                 .data(signalData).enter()
@@ -199,6 +205,7 @@ export const crossoverSignal = ({svg, data, xScale, yScale, variable1, variable2
 
     // text
     displayTextFn(svg, displayText, delayTextTime, displayTextTime)
+    return allSignalData
 }
 
 export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=false}) => {
