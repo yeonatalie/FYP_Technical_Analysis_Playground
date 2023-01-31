@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal, plotBar } from './animationFramework';
 
-function CustomTutorial({data, xScale, yScale, tutorial, customData}) {
+function CustomTutorial({data, xScale, yScale, tutorial, performance, customData}) {
     const dates = data.map(d => Date.parse(d.date))
 
     if (tutorial === "custom") {
@@ -47,6 +47,8 @@ function CustomTutorial({data, xScale, yScale, tutorial, customData}) {
         // Filter data
         var slicedData = cData.filter(d => dates.includes(d.date))
 
+        var allSignalData = []
+
         //////////////////////////////////////////////
         ////////////// CHART PREPARATION /////////////
         //////////////////////////////////////////////
@@ -89,7 +91,7 @@ function CustomTutorial({data, xScale, yScale, tutorial, customData}) {
                 variable2:longSignalData['variable2'], longSignal:true, 
                 crossAbove:(longSignalData['crossAbove'] === 'Cross Above'), delayTime:parseInt(longSignalData['delayTime']), 
                 displayText:longSignalData['displayText'], delayTextTime:parseInt(longSignalData['delayTextTime']), 
-                displayTextTime:parseInt(longSignalData['displayTextTime'])})
+                displayTextTime:parseInt(longSignalData['displayTextTime']), allSignalData:allSignalData, performance:performance})
         }
 
         if (customData['shortSignal'].variable1 !== "" && !customData['shortSignal'].indicatorChart) {
@@ -98,7 +100,7 @@ function CustomTutorial({data, xScale, yScale, tutorial, customData}) {
                 variable2:shortSignalData['variable2'], longSignal:false, 
                 crossAbove:(shortSignalData['crossAbove'] === 'Cross Above'), delayTime:parseInt(shortSignalData['delayTime']), 
                 displayText:shortSignalData['displayText'], delayTextTime:parseInt(shortSignalData['delayTextTime']), 
-                displayTextTime:parseInt(shortSignalData['displayTextTime'])})
+                displayTextTime:parseInt(shortSignalData['displayTextTime']), allSignalData:allSignalData, performance:performance})
         }
 
         if (customData['annotateUpDown'].variable !== "" && !customData['annotateUpDown'].indicatorChart) {

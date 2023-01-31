@@ -1,9 +1,9 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance } from './animationFramework';
 
 const BBand = require('technicalindicators').BollingerBands;
 
-function BbandTutorial({data, xScale, yScale, tutorial}) {
+function BbandTutorial({data, xScale, yScale, tutorial, performance}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -32,6 +32,8 @@ function BbandTutorial({data, xScale, yScale, tutorial}) {
         })
     }
 
+    var allSignalData = []
+
     //////////////////////////////////////////////
     ////////////// CHART PREPARATION /////////////
     //////////////////////////////////////////////
@@ -46,7 +48,7 @@ function BbandTutorial({data, xScale, yScale, tutorial}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    if (tutorial === "bband") {
+    if (tutorial === "bband" && !performance) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Annotate Close Prices', delayTime:500, displayTime:3000, displayTextTime:2000})
@@ -67,10 +69,10 @@ function BbandTutorial({data, xScale, yScale, tutorial}) {
         // Annotate Buy Sell Points
         // long signal when cross below lower
         crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'lower', longSignal:true, crossAbove:false, delayTime:12000,
-            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000}) 
+            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
         // short signal when cross above upper
         crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'upper', longSignal:false, crossAbove:true, delayTime:12000,
-            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000}) 
+            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
 
         // Tooltip
         tooltipIndicator({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale})
@@ -83,8 +85,22 @@ function BbandTutorial({data, xScale, yScale, tutorial}) {
 
         // Annotate Signal
         annotateSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, displayTime:3000})
-    }
 
+    } else if (tutorial === "bband" && performance) {
+        // Get signal data
+        // long signal when cross below lower
+        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'lower', longSignal:true, crossAbove:false, delayTime:12000,
+            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
+        // short signal when cross above upper
+        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'upper', longSignal:false, crossAbove:true, delayTime:12000,
+            displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
+
+        // Plot trade signals, unfilled for losing trades
+        plotWinningLosingTrades({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
+
+        // Tooltip showing trade returns
+        annotateTradePerformance({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, displayTime:3000})
+    }
 }
 
 export default BbandTutorial;

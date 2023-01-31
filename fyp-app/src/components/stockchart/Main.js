@@ -87,6 +87,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                 />
                 <RsiTutorial
                     class='rsi'
@@ -94,6 +95,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                 />
                 <MacdTutorial
                     class='macd'
@@ -101,6 +103,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                 />
                 <BbandTutorial
                     class='bband'
@@ -108,6 +111,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                 />
                 <PpTutorial
                     class='pp'
@@ -115,6 +119,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                 />
                 <CustomTutorial
                     class='custom'
@@ -122,6 +127,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                     customData={customData}
                 />
                 <CandlestickTooltip

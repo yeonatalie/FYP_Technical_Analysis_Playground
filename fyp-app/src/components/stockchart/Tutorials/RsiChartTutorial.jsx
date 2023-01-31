@@ -30,6 +30,8 @@ function RsiChartTutorial({data, xScale, yScale, tutorial}) {
         })
     }
 
+    var allSignalData = []
+
     // //////////////////////////////////////////////
     // ////////////// CHART PREPARATION /////////////
     // //////////////////////////////////////////////
@@ -46,7 +48,7 @@ function RsiChartTutorial({data, xScale, yScale, tutorial}) {
 
     // Plot and Animate RSI filter levels
     if (tutorial === "rsi") {
-        const delayTime = (data.length * 50) + 1000 // wait for up down price mvoements to be animated
+        const delayTime = performance ? 0 : (data.length * 50) + 1000 // wait for up down price mvoements to be animated
         // Plot RSI
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'rsi', variableLabel:'', 
             color:"black", displayText:'Plot 14 day RSI', delayTime:delayTime, displayTextTime:2000})
@@ -58,9 +60,9 @@ function RsiChartTutorial({data, xScale, yScale, tutorial}) {
 
         // RSI Filter Signals
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'oversold', longSignal:true, crossAbove:false, delayTime:delayTime,
-            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000}) // long signal
+            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // long signal
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'overbought', longSignal:false, crossAbove:true, delayTime:delayTime,
-            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000}) // short signal
+            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, indicatorChart: true})

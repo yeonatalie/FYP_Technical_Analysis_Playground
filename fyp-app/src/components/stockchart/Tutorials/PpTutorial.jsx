@@ -1,8 +1,8 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance } from './animationFramework';
 import { schemePastel1 } from 'd3';
 
-function PpTutorial({data, xScale, yScale, tutorial}) {
+function PpTutorial({data, xScale, yScale, tutorial, performance}) {
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
@@ -27,6 +27,8 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
         prevTp = d['tp']
     })
 
+    var allSignalData = []
+
     //////////////////////////////////////////////
     ////////////// CHART PREPARATION /////////////
     //////////////////////////////////////////////
@@ -41,7 +43,7 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    if (tutorial === "pp") {
+    if (tutorial === "pp" && !performance) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:1500, displayTextTime:1000})
@@ -72,9 +74,9 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
         
         // Annotate Buy Sell Points
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'s2', longSignal:true, crossAbove:false, delayTime:9000,
-            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000}) // long signal
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // long signal
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'r2', longSignal:false, crossAbove:true, delayTime:9000,
-            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000}) // short signal
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale})
@@ -87,6 +89,19 @@ function PpTutorial({data, xScale, yScale, tutorial}) {
 
         // Annotate Signal
         annotateSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})
+    
+    } else if (tutorial === "pp" && performance) {
+        // Get trade signals
+        crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'s2', longSignal:true, crossAbove:false, delayTime:9000,
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // long signal
+        crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'r2', longSignal:false, crossAbove:true, delayTime:9000,
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // short signal
+
+        // Plot trade signals, unfilled for losing trades
+        plotWinningLosingTrades({svg:svg, data:data, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
+
+        // Tooltip showing trade returns
+        annotateTradePerformance({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

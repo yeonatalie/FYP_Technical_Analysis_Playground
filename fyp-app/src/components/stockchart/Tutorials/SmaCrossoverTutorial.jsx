@@ -64,9 +64,9 @@ function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
             color:"brown", displayText:'Plot 7 & 14 day SMAs', delayTime:4000, displayTextTime:2000})
 
         // SMA crossover
-        allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
+        crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // long signal
-        allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
+        crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
         
         // Tooltip
@@ -86,9 +86,9 @@ function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
 
     } else if (tutorial === "sma" && performance) {
         // Get signal data from SMA crossover
-        allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
+        crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // long signal
-        allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
+        crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
 
         // Plot trade signals, unfilled for losing trades

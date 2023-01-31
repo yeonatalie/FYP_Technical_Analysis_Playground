@@ -1,7 +1,7 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance } from './animationFramework';
 
-function EmaCrossover({data, xScale, yScale, tutorial}) {
+function EmaCrossover({data, xScale, yScale, tutorial, performance}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -36,6 +36,8 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
         })
     }
 
+    var allSignalData = []
+
     //////////////////////////////////////////////
     ////////////// CHART PREPARATION /////////////
     //////////////////////////////////////////////
@@ -53,7 +55,7 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
     //////////////////////////////////////////////
 
     // Plot and Animate EMA Crossover
-    if (tutorial === 'ema') {
+    if (tutorial === 'ema' && !performance) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:3000, displayTime:5000, displayTextTime:5000})
@@ -66,9 +68,9 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
 
         // EMA crossover
         crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', delayTime:10000,
-            displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:22000, displayTextTime:20000}) // long signal
+            displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:22000, displayTextTime:20000, allSignalData:allSignalData, performance:performance}) // long signal
         crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', longSignal:false, crossAbove:false, delayTime:10000,
-            displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:22000, displayTextTime:20000}) // short signal
+            displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:22000, displayTextTime:20000, allSignalData:allSignalData, performance:performance}) // short signal
 
         // Tooltip
         tooltipIndicator({svg:svg, data:emaData, xScale:xScale, yScale:yScale})
@@ -79,6 +81,24 @@ function EmaCrossover({data, xScale, yScale, tutorial}) {
 
         // Annotate Signal
         annotateSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, displayTime:3000})
+
+
+    ////////////////////////
+    // TRADE PERFORMANCES //
+    ////////////////////////
+
+    } else if (tutorial === "ema" && performance) {
+        // Get signal data from SMA crossover
+        crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', delayTime:10000,
+            displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:22000, displayTextTime:20000, allSignalData:allSignalData, performance:performance}) // long signal
+        crossoverSignal({svg:svg, data:emaData, xScale:xScale, yScale:yScale, variable1:'emaShort', variable2:'emaLong', longSignal:false, crossAbove:false, delayTime:10000,
+            displayText:'Long/Short when Short Term EMA Crosses Above/Below Long Term EMA', delayTextTime:22000, displayTextTime:20000, allSignalData:allSignalData, performance:performance}) // short signal
+
+        // Plot trade signals, unfilled for losing trades
+        plotWinningLosingTrades({svg:svg, data:emaData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
+
+        // Tooltip showing trade returns
+        annotateTradePerformance({svg:svg, data:emaData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 
