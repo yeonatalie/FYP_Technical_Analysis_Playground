@@ -1,6 +1,7 @@
 import { StockChart } from '../components/stockchart/StockChart'
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
 
@@ -26,6 +27,7 @@ function Tutorial() {
     const [tutorial, setTutorial] = useState(null)
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
     const [indicatorChart, setIndicatorChart] = useState(false)
+    const [performance, setPerformance] = useState(false)
 
     var tutorialHeader = "Candlestick Chart"
     var indicatorChartLabel = "Indicator"
@@ -56,6 +58,10 @@ function Tutorial() {
       tutorialHeader = "Custom Tutorial"
     }
 
+    if (performance) {
+      tutorialHeader += " Trade Performance"
+    }
+
     const navigate = useNavigate();
     const navigateCustom = () => {
       // 👇️ navigate to /
@@ -65,7 +71,11 @@ function Tutorial() {
     return (
       <div>
         <div>
-          <h2 style={{float: 'left', width: '80%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
+          <h2 style={{float: 'left', width: '70%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
+          <Button style={{float: 'left', width: '10%', marginLeft: '15px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => {setPerformance(!performance)}}> 
+            Peformance
+          </Button>
+          
           <Dropdown style={{float: 'right', width: '18%'}}>
             <Dropdown.Toggle style={{padding: '5px 20px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary">
               Technical Indicator
@@ -92,7 +102,7 @@ function Tutorial() {
 
         <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
           <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} />
+            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} performance={performance} />
         </div>
       </div>
     );

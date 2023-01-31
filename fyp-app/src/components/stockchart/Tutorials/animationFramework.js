@@ -152,7 +152,7 @@ export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTi
     })
 }
 
-export function crossoverSignal({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, speed=100, delayTextTime, displayTextTime, allSignalData}) { 
+export function crossoverSignal({svg, data, xScale, yScale, variable1, variable2, longSignal=true, crossAbove=true, delayTime, displayText, speed=100, delayTextTime, displayTextTime, allSignalData, performance}) { 
     // calculate and plot crossover
     var count = 0
     var prevPosition = 1
@@ -195,16 +195,22 @@ export function crossoverSignal({svg, data, xScale, yScale, variable1, variable2
                 .attr("fill", longSignal ? schemeSet1[2] : schemeSet1[0]);
 
             signalAnnotation.style("opacity", 0);
-            signalAnnotation.transition()
-                .delay(delayTime + (count * speed))
-                .transition()
-                .style("opacity", 1);
+
+            if (!performance) {
+                signalAnnotation.transition()
+                    .delay(delayTime + (count * speed))
+                    .transition()
+                    .style("opacity", 1);
+            }
         }
         prevPosition = position;
     });
 
     // text
-    displayTextFn(svg, displayText, delayTextTime, displayTextTime)
+    if (!performance) {
+        displayTextFn(svg, displayText, delayTextTime, displayTextTime)
+    }
+    
     return allSignalData
 }
 
@@ -404,5 +410,115 @@ export const annotateSignal = ({svg, data, xScale, yScale, displayTime}) => {
             .style("opacity", 0)
         
         tooltipSignal.html(text)
+    })
+}
+
+///////////////////////
+// Trade Performance //
+///////////////////////
+
+export const plotWinningLosingTrades = ({svg, data, xScale, yScale, allSignalData}) => {
+    // sort long and short signals by trade date
+    allSignalData.sort(function(a, b) {
+        if (a.date < b.date) return -1;
+        if (a.date > b.date) return 1;
+        return 0;
+    })
+
+    // calculate trade returns
+    allSignalData.forEach(function(d, index) {
+        if (index + 1 < allSignalData.length) {
+            var nextData = allSignalData.at(index + 1);
+        } else {
+            nextData = {
+                'date': data.at(-1).date,
+                'dateFormatted': formatDate(data.at(-1).date),
+                'signal': 0,
+                'close': data.at(-1)['close'],
+                'yPoint': data.at(-1)['smaShort']
+            }
+        }
+        allSignalData.at(index)['dollar_return'] = d['signal'] * (nextData['close'] - d['close'])
+        allSignalData.at(index)['profitable'] = allSignalData.at(index)['dollar_return'] > 0
+        allSignalData.at(index)['percentage_return'] = allSignalData.at(index)['dollar_return'] / d['close'] * 100
+    })
+
+    console.log("### Signal Data ###")
+    console.log(allSignalData)
+    console.log("###")
+
+    // Plot winning / losing trades using close prices
+    allSignalData.forEach(function(d, index) {    
+        svg.selectAll()
+            .data([d,]).enter()
+            .append("path")
+            .attr("d", d3.symbol().type(d3.symbolTriangle))
+            .attr("class", "performanceSignal")
+            .attr("transform", function (d) { return d['signal'] === 1 ?
+                "translate(" + xScale(d.date) + "," + yScale(d.close) + ")" :
+                "translate(" + xScale(d.date) + "," + yScale(d.close) + ") rotate(180)";})
+            .attr("stroke", d['signal'] === 1 ? schemeSet1[2] : schemeSet1[0])
+            .style("stroke-width", "1.5px")
+            .attr("fill", d['profitable'] ? (d['signal'] === 1 ? schemeSet1[2] : schemeSet1[0]) : "none") // filled if trade was profitable
+    })
+}
+
+export const annotateTradePerformance = ({svg, xScale, yScale, displayTime}) => {
+    var tooltipTradePerformance = svg.append("foreignObject")
+        .attr("class", "tooltipTradePerformance")
+        .attr("width", 185)
+        .attr("height", 88)
+        .style("opacity", 0)
+        .style("pointer-events", "none")
+        .style("background-color", "#F9F9F9")
+        .append("xhtml:div")
+        .attr("class", "tooltipSignalText")
+        .attr("height", "100%")
+        .style("pointer-events", "none")
+        .style("font-size", "12px")
+        .style("padding", "5px")
+        .style("border", "solid")
+        .style("border-width", "1px")
+        .style("border-radius", "5px")
+    
+    const tradeClicked = d3.selectAll('.performanceSignal')
+    tradeClicked.on('click',function(event, d){
+        console.log(d)
+        console.log("CLICKKKK")
+
+        // tooltip position
+        var x_pos = xScale(d.date) + 10
+        var y_pos = yScale(d.close) - 50
+        // to account for when tooltip is at the corner of page
+        if (x_pos > 950) {
+            x_pos -= x_pos - 950
+        }
+
+        // tooltip text
+        var tradeType = d['signal'] === 1 ? "Long" : "Short"
+        var tradeProfitable
+        if (d['profitable']) {
+            tradeProfitable = `<span style="color: green">[GAIN]</span>`
+        } else {
+            tradeProfitable = `<span style="color: red">[LOSS]</span>`
+        }
+        
+        var text = `<u><b>${tradeType} Trade ${tradeProfitable}</b></u></br>`
+        text += `<b>Date: </b>${d.dateFormatted}</br>`
+        text += `<b>Dollar Return: </b>${formatValue(d.dollar_return)}</br>`
+        text += `<b>Percentage Return: </b>${formatValue(d.percentage_return)}%`
+
+        // display tooltip
+        d3.select('.tooltipTradePerformance')
+            .attr("x", x_pos)
+            .attr("y", y_pos)
+            .transition()
+            .duration(0) // cancel any pending transition
+            .style("opacity", 1)
+            .transition()
+            .delay(displayTime)
+            .style("opacity", 0)
+        
+        tooltipTradePerformance.html(text)
     })
 }

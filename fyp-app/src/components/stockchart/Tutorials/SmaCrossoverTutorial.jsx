@@ -1,9 +1,8 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal} from './animationFramework';
-import { utcFormat } from 'd3';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance} from './animationFramework';
 const SMA = require('technicalindicators').SMA;
 
-function SmaCrossover({data, xScale, yScale, tutorial}) {
+function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
@@ -53,7 +52,7 @@ function SmaCrossover({data, xScale, yScale, tutorial}) {
     //////////////////////////////////////////////
 
     // Plot and Animate SMA Crossover
-    if (tutorial === "sma") {
+    if (tutorial === "sma" && !performance) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})
@@ -66,9 +65,9 @@ function SmaCrossover({data, xScale, yScale, tutorial}) {
 
         // SMA crossover
         allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
-            displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData}) // long signal
+            displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // long signal
         allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
-            displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData}) // short signal
+            displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:smaData, xScale:xScale, yScale:yScale})
@@ -80,37 +79,23 @@ function SmaCrossover({data, xScale, yScale, tutorial}) {
         // Annotate Signal
         annotateSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
 
+    
+    ////////////////////////
+    // TRADE PERFORMANCES //
+    ////////////////////////
 
-        // TRADE PERFORMANCES
-        //////////////////////
-        const formatDate = utcFormat('%B %-d, %Y');
+    } else if (tutorial === "sma" && performance) {
+        // Get signal data from SMA crossover
+        allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
+            displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // long signal
+        allSignalData = crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
+            displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
 
-        allSignalData.sort(function(a, b) {
-            if (a.date < b.date) return -1;
-            if (a.date > b.date) return 1;
-            return 0;
-        })
+        // Plot trade signals, unfilled for losing trades
+        plotWinningLosingTrades({svg:svg, data:smaData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
 
-        allSignalData.forEach(function(d, index) {
-            if (index + 1 < allSignalData.length) {
-                var nextData = allSignalData.at(index + 1);
-            } else {
-                nextData = {
-                    'date': smaData.at(-1).date,
-                    'dateFormatted': formatDate(smaData.at(-1).date),
-                    'signal': 0,
-                    'close': smaData.at(-1)['close'],
-                    'yPoint': smaData.at(-1)['smaShort']
-                }
-            }
-            allSignalData.at(index)['dollar_return'] = d['signal'] * (nextData['close'] - d['close'])
-            allSignalData.at(index)['profitable'] = allSignalData.at(index)['dollar_return'] > 0
-            allSignalData.at(index)['percentage_return'] = allSignalData.at(index)['dollar_return'] / d['close'] * 100
-        })
-
-        console.log("### Signal Data ###")
-        console.log(allSignalData)
-        console.log("###")
+        // Tooltip showing trade returns
+        annotateTradePerformance({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

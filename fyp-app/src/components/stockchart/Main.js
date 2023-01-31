@@ -21,6 +21,7 @@ export const Main = ({
     specs: { width, height, margin },
     lightenCandlestick,
     tutorial,
+    performance,
     customData
 }) => {
     const innerWidth = width - margin.left - margin.right;
@@ -78,6 +79,7 @@ export const Main = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    performance={performance}
                 />
                 <EmaCrossover
                     class='emacrossover'

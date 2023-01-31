@@ -16,7 +16,7 @@ export const StockChart = ({
         indicatorSpecs,
         brushSpecs,
         mainChartSpecs
-    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, tutorial, customData
+    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, tutorial, performance, customData
 }) => {
     const data = useData();
     const [brushExtent, setBrushExtent] = useState();
@@ -65,6 +65,7 @@ export const StockChart = ({
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
                         tutorial={tutorial}
+                        performance={performance}
                         customData={customData}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
@@ -98,6 +99,7 @@ export const StockChart = ({
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
                         tutorial={tutorial}
+                        performance={performance}
                         customData={customData}
                     />
                     <g transform={`translate(0,${totalHeight * mainChartRatio})`}>
