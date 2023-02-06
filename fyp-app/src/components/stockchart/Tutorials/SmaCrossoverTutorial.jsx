@@ -96,6 +96,39 @@ function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
+        
+        var signalIndex = 0
+        var signal = allSignalData.at(signalIndex)
+        var prevPosition = 0
+        smaData.at(0)['strat_gross_cum_log_ret'] = 0
+        smaData.at(0)['strat_gross_profit'] = 0
+
+        smaData.forEach(function(d, index) { 
+            if (d['date'] === signal['date']) {
+                d['position'] = signal['signal']
+                prevPosition = d['position']
+ 
+                signalIndex += 1
+                signal = allSignalData.at(Math.min(signalIndex, allSignalData.length - 1))
+            } else {
+                d['position'] = prevPosition
+            }
+
+            var prevDay = smaData[Math.max(index-1, 0)]
+            d['stock_daily_dollar_return'] = d['close'] - prevDay['close']
+            d['stock_daily_log_return'] = Math.log(d['close'] / prevDay['close'])
+
+            d['strat_daily_dollar_return'] = d['stock_daily_dollar_return'] * prevDay['position']
+            d['strat_gross_profit'] = prevDay['strat_gross_profit'] + d['strat_daily_dollar_return']
+
+            d['strat_daily_log_return'] = d['stock_daily_log_return'] * prevDay['position']
+            d['strat_gross_cum_log_ret'] = prevDay['strat_gross_cum_log_ret'] + d['strat_daily_log_return']
+            d['strat_gross_cum_ret'] = Math.exp(d['strat_gross_cum_log_ret']) - 1
+        })  
+
+        console.log('&&&')
+        console.log(smaData)
+        console.log("###")
     }
 }
 

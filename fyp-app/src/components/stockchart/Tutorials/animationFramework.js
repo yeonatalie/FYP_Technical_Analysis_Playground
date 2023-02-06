@@ -443,10 +443,6 @@ export const plotWinningLosingTrades = ({svg, data, xScale, yScale, allSignalDat
         allSignalData.at(index)['percentage_return'] = allSignalData.at(index)['dollar_return'] / d['close'] * 100
     })
 
-    console.log("### Signal Data ###")
-    console.log(allSignalData)
-    console.log("###")
-
     // Plot winning / losing trades using close prices
     allSignalData.forEach(function(d, index) {    
         svg.selectAll()
@@ -483,9 +479,6 @@ export const annotateTradePerformance = ({svg, xScale, yScale, displayTime}) => 
     
     const tradeClicked = d3.selectAll('.performanceSignal')
     tradeClicked.on('click',function(event, d){
-        console.log(d)
-        console.log("CLICKKKK")
-
         // tooltip position
         var x_pos = xScale(d.date) + 10
         var y_pos = yScale(d.close) - 50
