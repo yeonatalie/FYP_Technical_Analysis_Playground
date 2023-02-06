@@ -2,7 +2,7 @@ import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance} from './animationFramework';
 const SMA = require('technicalindicators').SMA;
 
-function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
+function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance}) {
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
@@ -90,13 +90,8 @@ function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // long signal
         crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
-
-        // Plot trade signals, unfilled for losing trades
-        plotWinningLosingTrades({svg:svg, data:smaData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
-
-        // Tooltip showing trade returns
-        annotateTradePerformance({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
         
+        // Calculate trade returns
         var signalIndex = 0
         var signal = allSignalData.at(signalIndex)
         var prevPosition = 0
@@ -126,9 +121,26 @@ function SmaCrossover({data, xScale, yScale, tutorial, performance}) {
             d['strat_gross_cum_ret'] = Math.exp(d['strat_gross_cum_log_ret']) - 1
         })  
 
-        console.log('&&&')
-        console.log(smaData)
-        console.log("###")
+        // Plot Profit
+        plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 
+            color:"#E2AB06", displayText:'', delayTime:0, speed:0, displayTextTime:0})
+
+        // Plot trade signals, unfilled for losing trades
+        plotWinningLosingTrades({svg:svg, data:smaData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
+
+        // Tooltip showing strategy proft / returns
+        var profitTooltipData = []
+        smaData.forEach(function(d, index) { 
+            profitTooltipData.push({
+                'date': d['date'],
+                'Profit ($)': d['strat_gross_profit'],
+                'Return (%)': d['strat_gross_cum_ret']*100
+            })
+        })  
+        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+
+        // Tooltip showing trade returns
+        annotateTradePerformance({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

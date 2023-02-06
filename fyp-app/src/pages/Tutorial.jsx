@@ -12,14 +12,14 @@ function Tutorial() {
         indicatorHeight: 200,
         mainChartRatio: 0.75,
         mainChartSpecs: {
-          margin: { top: 20, right: 20, bottom: 40, left: 100 }
+          margin: { top: 20, right: 70, bottom: 40, left: 100 }
         },
         indicatorSpecs: {
-          margin: { top: 20, right: 20, bottom: 40, left: 100 },
+          margin: { top: 20, right: 70, bottom: 40, left: 100 },
         },
         brushSpecs: {
           brushSize: 130,
-          margin: { top: 20, right: 20, bottom: 40, left: 100 },
+          margin: { top: 20, right: 70, bottom: 40, left: 100 },
           yAxisNumTicks: 5
         }
     }

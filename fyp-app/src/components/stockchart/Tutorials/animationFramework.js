@@ -85,7 +85,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
         .style("opacity", 0)
         .attr("fill", "none")
         .attr("stroke", color)
-        .attr("stroke-width", 1)
+        .attr("stroke-width", 1.5)
         .attr("d", d3.line()
         .x(function(d) { return xScale(d.date) })
         .y(function(d) { return yScale(d[variable]) }))

@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 
 import { AxisBottom } from './Axis/AxisBottom';
 import { AxisLeft } from './Axis/AxisLeft';
+import { AxisRight } from './Axis/AxisRight';
 import CandlestickMarks from './Marks/CandlestickMarks.jsx';
 import SmaCrossover from './Tutorials/SmaCrossoverTutorial';
 import EmaCrossover from './Tutorials/EmaCrossoverTutorial';
@@ -39,6 +40,11 @@ export const Main = ({
         .rangeRound([innerHeight, 0])
         .nice();
 
+    const yProfitScale = d3.scaleLinear()
+        .domain([-100, 100]) // TO CHANGE
+        .rangeRound([innerHeight, 0])
+        .nice();
+
     const getOnlyMonday = d => d.getUTCDay() === 1;
 
     return (
@@ -59,12 +65,25 @@ export const Main = ({
                     xOffset={-xScale.bandwidth() / 2}
                     tickFormat={leftAxisTickFormat}
                 />
+                <AxisRight
+                    yScale={performance ? yProfitScale : yPriceScale}
+                    yLength={innerHeight}
+                    xOffset={innerWidth + xScale.bandwidth() / 2}
+                    tickFormat={leftAxisTickFormat}
+                />
                 <text
                     className='axis-label'
                     textAnchor='middle'
                     transform={`translate(${-yAxisLabelOffset},${innerHeight / 2}) rotate(-90)`}
                 >
                     Price
+                </text>
+                <text
+                    className='axis-label'
+                    textAnchor='middle'
+                    transform={`translate(${innerWidth + yAxisLabelOffset + 10},${innerHeight / 2}) rotate(-90)`}
+                >
+                    {performance ? 'Profit' : 'Price'}
                 </text>
                 <CandlestickMarks
                     class='candlestick'
@@ -78,6 +97,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                 />
