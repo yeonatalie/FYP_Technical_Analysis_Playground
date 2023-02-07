@@ -4,6 +4,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
+import SlidingPane from "react-sliding-pane";
+import "react-sliding-pane/dist/react-sliding-pane.css";
 
 function Tutorial() {
     const chartSpecs = {
@@ -23,6 +25,10 @@ function Tutorial() {
           yAxisNumTicks: 5
         }
     }
+
+    const [pane, setPane] = useState({
+      isPaneOpen: false,
+    });
 
     const [tutorial, setTutorial] = useState(null)
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
@@ -72,7 +78,10 @@ function Tutorial() {
       <div>
         <div>
           <h2 style={{float: 'left', width: '70%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
-          <Button style={{float: 'left', width: '10%', marginLeft: '15px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => {setPerformance(!performance)}}> 
+          <Button style={{float: 'right', width: '10%', marginRight: '30px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => setPane({ isPaneOpen: true })}>
+            Pane
+          </Button>
+          {/* <Button style={{float: 'left', width: '10%', marginLeft: '15px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => {setPerformance(!performance)}}> 
             Peformance
           </Button>
           
@@ -97,8 +106,18 @@ function Tutorial() {
               <Dropdown.Divider />
               <Dropdown.Item style={{color: "#6C757D"}} onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown>
+          </Dropdown> */}
         </div>
+
+        <SlidingPane
+          isOpen={pane.isPaneOpen}
+          title="Technical Indicator"
+          width="25%"
+          onRequestClose={() => setPane({ isPaneOpen: false })}
+          style={{position: "absolute"}}
+        >
+          <div>And I am pane content.</div>
+        </SlidingPane>
 
         <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
           <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
