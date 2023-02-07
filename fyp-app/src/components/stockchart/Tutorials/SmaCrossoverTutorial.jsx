@@ -91,6 +91,13 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
         crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', longSignal:false, crossAbove:false, delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
         
+        // sort long and short signals by trade date
+        allSignalData.sort(function(a, b) {
+            if (a.date < b.date) return -1;
+            if (a.date > b.date) return 1;
+            return 0;
+        })
+
         // Calculate trade returns
         var signalIndex = 0
         var signal = allSignalData.at(signalIndex)
@@ -103,8 +110,8 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
                 d['position'] = signal['signal']
                 prevPosition = d['position']
  
-                signalIndex += 1
-                signal = allSignalData.at(Math.min(signalIndex, allSignalData.length - 1))
+                signalIndex = Math.min(signalIndex + 1, allSignalData.length - 1)
+                signal = allSignalData.at(signalIndex)
             } else {
                 d['position'] = prevPosition
             }
@@ -120,6 +127,7 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             d['strat_gross_cum_log_ret'] = prevDay['strat_gross_cum_log_ret'] + d['strat_daily_log_return']
             d['strat_gross_cum_ret'] = Math.exp(d['strat_gross_cum_log_ret']) - 1
         })  
+
 
         // Plot Profit
         plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 

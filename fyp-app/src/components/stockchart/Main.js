@@ -41,7 +41,7 @@ export const Main = ({
         .nice();
 
     const yProfitScale = d3.scaleLinear()
-        .domain([-100, 100]) // TO CHANGE
+        .domain([-60, 60]) // TO CHANGE
         .rangeRound([innerHeight, 0])
         .nice();
 

@@ -418,13 +418,6 @@ export const annotateSignal = ({svg, data, xScale, yScale, displayTime}) => {
 ///////////////////////
 
 export const plotWinningLosingTrades = ({svg, data, xScale, yScale, allSignalData}) => {
-    // sort long and short signals by trade date
-    allSignalData.sort(function(a, b) {
-        if (a.date < b.date) return -1;
-        if (a.date > b.date) return 1;
-        return 0;
-    })
-
     // calculate trade returns
     allSignalData.forEach(function(d, index) {
         if (index + 1 < allSignalData.length) {
