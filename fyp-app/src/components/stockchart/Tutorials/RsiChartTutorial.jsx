@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
-function RsiChartTutorial({data, xScale, yScale, tutorial}) {
+function RsiChartTutorial({data, xScale, yScale, tutorial, performance}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////

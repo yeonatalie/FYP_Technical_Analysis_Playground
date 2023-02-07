@@ -75,6 +75,7 @@ export const StockChart = ({
                             indicatorChartLabel={indicatorChartLabel}
                             indicatorRange={indicatorRange}
                             tutorial={tutorial}
+                            performance={performance}
                             customData={customData}
                         />
                     </g>

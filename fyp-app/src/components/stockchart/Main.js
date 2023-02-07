@@ -106,6 +106,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                 />
@@ -114,6 +115,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                 />
@@ -122,6 +124,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                 />
@@ -130,6 +133,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                 />
@@ -138,6 +142,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                 />
@@ -146,6 +151,7 @@ export const Main = ({
                     data={data}
                     xScale={xScale}
                     yScale={yPriceScale}
+                    yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
                     customData={customData}
