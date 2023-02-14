@@ -1,5 +1,7 @@
 import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance} from './animationFramework';
+import { utcFormat } from 'd3';
+const formatDate = utcFormat('%B %-d, %Y');
 const SMA = require('technicalindicators').SMA;
 
 function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance}) {
@@ -105,18 +107,26 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
         smaData.at(0)['strat_gross_cum_log_ret'] = 0
         smaData.at(0)['strat_gross_profit'] = 0
 
+        // Stop loss
+        var allExitData = []
+        var stopLoss = -0.03 // 3% stop loss
+
         smaData.forEach(function(d, index) { 
+            var prevDay = smaData[Math.max(index-1, 0)]
+
+            // calculate position
             if (d['date'] === signal['date']) {
+                d['signal'] = signal['signal']
                 d['position'] = signal['signal']
                 prevPosition = d['position']
  
                 signalIndex = Math.min(signalIndex + 1, allSignalData.length - 1)
                 signal = allSignalData.at(signalIndex)
             } else {
+                d['signal'] = 0
                 d['position'] = prevPosition
             }
 
-            var prevDay = smaData[Math.max(index-1, 0)]
             d['stock_daily_dollar_return'] = d['close'] - prevDay['close']
             d['stock_daily_log_return'] = Math.log(d['close'] / prevDay['close'])
 
@@ -126,8 +136,41 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             d['strat_daily_log_return'] = d['stock_daily_log_return'] * prevDay['position']
             d['strat_gross_cum_log_ret'] = prevDay['strat_gross_cum_log_ret'] + d['strat_daily_log_return']
             d['strat_gross_cum_ret'] = Math.exp(d['strat_gross_cum_log_ret']) - 1
+
+            // calculate trade gross return for purpose of stop loss / take profit
+            if (prevDay['signal'] === 0) {
+                d['trade_gross_cum_log_ret'] = prevDay['trade_gross_cum_log_ret'] + d['strat_daily_log_return']
+            } else {
+                d['trade_gross_cum_log_ret'] = d['strat_daily_log_return'] // reset when trade signal present
+            }
+            d['trade_gross_cum_ret'] = Math.exp(d['trade_gross_cum_log_ret']) - 1
+
+            // check for stop loss or take profit (based on trade, not entire strategy)
+            if (d['trade_gross_cum_ret'] < stopLoss && d['signal'] === 0 && d['position'] !== 0) {
+                d['signal'] = -(prevDay['position'] / 2)
+                d['position'] = 0
+                prevPosition = d['position']
+
+                allExitData.push({
+                    'date': d.date,
+                    'dateFormatted': formatDate(d.date),
+                    'signal': d.signal,
+                    'close': d['close'],
+                })
+            }
         })  
 
+        console.log(smaData)
+        console.log(allExitData)
+
+        svg.selectAll()
+            .data(allExitData).enter()
+            .append("path")
+            .attr("d", d3.symbol().type(d3.symbolCross).size(120))
+            .attr("transform", function (d) { return "translate(" + xScale(d.date) + "," + yScale(d.close) + ") rotate(45)";
+            })
+            .attr("fill", "black");
+        
 
         // Plot Profit
         plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 
@@ -142,7 +185,8 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             profitTooltipData.push({
                 'date': d['date'],
                 'Profit ($)': d['strat_gross_profit'],
-                'Return (%)': d['strat_gross_cum_ret']*100
+                'Return (%)': d['strat_gross_cum_ret']*100,
+                'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
         tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})

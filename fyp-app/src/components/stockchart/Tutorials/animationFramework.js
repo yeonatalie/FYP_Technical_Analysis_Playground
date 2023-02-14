@@ -223,7 +223,7 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
 
     var tooltipIndicator = svg.append("foreignObject")
         .attr("class", "tooltipIndicator")
-        .attr("width", 130)
+        .attr("width", 160)
         .attr("height", 300)
         .style("opacity", 0)
         .style("pointer-events", "none")
@@ -280,8 +280,8 @@ export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=fals
             // to account for when tooltip is at the corner of page
             var translateX = x_pos+10
             var translateY = y_pos-80
-            if (x_pos > 1000) {
-                translateX += 1000 - x_pos 
+            if (x_pos > 950) {
+                translateX += 950 - x_pos 
             }
             if (y_pos < 80) {
                 translateY += 80 - y_pos
