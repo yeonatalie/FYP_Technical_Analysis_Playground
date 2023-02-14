@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
+import { List } from 'react-bootstrap-icons';
 
 function Tutorial() {
     const chartSpecs = {
@@ -78,19 +79,24 @@ function Tutorial() {
       <div>
         <div>
           <h2 style={{float: 'left', width: '70%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
-          <Button style={{float: 'right', width: '10%', marginRight: '30px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => setPane({ isPaneOpen: true })}>
-            Pane
+          <Button style={{float: 'right', marginRight: '30px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => setPane({ isPaneOpen: true })}>
+            <List size={25}/> 
           </Button>
-          {/* <Button style={{float: 'left', width: '10%', marginLeft: '15px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => {setPerformance(!performance)}}> 
-            Peformance
-          </Button>
-          
-          <Dropdown style={{float: 'right', width: '18%'}}>
-            <Dropdown.Toggle style={{padding: '5px 20px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary">
-              Technical Indicator
-            </Dropdown.Toggle>
+        </div>
 
-            <Dropdown.Menu style={{width: '83%'}}>
+        <SlidingPane
+          isOpen={pane.isPaneOpen}
+          title="Tutorial"
+          width="25%"
+          onRequestClose={() => setPane({ isPaneOpen: false })}
+          style={{position: "absolute"}}
+        >
+          <h5>Tutorial</h5>
+          <Dropdown>
+            <Dropdown.Toggle style={{padding: '5px 20px', backgroundColor:'#F9F9F9', color: 'black', width: "100%"}} variant="secondary">
+              {tutorialHeader === "Candlestick Chart" ? "Technical Indicator" : tutorialHeader.replace(" Trade Performance", "")}
+            </Dropdown.Toggle>
+            <Dropdown.Menu >
               <Dropdown.Header>Trend Indicators</Dropdown.Header>
               <Dropdown.Item onClick={() => {setTutorial("sma"); setLightenCandlestick(true); setIndicatorChart(false)}}>SMA Crossover</Dropdown.Item>
               <Dropdown.Item onClick={() => {setTutorial("ema"); setLightenCandlestick(true); setIndicatorChart(false)}}>EMA Crossover</Dropdown.Item>
@@ -106,17 +112,15 @@ function Tutorial() {
               <Dropdown.Divider />
               <Dropdown.Item style={{color: "#6C757D"}} onClick={() => {setTutorial(null); setLightenCandlestick(false); setIndicatorChart(false)}}>Candlestick Chart</Dropdown.Item>
             </Dropdown.Menu>
-          </Dropdown> */}
-        </div>
+          </Dropdown>
 
-        <SlidingPane
-          isOpen={pane.isPaneOpen}
-          title="Technical Indicator"
-          width="25%"
-          onRequestClose={() => setPane({ isPaneOpen: false })}
-          style={{position: "absolute"}}
-        >
-          <div>And I am pane content.</div>
+          {tutorialHeader === "Candlestick Chart" ? 
+            <div></div> :
+            <Button style={{width: '100%', color: 'white', fontWeight: 'bold', marginTop: '10px'}} variant="primary" onClick={() => {setPerformance(!performance)}}> 
+              Peformance
+            </Button>
+          }
+
         </SlidingPane>
 
         <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
