@@ -110,6 +110,7 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
         // Stop loss
         var allExitData = []
         var stopLoss = -0.03 // 3% stop loss
+        var takeProfit = 0.03
 
         smaData.forEach(function(d, index) { 
             var prevDay = smaData[Math.max(index-1, 0)]
@@ -146,17 +147,19 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             d['trade_gross_cum_ret'] = Math.exp(d['trade_gross_cum_log_ret']) - 1
 
             // check for stop loss or take profit (based on trade, not entire strategy)
-            if (d['trade_gross_cum_ret'] < stopLoss && d['signal'] === 0 && d['position'] !== 0) {
-                d['signal'] = -(prevDay['position'] / 2)
-                d['position'] = 0
-                prevPosition = d['position']
-
-                allExitData.push({
-                    'date': d.date,
-                    'dateFormatted': formatDate(d.date),
-                    'signal': d.signal,
-                    'close': d['close'],
-                })
+            if (d['trade_gross_cum_ret'] < stopLoss || d['trade_gross_cum_ret'] > takeProfit) {
+                if (d['position'] !== 0 && d['signal'] === 0) {
+                    d['signal'] = -(prevDay['position'] / 2)
+                    d['position'] = 0
+                    prevPosition = d['position']
+    
+                    allExitData.push({
+                        'date': d.date,
+                        'dateFormatted': formatDate(d.date),
+                        'signal': d.signal,
+                        'close': d['close'],
+                    })
+                }
             }
         })  
 
