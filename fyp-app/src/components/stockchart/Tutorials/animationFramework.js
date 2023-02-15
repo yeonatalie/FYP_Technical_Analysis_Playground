@@ -417,11 +417,11 @@ export const annotateSignal = ({svg, data, xScale, yScale, displayTime}) => {
 // Trade Performance //
 ///////////////////////
 
-export const plotWinningLosingTrades = ({svg, data, xScale, yScale, allSignalData}) => {
+export const plotWinningLosingTrades = ({svg, data, xScale, yScale, allSignalAndExitData}) => {
     // calculate trade returns
-    allSignalData.forEach(function(d, index) {
-        if (index + 1 < allSignalData.length) {
-            var nextData = allSignalData.at(index + 1);
+    allSignalAndExitData.forEach(function(d, index) {
+        if (index + 1 < allSignalAndExitData.length) {
+            var nextData = allSignalAndExitData.at(index + 1);
         } else {
             nextData = {
                 'date': data.at(-1).date,
@@ -431,17 +431,17 @@ export const plotWinningLosingTrades = ({svg, data, xScale, yScale, allSignalDat
                 'yPoint': data.at(-1)['smaShort']
             }
         }
-        allSignalData.at(index)['dollar_return'] = d['signal'] * (nextData['close'] - d['close'])
-        allSignalData.at(index)['profitable'] = allSignalData.at(index)['dollar_return'] > 0
-        allSignalData.at(index)['percentage_return'] = allSignalData.at(index)['dollar_return'] / d['close'] * 100
+        allSignalAndExitData.at(index)['dollar_return'] = d['signal'] * (nextData['close'] - d['close'])
+        allSignalAndExitData.at(index)['profitable'] = allSignalAndExitData.at(index)['dollar_return'] > 0
+        allSignalAndExitData.at(index)['percentage_return'] = allSignalAndExitData.at(index)['dollar_return'] / d['close'] * 100
     })
 
     // Plot winning / losing trades using close prices
-    allSignalData.forEach(function(d, index) {    
+    allSignalAndExitData.forEach(function(d, index) {    
         svg.selectAll()
             .data([d,]).enter()
             .append("path")
-            .attr("d", d3.symbol().type(d3.symbolTriangle))
+            .attr("d", (d.signal === 1 || d.signal === -1) ? d3.symbol().type(d3.symbolTriangle) : null)
             .attr("class", "performanceSignal")
             .attr("transform", function (d) { return d['signal'] === 1 ?
                 "translate(" + xScale(d.date) + "," + yScale(d.close) + ")" :

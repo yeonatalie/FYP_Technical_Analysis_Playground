@@ -166,8 +166,17 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             }
         })  
 
+        var allSignalAndExitData = [...allSignalData, ...allExitData]
+        // sort all signal and exit signals by trade date
+        allSignalAndExitData.sort(function(a, b) {
+            if (a.date < b.date) return -1;
+            if (a.date > b.date) return 1;
+            return 0;
+        })
+
         console.log(smaData)
         console.log(allExitData)
+        console.log(allSignalAndExitData)
 
         svg.selectAll()
             .data(allExitData).enter()
@@ -183,7 +192,7 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             color:"#E2AB06", displayText:'', delayTime:0, speed:0, displayTextTime:0})
 
         // Plot trade signals, unfilled for losing trades
-        plotWinningLosingTrades({svg:svg, data:smaData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
+        plotWinningLosingTrades({svg:svg, data:smaData, xScale:xScale, yScale:yScale, allSignalAndExitData:allSignalAndExitData})
 
         // Tooltip showing strategy proft / returns
         var profitTooltipData = []
