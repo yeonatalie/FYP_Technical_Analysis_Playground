@@ -4,7 +4,7 @@ import { utcFormat } from 'd3';
 const formatDate = utcFormat('%B %-d, %Y');
 const SMA = require('technicalindicators').SMA;
 
-function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance}) {
+function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit}) {
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
@@ -108,9 +108,12 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
         smaData.at(0)['strat_gross_profit'] = 0
 
         // Stop loss
+        stopLoss = -parseFloat(stopLoss)/100
+        takeProfit = parseFloat(takeProfit)/100
         var allExitData = []
-        var stopLoss = -0.03 // 3% stop loss
-        var takeProfit = 0.03
+
+        console.log(stopLoss)
+        console.log(takeProfit)
 
         smaData.forEach(function(d, index) { 
             var prevDay = smaData[Math.max(index-1, 0)]

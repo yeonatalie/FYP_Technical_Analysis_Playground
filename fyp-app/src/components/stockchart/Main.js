@@ -23,6 +23,8 @@ export const Main = ({
     lightenCandlestick,
     tutorial,
     performance,
+    stopLoss,
+    takeProfit,
     customData
 }) => {
     const innerWidth = width - margin.left - margin.right;
@@ -100,6 +102,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                 />
                 <EmaCrossover
                     class='emacrossover'

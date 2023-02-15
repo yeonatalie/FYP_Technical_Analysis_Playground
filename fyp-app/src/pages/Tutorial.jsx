@@ -2,11 +2,13 @@ import { StockChart } from '../components/stockchart/StockChart'
 import React, { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Button from 'react-bootstrap/Button';
+import ToggleButton from 'react-bootstrap/ToggleButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { List } from 'react-bootstrap-icons';
+import Form from 'react-bootstrap/Form';
 
 function Tutorial() {
     const chartSpecs = {
@@ -35,6 +37,9 @@ function Tutorial() {
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
     const [indicatorChart, setIndicatorChart] = useState(false)
     const [performance, setPerformance] = useState(false)
+
+    const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
+    const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
 
     var tutorialHeader = "Candlestick Chart"
     var indicatorChartLabel = "Indicator"
@@ -93,10 +98,10 @@ function Tutorial() {
         >
           <h5>Tutorial</h5>
           <Dropdown>
-            <Dropdown.Toggle style={{padding: '5px 20px', backgroundColor:'#F9F9F9', color: 'black', width: "100%"}} variant="secondary">
+            <Dropdown.Toggle style={{padding: '5px 20px', marginBottom: '10px', backgroundColor:'#F9F9F9', color: 'black', width: "100%"}} variant="secondary">
               {tutorialHeader === "Candlestick Chart" ? "Technical Indicator" : tutorialHeader.replace(" Trade Performance", "")}
             </Dropdown.Toggle>
-            <Dropdown.Menu >
+            <Dropdown.Menu style={{width: "100%"}}>
               <Dropdown.Header>Trend Indicators</Dropdown.Header>
               <Dropdown.Item onClick={() => {setTutorial("sma"); setLightenCandlestick(true); setIndicatorChart(false)}}>SMA Crossover</Dropdown.Item>
               <Dropdown.Item onClick={() => {setTutorial("ema"); setLightenCandlestick(true); setIndicatorChart(false)}}>EMA Crossover</Dropdown.Item>
@@ -114,18 +119,31 @@ function Tutorial() {
             </Dropdown.Menu>
           </Dropdown>
 
+          {performance ?
+            <div>
+              <h6 style={{marginTop: '5px'}}>Exit Conditions</h6>
+              <Form.Group className="mb-3">
+                <Form.Label style={{marginBottom: '0px'}}>Stop Loss (%)</Form.Label>
+                <Form.Control id='stopLoss' placeholder={stopLoss} onChange={e => setStopLoss(e.target.value)}/>
+                <Form.Label style={{marginTop: '5px', marginBottom: '0px'}}>Take Profit (%)</Form.Label>
+                <Form.Control id='takeProfit' placeholder={takeProfit} onChange={e => setTakeProfit(e.target.value)}/>
+              </Form.Group>
+            </div> :
+            <div></div>
+          }
+
           {tutorialHeader === "Candlestick Chart" ? 
             <div></div> :
-            <Button style={{width: '100%', color: 'white', fontWeight: 'bold', marginTop: '10px'}} variant="primary" onClick={() => {setPerformance(!performance)}}> 
+            <ToggleButton style={{width: '100%', fontWeight: 'bold'}} type="checkbox" variant="outline-primary" onClick={() => {setPerformance(!performance)}} checked={!performance} > 
               Peformance
-            </Button>
+            </ToggleButton>
           }
 
         </SlidingPane>
 
         <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
           <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} performance={performance} />
+            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit}/>
         </div>
       </div>
     );
