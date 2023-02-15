@@ -113,6 +113,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                 />
                 <RsiTutorial
                     class='rsi'
@@ -122,6 +124,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                 />
                 <MacdTutorial
                     class='macd'
@@ -131,6 +135,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                 />
                 <BbandTutorial
                     class='bband'
@@ -140,6 +146,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                 />
                 <PpTutorial
                     class='pp'
@@ -149,6 +157,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                 />
                 <CustomTutorial
                     class='custom'

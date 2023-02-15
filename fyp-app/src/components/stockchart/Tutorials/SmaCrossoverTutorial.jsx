@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance} from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade} from './animationFramework';
 import { utcFormat } from 'd3';
 const formatDate = utcFormat('%B %-d, %Y');
 const SMA = require('technicalindicators').SMA;
@@ -100,92 +100,12 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             return 0;
         })
 
-        // Calculate trade returns
-        var signalIndex = 0
-        var signal = allSignalData.at(signalIndex)
-        var prevPosition = 0
-        smaData.at(0)['strat_gross_cum_log_ret'] = 0
-        smaData.at(0)['strat_gross_profit'] = 0
-
         // Stop loss
         stopLoss = -parseFloat(stopLoss)/100
         takeProfit = parseFloat(takeProfit)/100
-        var allExitData = []
-
-        console.log(stopLoss)
-        console.log(takeProfit)
-
-        smaData.forEach(function(d, index) { 
-            var prevDay = smaData[Math.max(index-1, 0)]
-
-            // calculate position
-            if (d['date'] === signal['date']) {
-                d['signal'] = signal['signal']
-                d['position'] = signal['signal']
-                prevPosition = d['position']
- 
-                signalIndex = Math.min(signalIndex + 1, allSignalData.length - 1)
-                signal = allSignalData.at(signalIndex)
-            } else {
-                d['signal'] = 0
-                d['position'] = prevPosition
-            }
-
-            d['stock_daily_dollar_return'] = d['close'] - prevDay['close']
-            d['stock_daily_log_return'] = Math.log(d['close'] / prevDay['close'])
-
-            d['strat_daily_dollar_return'] = d['stock_daily_dollar_return'] * prevDay['position']
-            d['strat_gross_profit'] = prevDay['strat_gross_profit'] + d['strat_daily_dollar_return']
-
-            d['strat_daily_log_return'] = d['stock_daily_log_return'] * prevDay['position']
-            d['strat_gross_cum_log_ret'] = prevDay['strat_gross_cum_log_ret'] + d['strat_daily_log_return']
-            d['strat_gross_cum_ret'] = Math.exp(d['strat_gross_cum_log_ret']) - 1
-
-            // calculate trade gross return for purpose of stop loss / take profit
-            if (prevDay['signal'] === 0) {
-                d['trade_gross_cum_log_ret'] = prevDay['trade_gross_cum_log_ret'] + d['strat_daily_log_return']
-            } else {
-                d['trade_gross_cum_log_ret'] = d['strat_daily_log_return'] // reset when trade signal present
-            }
-            d['trade_gross_cum_ret'] = Math.exp(d['trade_gross_cum_log_ret']) - 1
-
-            // check for stop loss or take profit (based on trade, not entire strategy)
-            if (d['trade_gross_cum_ret'] < stopLoss || d['trade_gross_cum_ret'] > takeProfit) {
-                if (d['position'] !== 0 && d['signal'] === 0) {
-                    d['signal'] = -(prevDay['position'] / 2)
-                    d['position'] = 0
-                    prevPosition = d['position']
-    
-                    allExitData.push({
-                        'date': d.date,
-                        'dateFormatted': formatDate(d.date),
-                        'signal': d.signal,
-                        'close': d['close'],
-                    })
-                }
-            }
-        })  
-
-        var allSignalAndExitData = [...allSignalData, ...allExitData]
-        // sort all signal and exit signals by trade date
-        allSignalAndExitData.sort(function(a, b) {
-            if (a.date < b.date) return -1;
-            if (a.date > b.date) return 1;
-            return 0;
-        })
-
-        console.log(smaData)
-        console.log(allExitData)
-        console.log(allSignalAndExitData)
-
-        svg.selectAll()
-            .data(allExitData).enter()
-            .append("path")
-            .attr("d", d3.symbol().type(d3.symbolCross).size(120))
-            .attr("transform", function (d) { return "translate(" + xScale(d.date) + "," + yScale(d.close) + ") rotate(45)";
-            })
-            .attr("fill", "black");
         
+        // Calculate trade returns & annotate stop loss / take profit
+        var allSignalAndExitData = returnsAndExitTrade({svg:svg, xScale:xScale, yScale:yScale, data:smaData, allSignalData:allSignalData, stopLoss:stopLoss, takeProfit:takeProfit})
 
         // Plot Profit
         plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 

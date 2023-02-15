@@ -1,7 +1,7 @@
 import * as d3 from "d3";
-import { annotateChart, annotateUpDown, crossoverSignal, plotPath, tooltipIndicator, plotWinningLosingTrades, annotateTradePerformance } from './animationFramework';
+import { annotateChart, annotateUpDown, crossoverSignal, plotPath, tooltipIndicator, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 
-function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance}) {
+function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit}) {
 
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -70,43 +70,19 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance}
             return 0;
         })
 
-        // Calculate trade returns
-        var signalIndex = 0
-        var signal = allSignalData.at(signalIndex)
-        var prevPosition = 0
-        rsiTutData.at(0)['strat_gross_cum_log_ret'] = 0
-        rsiTutData.at(0)['strat_gross_profit'] = 0
-
-        rsiTutData.forEach(function(d, index) { 
-            if (d['date'] === signal['date']) {
-                d['position'] = signal['signal']
-                prevPosition = d['position']
- 
-                signalIndex = Math.min(signalIndex + 1, allSignalData.length - 1)
-                signal = allSignalData.at(signalIndex)
-            } else {
-                d['position'] = prevPosition
-            }
-
-            var prevDay = rsiTutData[Math.max(index-1, 0)]
-            d['stock_daily_dollar_return'] = d['close'] - prevDay['close']
-            d['stock_daily_log_return'] = Math.log(d['close'] / prevDay['close'])
-
-            d['strat_daily_dollar_return'] = d['stock_daily_dollar_return'] * prevDay['position']
-            d['strat_gross_profit'] = prevDay['strat_gross_profit'] + d['strat_daily_dollar_return']
-
-            d['strat_daily_log_return'] = d['stock_daily_log_return'] * prevDay['position']
-            d['strat_gross_cum_log_ret'] = prevDay['strat_gross_cum_log_ret'] + d['strat_daily_log_return']
-            d['strat_gross_cum_ret'] = Math.exp(d['strat_gross_cum_log_ret']) - 1
-        })  
-
+        // Stop loss
+        stopLoss = -parseFloat(stopLoss)/100
+        takeProfit = parseFloat(takeProfit)/100
+        
+        // Calculate trade returns & annotate stop loss / take profit
+        var allSignalAndExitData = returnsAndExitTrade({svg:svg, xScale:xScale, yScale:yScale, data:rsiTutData, allSignalData:allSignalData, stopLoss:stopLoss, takeProfit:takeProfit})
 
         // Plot Profit
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 
             color:"#E2AB06", displayText:'', delayTime:0, speed:0, displayTextTime:0})
 
         // Plot trade signals, unfilled for losing trades
-        plotWinningLosingTrades({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, allSignalData:allSignalData})
+        plotWinningLosingTrades({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, allSignalAndExitData:allSignalAndExitData})
 
         // Tooltip showing strategy proft / returns
         var profitTooltipData = []
@@ -114,7 +90,8 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance}
             profitTooltipData.push({
                 'date': d['date'],
                 'Profit ($)': d['strat_gross_profit'],
-                'Return (%)': d['strat_gross_cum_ret']*100
+                'Return (%)': d['strat_gross_cum_ret']*100,
+                'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
         tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
