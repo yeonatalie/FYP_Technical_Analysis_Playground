@@ -9,6 +9,7 @@ import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import { List } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
+import SidePanelCustomForm from '../components/SidePanelCustomForm';
 
 function Tutorial() {
     const chartSpecs = {
@@ -40,6 +41,8 @@ function Tutorial() {
 
     const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
     const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
+
+    const [paramData, setParamData] = useState({sma: {short:7, long:14}})
 
     var tutorialHeader = "Candlestick Chart"
     var indicatorChartLabel = "Indicator"
@@ -131,7 +134,8 @@ function Tutorial() {
             </div> :
             <div></div>
           }
-
+          <SidePanelCustomForm tutorial={tutorial} paramData={paramData} setParamData={setParamData}></SidePanelCustomForm>
+          
           {tutorialHeader === "Candlestick Chart" ? 
             <div></div> :
             <ToggleButton style={{width: '100%', fontWeight: 'bold'}} type="checkbox" variant="outline-primary" onClick={() => {setPerformance(!performance)}} checked={!performance} > 
@@ -143,7 +147,7 @@ function Tutorial() {
 
         <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
           <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit}/>
+            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} paramData={paramData} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit}/>
         </div>
       </div>
     );

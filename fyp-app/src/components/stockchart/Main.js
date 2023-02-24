@@ -22,6 +22,7 @@ export const Main = ({
     specs: { width, height, margin },
     lightenCandlestick,
     tutorial,
+    paramData,
     performance,
     stopLoss,
     takeProfit,
@@ -101,6 +102,7 @@ export const Main = ({
                     yScale={yPriceScale}
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
+                    paramData={paramData}
                     performance={performance}
                     stopLoss={stopLoss}
                     takeProfit={takeProfit}

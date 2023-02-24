@@ -16,7 +16,7 @@ export const StockChart = ({
         indicatorSpecs,
         brushSpecs,
         mainChartSpecs
-    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, tutorial, performance, stopLoss, takeProfit, customData
+    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, tutorial, paramData, performance, stopLoss, takeProfit, customData
 }) => {
     const data = useData();
     const [brushExtent, setBrushExtent] = useState();
@@ -65,6 +65,7 @@ export const StockChart = ({
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
                         tutorial={tutorial}
+                        paramData={paramData}
                         performance={performance}
                         stopLoss={stopLoss}
                         takeProfit={takeProfit}
@@ -102,6 +103,7 @@ export const StockChart = ({
                         specs={mainChartSpecs}
                         lightenCandlestick={lightenCandlestick}
                         tutorial={tutorial}
+                        paramData={paramData}
                         performance={performance}
                         stopLoss={stopLoss}
                         takeProfit={takeProfit}

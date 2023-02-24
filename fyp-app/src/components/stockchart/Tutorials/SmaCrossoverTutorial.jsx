@@ -4,10 +4,12 @@ import { utcFormat } from 'd3';
 const formatDate = utcFormat('%B %-d, %Y');
 const SMA = require('technicalindicators').SMA;
 
-function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit}) {
+function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, performance, stopLoss, takeProfit}) {
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
+    var short = paramData['sma']['short']
+    var long = paramData['sma']['long']
 
     // Calculate SMA values and format data into a list of dictionaries
     // [{date:, close:, smaShort, smaLong,}]
@@ -16,13 +18,13 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
     var closeData = {}
     closeDates.map((x, i) => (closeData[x] = closePrices[i]))
 
-    var smaShortDates = data.map(d => d.date).slice(7-1)
-    var smaShortValues = SMA.calculate({period: 7, values: closePrices}) //list of SMA values
+    var smaShortDates = data.map(d => d.date).slice(short-1)
+    var smaShortValues = SMA.calculate({period: short, values: closePrices}) //list of SMA values
     var smaShortData = {}
     smaShortDates.map((x, i) => (smaShortData[x] = smaShortValues[i]))
 
-    var smaLongDates = data.map(d => d.date).slice(14-1)
-    var smaLongValues = SMA.calculate({period: 14, values: closePrices}) //list of SMA values
+    var smaLongDates = data.map(d => d.date).slice(long-1)
+    var smaLongValues = SMA.calculate({period: long, values: closePrices}) //list of SMA values
     var smaLongData = {}
     smaLongDates.map((x, i) => (smaLongData[x] = smaLongValues[i]))
 
@@ -60,10 +62,10 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
             displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})
         
         // Plot SMAs
-        plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:'smaShort', variableLabel:'7 days', 
-            color:"darkblue", displayText:'Plot 7 & 14 day SMAs', delayTime:4000, displayTextTime:2000})
-        plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:'smaLong', variableLabel:'14 days', 
-            color:"brown", displayText:'Plot 7 & 14 day SMAs', delayTime:4000, displayTextTime:2000})
+        plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:'smaShort', variableLabel:`${short} days`, 
+            color:"darkblue", displayText:`Plot ${short} & ${long} day SMAs`, delayTime:4000, displayTextTime:2000})
+        plotPath({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:'smaLong', variableLabel:`${long} days`, 
+            color:"brown", displayText:`Plot ${short} & ${long} day SMAs`, delayTime:4000, displayTextTime:2000})
 
         // SMA crossover
         crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
@@ -75,8 +77,8 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, performance
         tooltipIndicator({svg:svg, data:smaData, xScale:xScale, yScale:yScale})
 
         // Annotate Path
-        annotatePath({svg:svg, variable:'smaShort', displayTime:3000, displayText:'Simple Moving Average of Close Prices the Last 7 Days'})
-        annotatePath({svg:svg, variable:'smaLong', displayTime:3000, displayText:'Simple Moving Average of Close Prices the Last 14 Days'})
+        annotatePath({svg:svg, variable:'smaShort', displayTime:3000, displayText:`Simple Moving Average of Close Prices the Last ${short} Days`})
+        annotatePath({svg:svg, variable:'smaLong', displayTime:3000, displayText:`Simple Moving Average of Close Prices the Last ${long} Days`})
 
         // Annotate Signal
         annotateSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
