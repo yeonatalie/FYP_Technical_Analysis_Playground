@@ -72,6 +72,7 @@ export const Indicator = ({
                     xScale={xScale}
                     yScale={yPriceScale}
                     tutorial={tutorial}
+                    paramData={paramData}
                     performance={performance}
                 />
                 <CustomChartTutorial

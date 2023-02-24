@@ -1,11 +1,14 @@
 import * as d3 from "d3";
 import { annotateChart, crossoverSignal, plotPath, tooltipIndicator, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 
-function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit}) {
+function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, performance, stopLoss, takeProfit}) {
 
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
+    var short = paramData['macd']['short']
+    var long = paramData['macd']['long']
+    var signal = paramData['macd']['signal']
 
     // Calculate MACD values and format data into a list of dictionaries
     var closeDates = data.map(d => d.date)
@@ -14,9 +17,9 @@ function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, performance
     closeDates.map((x, i) => (closeData[x] = closePrices[i]))
 
     const MACD = require('technicalindicators').MACD;
-    var macdValues = MACD.calculate({fastPeriod:12, slowPeriod:26, signalPeriod:9, SimpleMAOscillator:false,
+    var macdValues = MACD.calculate({fastPeriod:short, slowPeriod:long, signalPeriod:signal, SimpleMAOscillator:false,
         SimpleMASignal:false, values:closePrices}) 
-    var macdDates = data.map(d => d.date).slice(26-1)
+    var macdDates = data.map(d => d.date).slice(long-1)
     var macdData = {}
     macdDates.map((x, i) => (macdData[x] = macdValues[i])) // {date: {MACD: , signal:, histogram:, }}
 

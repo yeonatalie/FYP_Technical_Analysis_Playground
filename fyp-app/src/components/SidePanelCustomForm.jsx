@@ -43,6 +43,19 @@ const SidePanelCustomForm = ({tutorial, paramData, setParamData}) => {
                 <Form.Control id='rsiOversold' placeholder={params['rsi']['oversold']} onChange={e => setParams({...params, 'rsi':{...params['rsi'], 'oversold':parseInt(e.target.value) || params['rsi']['oversold']}})}/>
             </Form.Group>
         </>
+    } else if (tutorial === 'macd') {
+        form = <>
+            <Form.Group className="mb-3">
+                <Form.Label style={{marginBottom: '0px'}}>Short Term SMA (days)</Form.Label>
+                <Form.Control id='macdFast' placeholder={params['macd']['short']} onChange={e => setParams({...params, 'macd':{...params['macd'], 'short':parseInt(e.target.value) || params['macd']['short']}})}/>
+
+                <Form.Label style={{marginBottom: '0px'}}>Long Term SMA (days)</Form.Label>
+                <Form.Control id='macdSlow' placeholder={params['macd']['long']} onChange={e => setParams({...params, 'macd':{...params['macd'], 'long':parseInt(e.target.value) || params['macd']['long']}})}/>
+
+                <Form.Label style={{marginBottom: '0px'}}>Period for Signal Line (days)</Form.Label>
+                <Form.Control id='macdSignal' placeholder={params['macd']['signal']} onChange={e => setParams({...params, 'macd':{...params['macd'], 'signal':parseInt(e.target.value) || params['macd']['signal']}})}/>
+            </Form.Group>
+        </>
     }
 
 

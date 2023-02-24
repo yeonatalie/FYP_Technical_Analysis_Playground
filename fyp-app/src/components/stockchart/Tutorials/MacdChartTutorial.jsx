@@ -1,11 +1,14 @@
 import * as d3 from "d3";
 import { plotPath, plotBar, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
-function MacdChartTutorial({data, xScale, yScale, tutorial, performance}) {
+function MacdChartTutorial({data, xScale, yScale, tutorial, paramData, performance}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
+    var short = paramData['macd']['short']
+    var long = paramData['macd']['long']
+    var signal = paramData['macd']['signal']
 
     // Calculate MACD values and format data into a list of dictionaries
     var closeDates = data.map(d => d.date)
@@ -14,9 +17,9 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, performance}) {
     closeDates.map((x, i) => (closeData[x] = closePrices[i]))
 
     const MACD = require('technicalindicators').MACD;
-    var macdValues = MACD.calculate({fastPeriod:12, slowPeriod:26, signalPeriod:9, SimpleMAOscillator:false,
+    var macdValues = MACD.calculate({fastPeriod:short, slowPeriod:long, signalPeriod:signal, SimpleMAOscillator:false,
         SimpleMASignal:false, values:closePrices}) 
-    var macdDates = data.map(d => d.date).slice(26-1)
+    var macdDates = data.map(d => d.date).slice(long-1)
     var macdData = {}
     macdDates.map((x, i) => (macdData[x] = macdValues[i])) // {date: {MACD: , signal:, histogram:, }}
 
@@ -51,14 +54,13 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, performance}) {
 
     // Plot and Animate MACD
     if (tutorial === "macd") {
-        console.log(performance)
         // Plot MACD
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'macd', variableLabel:'MACD', 
-            color:"black", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:(performance ? 0 : 10000), displayTextTime:15000})
+            color:"black", displayText:`Plot ${short} / ${long} day MACD, ${signal} day Signal`, delayTime:(performance ? 0 : 10000), displayTextTime:15000})
         
         // Plot Signal Line
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'signal', variableLabel:'Signal', 
-            color:"orange", displayText:'Plot 12 / 26 day MACD, 9 day Signal', delayTime:(performance ? 0 : 10000), displayTextTime:15000})
+            color:"orange", displayText:`Plot ${short} / ${long} day MACD, ${signal} day Signal`, delayTime:(performance ? 0 : 10000), displayTextTime:15000})
         
         // Plot Histogram
         plotBar({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable:'histogram', delayTime:(performance ? 0 : 10000)})
@@ -73,8 +75,8 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, performance}) {
         tooltipIndicator({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
 
         // Annotate Path
-        annotatePath({svg:svg, variable:'macd', displayTime:3000, displayText:'Difference between 12 day EMA and 26 day EMA'})
-        annotatePath({svg:svg, variable:'signal', displayTime:3000, displayText:'Signal Line calculated using a 9 day EMA of the MACD.'})
+        annotatePath({svg:svg, variable:'macd', displayTime:3000, displayText:`Difference between ${short} day EMA and ${long} day EMA`})
+        annotatePath({svg:svg, variable:'signal', displayTime:3000, displayText:`Signal Line calculated using a ${signal} day EMA of the MACD.`})
 
         // Annotate Signal
         annotateSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, displayTime:3000})

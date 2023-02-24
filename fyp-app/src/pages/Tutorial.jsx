@@ -42,10 +42,12 @@ function Tutorial() {
     const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
     const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
 
+    // default parameters for tutorial
     const [paramData, setParamData] = useState({
       sma: {short:7, long:14},
       ema: {short:7, long:14},
       rsi: {period:14, overbought:70, oversold:30},
+      macd: {short:12, long:26, signal:9},
     })
 
     var tutorialHeader = "Candlestick Chart"
