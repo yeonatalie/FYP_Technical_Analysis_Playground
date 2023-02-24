@@ -48,6 +48,7 @@ function Tutorial() {
       ema: {short:7, long:14},
       rsi: {period:14, overbought:70, oversold:30},
       macd: {short:12, long:26, signal:9},
+      bband: {period:7, stdDev:2}
     })
 
     var tutorialHeader = "Candlestick Chart"

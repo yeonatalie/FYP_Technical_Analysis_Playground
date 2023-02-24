@@ -56,6 +56,16 @@ const SidePanelCustomForm = ({tutorial, paramData, setParamData}) => {
                 <Form.Control id='macdSignal' placeholder={params['macd']['signal']} onChange={e => setParams({...params, 'macd':{...params['macd'], 'signal':parseInt(e.target.value) || params['macd']['signal']}})}/>
             </Form.Group>
         </>
+    } else if (tutorial === 'bband') {
+        form = <>
+            <Form.Group className="mb-3">
+                <Form.Label style={{marginBottom: '0px'}}>Bollinger Band Period (days)</Form.Label>
+                <Form.Control id='bbandPeriod' placeholder={params['bband']['period']} onChange={e => setParams({...params, 'bband':{...params['bband'], 'period':parseInt(e.target.value) || params['bband']['period']}})}/>
+
+                <Form.Label style={{marginBottom: '0px'}}>Bollinger Band Standard Deviation</Form.Label>
+                <Form.Control id='bbandStdDev' placeholder={params['bband']['stdDev']} onChange={e => setParams({...params, 'bband':{...params['bband'], 'stdDev':parseFloat(e.target.value) || params['bband']['stdDev']}})}/>
+            </Form.Group>
+        </>
     }
 
 

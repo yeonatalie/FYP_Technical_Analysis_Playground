@@ -3,11 +3,13 @@ import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePat
 
 const BBand = require('technicalindicators').BollingerBands;
 
-function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit}) {
+function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, performance, stopLoss, takeProfit}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
+    var period = paramData['bband']['period']
+    var stdDev = paramData['bband']['stdDev']
 
     // Calculate SMA values and format data into a list of dictionaries
     // [{date:, close:, smaShort, smaLong,}]
@@ -16,8 +18,8 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, performanc
     var closeData = {}
     closeDates.map((x, i) => (closeData[x] = closePrices[i]))
 
-    var bbandDates = data.map(d => d.date).slice(7-1)
-    var bbandValues = BBand.calculate({period: 7, values: closePrices, stdDev: 2}) // [{middle:, upper:, lower:}]
+    var bbandDates = data.map(d => d.date).slice(period-1)
+    var bbandValues = BBand.calculate({period: period, values: closePrices, stdDev: stdDev}) // [{middle:, upper:, lower:}]
     var bbandData = {}
     bbandDates.map((x, i) => (bbandData[x] = bbandValues[i]))
 
@@ -56,11 +58,11 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, performanc
         // Plot BBands
         const bbandTime = (bbandTutData.length * 50) + 1000
         plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'middle', variableLabel:'Middle',
-            color:"grey", displayText:'Plot 7 day Bollinger Bands', speed:50, delayTime:4000, displayTextTime:bbandTime})
+            color:"grey", displayText:`Plot ${period} day Bollinger Bands based on ${stdDev} Standard Deviations`, speed:50, delayTime:4000, displayTextTime:bbandTime})
         plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'upper', variableLabel:'Upper',
-            color:"darkred", displayText:'Plot 7 day Bollinger Bands', speed:50, delayTime:4000, displayTextTime:bbandTime})
+            color:"darkred", displayText:`Plot ${period} day Bollinger Bands based on ${stdDev} Standard Deviations`, speed:50, delayTime:4000, displayTextTime:bbandTime})
         plotPath({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable:'lower', variableLabel:'Lower',
-            color:"darkgreen", displayText:'Plot 7 day Bollinger Bands', speed:50, delayTime:4000, displayTextTime:5000})
+            color:"darkgreen", displayText:`Plot ${period} day Bollinger Bands based on ${stdDev} Standard Deviations`, speed:50, delayTime:4000, displayTextTime:5000})
 
         // Plot Close Price
         plotPath({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', variableLabel:'Close Price',
