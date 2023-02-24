@@ -42,7 +42,10 @@ function Tutorial() {
     const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
     const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
 
-    const [paramData, setParamData] = useState({sma: {short:7, long:14}})
+    const [paramData, setParamData] = useState({
+      sma: {short:7, long:14},
+      ema: {short:7, long:14},
+    })
 
     var tutorialHeader = "Candlestick Chart"
     var indicatorChartLabel = "Indicator"
@@ -122,6 +125,8 @@ function Tutorial() {
             </Dropdown.Menu>
           </Dropdown>
 
+          <SidePanelCustomForm tutorial={tutorial} paramData={paramData} setParamData={setParamData}></SidePanelCustomForm>
+
           {performance ?
             <div>
               <h6 style={{marginTop: '5px'}}>Exit Conditions</h6>
@@ -134,7 +139,6 @@ function Tutorial() {
             </div> :
             <div></div>
           }
-          <SidePanelCustomForm tutorial={tutorial} paramData={paramData} setParamData={setParamData}></SidePanelCustomForm>
           
           {tutorialHeader === "Candlestick Chart" ? 
             <div></div> :
