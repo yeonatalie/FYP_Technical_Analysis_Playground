@@ -30,6 +30,19 @@ const SidePanelCustomForm = ({tutorial, paramData, setParamData}) => {
                 <Form.Control id='emaLong' placeholder={params['ema']['long']} onChange={e => setParams({...params, 'ema':{...params['ema'], 'long':parseInt(e.target.value) || params['ema']['long']}})}/>
             </Form.Group>
         </>
+    } else if (tutorial === 'rsi') {
+        form = <>
+            <Form.Group className="mb-3">
+                <Form.Label style={{marginBottom: '0px'}}>RSI Period (days)</Form.Label>
+                <Form.Control id='rsiPeriod' placeholder={params['rsi']['period']} onChange={e => setParams({...params, 'rsi':{...params['rsi'], 'period':parseInt(e.target.value) || params['rsi']['period']}})}/>
+
+                <Form.Label style={{marginBottom: '0px'}}>RSI Overbought Filter Level</Form.Label>
+                <Form.Control id='rsiOverbought' placeholder={params['rsi']['overbought']} onChange={e => setParams({...params, 'rsi':{...params['rsi'], 'overbought':parseInt(e.target.value) || params['rsi']['overbought']}})}/>
+
+                <Form.Label style={{marginBottom: '0px'}}>RSI Oversold Filter Level</Form.Label>
+                <Form.Control id='rsiOversold' placeholder={params['rsi']['oversold']} onChange={e => setParams({...params, 'rsi':{...params['rsi'], 'oversold':parseInt(e.target.value) || params['rsi']['oversold']}})}/>
+            </Form.Group>
+        </>
     }
 
 

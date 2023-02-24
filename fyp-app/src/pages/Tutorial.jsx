@@ -45,6 +45,7 @@ function Tutorial() {
     const [paramData, setParamData] = useState({
       sma: {short:7, long:14},
       ema: {short:7, long:14},
+      rsi: {period:14, overbought:70, oversold:30},
     })
 
     var tutorialHeader = "Candlestick Chart"
@@ -104,7 +105,7 @@ function Tutorial() {
         >
           <h5>Tutorial</h5>
           <Dropdown>
-            <Dropdown.Toggle style={{padding: '5px 20px', marginBottom: '10px', backgroundColor:'#F9F9F9', color: 'black', width: "100%"}} variant="secondary">
+            <Dropdown.Toggle style={{padding: '5px 10px', marginBottom: '10px', textAlign: 'left', backgroundColor:'#F9F9F9', color: 'black', width: "100%"}} variant="secondary">
               {tutorialHeader === "Candlestick Chart" ? "Technical Indicator" : tutorialHeader.replace(" Trade Performance", "")}
             </Dropdown.Toggle>
             <Dropdown.Menu style={{width: "100%"}}>

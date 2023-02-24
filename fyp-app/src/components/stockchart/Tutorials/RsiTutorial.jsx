@@ -1,11 +1,14 @@
 import * as d3 from "d3";
 import { annotateChart, annotateUpDown, crossoverSignal, plotPath, tooltipIndicator, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 
-function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit}) {
+function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, performance, stopLoss, takeProfit}) {
 
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
+    var period = paramData['rsi']['period']
+    var overbought = paramData['rsi']['overbought']
+    var oversold = paramData['rsi']['oversold']
 
     // Calculate RSI values and format data into a list of dictionaries
     var closeDates = data.map(d => d.date)
@@ -14,8 +17,8 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance,
     closeDates.map((x, i) => (closeData[x] = closePrices[i]))
 
     const RSI = require('technicalindicators').RSI;
-    var rsiValues = RSI.calculate({period: 14, values: closePrices}) 
-    var rsiDates = data.map(d => d.date).slice(14)
+    var rsiValues = RSI.calculate({period: period, values: closePrices}) 
+    var rsiDates = data.map(d => d.date).slice(period)
     var rsiData = {}
     rsiDates.map((x, i) => (rsiData[x] = rsiValues[i]))
 
@@ -25,8 +28,8 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance,
             'date': Date.parse(date),
             'close': closeData[date],
             'rsi': rsi,
-            'overbought': 70, // Filter levels
-            'oversold': 30, // Filter levels
+            'overbought': overbought, // Filter levels
+            'oversold': oversold, // Filter levels
         })
     }
 
@@ -59,9 +62,9 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, performance,
         // Get signal data
         const delayTime = (data.length * 50) + 1000 // wait for up down price mvoements to be animated
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'oversold', longSignal:true, crossAbove:false, delayTime:delayTime,
-            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // long signal
+            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // long signal
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'overbought', longSignal:false, crossAbove:true, delayTime:delayTime,
-            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // short signal
+            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // short signal
 
         // sort long and short signals by trade date
         allSignalData.sort(function(a, b) {

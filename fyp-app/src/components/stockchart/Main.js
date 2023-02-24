@@ -126,6 +126,7 @@ export const Main = ({
                     yScale={yPriceScale}
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
+                    paramData={paramData}
                     performance={performance}
                     stopLoss={stopLoss}
                     takeProfit={takeProfit}

@@ -1,11 +1,14 @@
 import * as d3 from "d3";
 import { plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
 
-function RsiChartTutorial({data, xScale, yScale, tutorial, performance}) {
+function RsiChartTutorial({data, xScale, yScale, tutorial, paramData, performance}) {
     
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
+    var period = paramData['rsi']['period']
+    var overbought = paramData['rsi']['overbought']
+    var oversold = paramData['rsi']['oversold']
 
     // Calculate RSI values and format data into a list of dictionaries
     var closeDates = data.map(d => d.date)
@@ -14,8 +17,8 @@ function RsiChartTutorial({data, xScale, yScale, tutorial, performance}) {
     closeDates.map((x, i) => (closeData[x] = closePrices[i]))
 
     const RSI = require('technicalindicators').RSI;
-    var rsiValues = RSI.calculate({period: 14, values: closePrices}) 
-    var rsiDates = data.map(d => d.date).slice(14)
+    var rsiValues = RSI.calculate({period: period, values: closePrices}) 
+    var rsiDates = data.map(d => d.date).slice(period)
     var rsiData = {}
     rsiDates.map((x, i) => (rsiData[x] = rsiValues[i]))
 
@@ -25,8 +28,8 @@ function RsiChartTutorial({data, xScale, yScale, tutorial, performance}) {
             'date': Date.parse(date),
             'close': closeData[date],
             'rsi': rsi,
-            'overbought': 70, // Filter levels
-            'oversold': 30, // Filter levels
+            'overbought': overbought, // Filter levels
+            'oversold': oversold, // Filter levels
         })
     }
 
@@ -51,18 +54,18 @@ function RsiChartTutorial({data, xScale, yScale, tutorial, performance}) {
         const delayTime = performance ? 0 : (data.length * 50) + 1000 // wait for up down price mvoements to be animated
         // Plot RSI
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'rsi', variableLabel:'', 
-            color:"black", displayText:'Plot 14 day RSI', delayTime:delayTime, displayTextTime:2000})
+            color:"black", displayText:`Plot ${period} day RSI`, delayTime:delayTime, displayTextTime:2000})
         // Plot Filters
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'oversold', variableLabel:'Oversold', 
-            color:"green", animate:false, dashed:true, displayText:'Plot 14 day RSI', delayTime:delayTime, displayTextTime:3000})
+            color:"green", animate:false, dashed:true, displayText:`Plot ${period} day RSI`, delayTime:delayTime, displayTextTime:3000})
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'overbought', variableLabel:'Overbought', 
-            color:"red", animate:false, dashed:true, displayText:'Plot 14 day RSI', delayTime:delayTime, displayTextTime:3000})
+            color:"red", animate:false, dashed:true, displayText:`Plot ${period} day RSI`, delayTime:delayTime, displayTextTime:3000})
 
         // RSI Filter Signals
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'oversold', longSignal:true, crossAbove:false, delayTime:delayTime,
-            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // long signal
+            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // long signal
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'overbought', longSignal:false, crossAbove:true, delayTime:delayTime,
-            displayText:'Long when RSI Crosses Below 30, Short when RSI Crosses Above 70', delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // short signal
+            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
