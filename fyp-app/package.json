@@ -23,7 +23,8 @@
     "react-tooltip": "^4.2.21",
     "styled-components": "^5.3.5",
     "technicalindicators": "^3.1.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yfinance": "^0.0.6"
   },
   "scripts": {
     "start": "react-scripts start",
