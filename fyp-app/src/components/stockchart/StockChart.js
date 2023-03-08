@@ -16,9 +16,9 @@ export const StockChart = ({
         indicatorSpecs,
         brushSpecs,
         mainChartSpecs
-    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, tutorial, paramData, performance, stopLoss, takeProfit, customData
+    }, indicatorChart, indicatorChartLabel, indicatorRange, lightenCandlestick, stockData, tutorial, paramData, performance, stopLoss, takeProfit, customData
 }) => {
-    const data = useData();
+    const data = useData(stockData);
     const [brushExtent, setBrushExtent] = useState();
 
     useEffect(() => {
@@ -53,8 +53,8 @@ export const StockChart = ({
     ];
 
     const slicedData = brushExtent ?
-        data.filter(d => (d.date > brushExtent[0]) && (d.date < brushExtent[1])) :
-        data.filter(d => (d.date > initialBrushExtent[0]) && (d.date < initialBrushExtent[1]));
+        data.filter(d => (d.date > brushExtent[0]) && (d.date <= brushExtent[1])) :
+        data.filter(d => (d.date > initialBrushExtent[0]) && (d.date <= initialBrushExtent[1]));
 
     if (indicatorChart) {
         return (

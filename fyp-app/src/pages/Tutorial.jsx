@@ -10,6 +10,8 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 import { List } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import SidePanelCustomForm from '../components/SidePanelCustomForm';
+import * as daily from '../stock-data/new/daily/';
+// import * as hourly from '../stock-data/new/hourly/';
 
 function Tutorial() {
     const chartSpecs = {
@@ -33,6 +35,9 @@ function Tutorial() {
     const [pane, setPane] = useState({
       isPaneOpen: false,
     });
+
+    const [stock, setStock] = useState('AAPL')
+    const [stockData, setStockData] = useState(daily.AAPL)
 
     const [tutorial, setTutorial] = useState(null)
     const [lightenCandlestick, setLightenCandlestick] = useState(false)
@@ -89,12 +94,37 @@ function Tutorial() {
       // 👇️ navigate to /
       navigate('/custom-tutorial');
     };
-
     return (
       <div>
         <div>
-          <h2 style={{float: 'left', width: '70%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
-          <Button style={{float: 'right', marginRight: '30px', backgroundColor:'#F9F9F9', color: 'black'}} variant="secondary" onClick={() => setPane({ isPaneOpen: true })}>
+          <h2 style={{float: 'left', width: '80%', paddingLeft: '30px'}}>{tutorialHeader}</h2>
+          <Dropdown style={{float: 'left', marginLeft:'75px'}}>
+            <Dropdown.Toggle style={{backgroundColor:'#F9F9F9', color: 'black', fontWeight: 'bold', height:'40px', width: '90px'}} variant="secondary">
+              {stock}
+            </Dropdown.Toggle>
+            <Dropdown.Menu style={{minWidth: '90px'}}>
+              <Dropdown.Item  onClick={() => {setStock('AAPL'); setStockData(daily.AAPL)}}>AAPL</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('MSFT'); setStockData(daily.MSFT)}}>MSFT</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('AMZN'); setStockData(daily.AMZN)}}>AMZN</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('NVDA'); setStockData(daily.NVDA)}}>NVDA</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('TSLA'); setStockData(daily.TSLA)}}>TSLA</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('GOOGL'); setStockData(daily.GOOGL)}}>GOOGL</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('GOOG'); setStockData(daily.GOOG)}}>GOOG</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('BRK-B'); setStockData(daily.BRKB)}}>BRK-B</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('JNJ'); setStockData(daily.JNJ)}}>JNJ</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('XOM'); setStockData(daily.XOM)}}>XOM</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('JPM'); setStockData(daily.JPM)}}>JPM</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('META'); setStockData(daily.META)}}>META</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('V'); setStockData(daily.V)}}>V</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('PG'); setStockData(daily.PG)}}>PG</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('MA'); setStockData(daily.MA)}}>MA</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('HD'); setStockData(daily.HD)}}>HD</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('CVX'); setStockData(daily.CVX)}}>CVX</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('ABBV'); setStockData(daily.ABBV)}}>ABBV</Dropdown.Item>
+              <Dropdown.Item  onClick={() => {setStock('MRK'); setStockData(daily.MRK)}}>MRK</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+          <Button style={{float: 'right', marginRight: '30px', marginLeft: '0px', backgroundColor:'#F9F9F9', color: 'black', height:'40px'}} variant="secondary" onClick={() => setPane({ isPaneOpen: true })}>
             <List size={25}/> 
           </Button>
         </div>
@@ -154,8 +184,8 @@ function Tutorial() {
         </SlidingPane>
 
         <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
-          <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} paramData={paramData} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit}/>
+          <StockChart specs={chartSpecs} indicatorChart={indicatorChart} indicatorChartLabel={indicatorChartLabel} indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} 
+          stockData={stockData} tutorial={tutorial} paramData={paramData} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit}/>
         </div>
       </div>
     );
