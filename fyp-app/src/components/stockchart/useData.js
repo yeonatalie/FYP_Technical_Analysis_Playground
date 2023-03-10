@@ -6,12 +6,12 @@ export const useData = (stockData) => {
 
     useEffect(() => {
         const row = d => {
-            d.date = new Date(d.Date);
-            d.volume = +d.Volume;
-            d.open = +d.Open;
-            d.close = +d.Close;
-            d.high = +d.High;
-            d.low = +d.Low;
+            d.date = new Date(d.date);
+            d.volume = +d.volume;
+            d.open = +d.open;
+            d.close = +d.close;
+            d.high = +d.high;
+            d.low = +d.low;
             return d;
         }
         csv(stockData, row).then(setData);
