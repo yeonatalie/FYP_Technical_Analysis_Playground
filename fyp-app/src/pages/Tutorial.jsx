@@ -102,7 +102,7 @@ function Tutorial() {
             <Dropdown.Toggle style={{backgroundColor:'#F9F9F9', color: 'black', fontWeight: 'bold', height:'40px', width: '90px'}} variant="secondary">
               {stock}
             </Dropdown.Toggle>
-            <Dropdown.Menu style={{minWidth: '90px'}}>
+            <Dropdown.Menu style={{minWidth: '90px', maxHeight: '300px', overflowY: 'auto'}}>
               <Dropdown.Item  onClick={() => {setStock('AAPL'); setStockData(daily.AAPL)}}>AAPL</Dropdown.Item>
               <Dropdown.Item  onClick={() => {setStock('MSFT'); setStockData(daily.MSFT)}}>MSFT</Dropdown.Item>
               <Dropdown.Item  onClick={() => {setStock('AMZN'); setStockData(daily.AMZN)}}>AMZN</Dropdown.Item>
