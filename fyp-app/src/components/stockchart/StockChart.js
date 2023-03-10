@@ -56,6 +56,8 @@ export const StockChart = ({
         data.filter(d => (d.date > brushExtent[0]) && (d.date <= brushExtent[1])) :
         data.filter(d => (d.date > initialBrushExtent[0]) && (d.date <= initialBrushExtent[1]));
 
+    console.log(data)
+
     if (indicatorChart) {
         return (
             <>
