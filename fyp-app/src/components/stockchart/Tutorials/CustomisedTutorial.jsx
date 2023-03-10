@@ -29,18 +29,32 @@ const CustomisedTutorial = ({customData, indicatorChartState, indicatorChartLabe
 
     var indicatorRange = [indicatorChartLower, indicatorChartUpper]
 
-    console.log('**** STATE *****')
-    console.log(indicatorChartState)
+    const [performance, setPerformance] = useState(false)
+
+    const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
+    const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
+
+    // default parameters for tutorial
+    const [paramData, setParamData] = useState({
+      sma: {short:7, long:14},
+      ema: {short:7, long:14},
+      rsi: {period:14, overbought:70, oversold:30},
+      macd: {short:12, long:26, signal:9},
+      bband: {period:7, stdDev:2}
+    })
 
     if (customData == null) {
       return (<div></div>)
     } else {
+      const blob = new Blob([customData.data], { type: 'text/csv;charset=utf-8,' })
+      const stockData = URL.createObjectURL(blob)   
+
       return (
         <div>
           <h2 style={{paddingLeft:'30px'}}>Tutorial: {customData['tutorialName']}</h2>
           <div style={{overflowY: 'scroll', height: '80vh', clear: 'left', display:'block'}}>
-            <StockChart specs={chartSpecs} indicatorChart={indicatorChartState} indicatorChartLabel={indicatorChartLabel} 
-              indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} tutorial={tutorial} customData={customData} />
+            <StockChart specs={chartSpecs} indicatorChart={indicatorChartState} indicatorChartLabel={indicatorChartLabel} indicatorRange={indicatorRange} lightenCandlestick={lightenCandlestick} 
+            stockData={stockData} tutorial={tutorial} paramData={paramData} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit} customData={customData}/>
           </div>
         </div>
       );

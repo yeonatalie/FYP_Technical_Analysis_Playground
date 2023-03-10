@@ -5,9 +5,6 @@ function CustomTutorial({data, xScale, yScale, tutorial, performance, customData
     const dates = data.map(d => Date.parse(d.date))
 
     if (tutorial === "custom") {
-        console.log('&&&&&&&')
-        console.log(customData)
-        console.log('&&&&&&&')
 
         //////////////////////////////////////////////
         ////////////// DATA PREPARATION //////////////

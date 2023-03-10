@@ -58,7 +58,7 @@ export const Brush = ({
         const brushObj = d3.select(brushRef.current);
         brush(brushObj);
         brush.move(brushObj, [xScale(initialBrushExtent[0]), xScale(initialBrushExtent[1])]);
-    }, [xScale, innerWidth, innerHeight, initialBrushExtent, setBrushExtent]);
+    }, [xScale, innerWidth, innerHeight]);
 
     const getFirstMondayOfYear = d => (
         (d.getUTCDay() === 1) && (d.getUTCDate() <= 7) && (d.getUTCMonth() === 0)
