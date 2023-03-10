@@ -11,7 +11,7 @@ import { List } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import SidePanelCustomForm from '../components/SidePanelCustomForm';
 import * as daily from '../stock-data/new/daily/';
-// import * as hourly from '../stock-data/new/hourly/';
+// import * as daily from '../stock-data/new/hourly/';
 
 function Tutorial() {
     const chartSpecs = {
