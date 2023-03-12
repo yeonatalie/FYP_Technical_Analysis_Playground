@@ -12,6 +12,11 @@ export const useData = (stockData) => {
             d.close = +d.close;
             d.high = +d.high;
             d.low = +d.low;
+
+            // ensure that values for custom input data are converted to float
+            for (const [key, value] of Object.entries(d)) {
+                d[key] = +value;
+            }
             return d;
         }
         csv(stockData, row).then(setData);
