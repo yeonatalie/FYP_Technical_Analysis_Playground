@@ -31,7 +31,7 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     var smaData = []
     for (const [date, smaLong] of Object.entries(smaLongData)) {
         smaData.push({
-            'date': Date.parse(date),
+            'date': parseInt(date),
             'close': closeData[date],
             'smaShort': smaShortData[date],
             'smaLong': smaLong
@@ -55,10 +55,12 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
+    console.log(smaData)
+
     // Plot and Animate SMA Crossover
     if (tutorial === "sma" && !performance) {
         // Annotate Close Prices
-        annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
+        annotateChart({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable:'close', 
             displayText:'Identify Close Prices', delayTime:500, displayTime:3000, displayTextTime:3000})
         
         // Plot SMAs

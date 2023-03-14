@@ -27,7 +27,7 @@ function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     for (const [date, macd] of Object.entries(macdData)) {
         if (macd['signal'] != null) {
             macdTutData.push({
-                'date': Date.parse(date),
+                'date': parseInt(date),
                 'close': closeData[date],
                 'macd': macd['MACD'],
                 'signal': macd['signal'],

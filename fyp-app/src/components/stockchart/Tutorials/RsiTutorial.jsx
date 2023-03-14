@@ -25,7 +25,7 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, p
     var rsiTutData = []
     for (const [date, rsi] of Object.entries(rsiData)) {
         rsiTutData.push({
-            'date': Date.parse(date),
+            'date': parseInt(date),
             'close': closeData[date],
             'rsi': rsi,
             'overbought': overbought, // Filter levels

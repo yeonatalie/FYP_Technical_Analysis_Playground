@@ -31,7 +31,7 @@ function EmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     var emaData = []
     for (const [date, emaLong] of Object.entries(emaLongData)) {
         emaData.push({
-            'date': Date.parse(date),
+            'date': parseInt(date),
             'close': closeData[date],
             'emaShort': emaShortData[date],
             'emaLong': emaLong

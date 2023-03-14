@@ -26,7 +26,7 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
     var bbandTutData = []
     for (const [date, bband] of Object.entries(bbandData)) {
         bbandTutData.push({
-            'date': Date.parse(date),
+            'date': parseInt(date),
             'close': closeData[date],
             'middle': bband['middle'],
             'upper': bband['upper'],
@@ -70,10 +70,10 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
 
         // Annotate Buy Sell Points
         // long signal when cross below lower
-        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'lower', longSignal:true, crossAbove:false, delayTime:12000,
+        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'lower', longSignal:true, crossAbove:false, delayTime:14000,
             displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
         // short signal when cross above upper
-        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'upper', longSignal:false, crossAbove:true, delayTime:12000,
+        crossoverSignal({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, variable1:'close', variable2:'upper', longSignal:false, crossAbove:true, delayTime:14000,
             displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
 
         // Tooltip
