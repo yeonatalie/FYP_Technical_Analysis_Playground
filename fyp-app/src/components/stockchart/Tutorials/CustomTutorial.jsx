@@ -1,7 +1,7 @@
 import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal, plotBar, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 
-function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, customData}) {
+function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit, customData}) {
     var allSignalData = []
     
     //////////////////////////////////////////////
@@ -125,8 +125,8 @@ function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performan
         })
 
         // Stop loss
-        var stopLoss = -parseFloat(1)/100 /////////////// TO CHANGE
-        var takeProfit = parseFloat(1)/100
+        stopLoss = -parseFloat(stopLoss)/100
+        takeProfit = parseFloat(takeProfit)/100
         
         // Calculate trade returns & annotate stop loss / take profit
         var allSignalAndExitData = returnsAndExitTrade({svg:svg, xScale:xScale, yScale:yScale, data:data, allSignalData:allSignalData, stopLoss:stopLoss, takeProfit:takeProfit})

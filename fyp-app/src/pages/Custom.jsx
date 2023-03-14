@@ -30,6 +30,8 @@ function Custom() {
     const [customData, setCustomData] = useState(null)
 
     const [performance, setPerformance] = useState(false)
+    const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
+    const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
 
     const onSubmit = () => {
         setCustomData({
@@ -107,6 +109,19 @@ function Custom() {
                     {animationFormList}
                 </span>
 
+                {performance ?
+                    <div>
+                    <h6 style={{marginTop: '5px'}}>Exit Conditions</h6>
+                    <Form.Group className="mb-3">
+                        <Form.Label style={{marginBottom: '0px'}}>Stop Loss (%)</Form.Label>
+                        <Form.Control id='stopLoss' placeholder={stopLoss} onChange={e => setStopLoss(e.target.value)}/>
+                        <Form.Label style={{marginTop: '5px', marginBottom: '0px'}}>Take Profit (%)</Form.Label>
+                        <Form.Control id='takeProfit' placeholder={takeProfit} onChange={e => setTakeProfit(e.target.value)}/>
+                    </Form.Group>
+                    </div> :
+                    <div></div>
+                }
+
                 <div style={{marginTop:"20px", marginBottom:"70px"}}>
                     <Button variant="outline-secondary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={e => {setNumAnimations(numAnimations+1)}}>
                         Add Interactivity
@@ -126,7 +141,7 @@ function Custom() {
             </Form>
 
             <CustomisedTutorial customData={customData} indicatorChartState={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorChartLower={indicatorChartLower} indicatorChartUpper={indicatorChartUpper} performance={performance}>
+            indicatorChartLower={indicatorChartLower} indicatorChartUpper={indicatorChartUpper} performance={performance} stopLoss={stopLoss} takeProfit={takeProfit}>
             </CustomisedTutorial>
         </div>
     );

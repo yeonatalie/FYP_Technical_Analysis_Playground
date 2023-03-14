@@ -4,7 +4,7 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const CustomisedTutorial = ({customData, indicatorChartState, indicatorChartLabel, indicatorChartLower, indicatorChartUpper, performance}) => {
+const CustomisedTutorial = ({customData, indicatorChartState, indicatorChartLabel, indicatorChartLower, indicatorChartUpper, performance, stopLoss, takeProfit}) => {
   const chartSpecs = {
       totalWidth: 1250,
       totalHeight: 550,
@@ -28,9 +28,6 @@ const CustomisedTutorial = ({customData, indicatorChartState, indicatorChartLabe
     // const [indicatorChart, setIndicatorChart] = useState(indicatorChartState)
 
     var indicatorRange = [indicatorChartLower, indicatorChartUpper]
-
-    const [stopLoss, setStopLoss] = useState("Stop Loss (%)")
-    const [takeProfit, setTakeProfit] = useState("Take Profit (%)")
 
     // default parameters for tutorial
     const [paramData, setParamData] = useState({

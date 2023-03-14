@@ -174,6 +174,8 @@ export const Main = ({
                     yProfitScale={yProfitScale}
                     tutorial={tutorial}
                     performance={performance}
+                    stopLoss={stopLoss}
+                    takeProfit={takeProfit}
                     customData={customData}
                 />
                 <CandlestickTooltip
