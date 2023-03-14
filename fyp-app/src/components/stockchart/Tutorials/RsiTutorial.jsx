@@ -1,7 +1,15 @@
 import * as d3 from "d3";
 import { annotateChart, annotateUpDown, crossoverSignal, plotPath, tooltipIndicator, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
+import React, { useState, useEffect } from 'react';
+import Modal from 'react-bootstrap/Modal';
 
 function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, performance, stopLoss, takeProfit}) {
+    const [show, setShow] = useState(true);
+    const handleClose = () => setShow(false);
+
+    useEffect(() => {
+        setShow(performance);
+    }, [performance])
 
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
@@ -101,6 +109,31 @@ function RsiTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, p
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, displayTime:3000})
+
+        // Pop-up showing trade summary
+        var lastDay = rsiTutData.slice(-1)[0]
+        var strat_returns = (lastDay['strat_gross_cum_ret'] * 100).toFixed(2)
+        var profit = lastDay['strat_gross_profit'].toFixed(2)
+        var num_long_trades = allSignalData.filter(d => d.signal === 1).length
+        var num_short_trades = allSignalData.filter(d => d.signal === -1).length
+
+        return (
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title style={{fontWeight: "bold"}}>Performance</Modal.Title>
+                </Modal.Header>
+                <Modal.Body style={{fontSize: "18px"}}>
+                    <span style={{fontWeight: "bold"}}>Profit: </span>${profit}
+                    <p style={{margin: "1px"}}></p>
+                    <span style={{fontWeight: "bold"}}>Strategy Returns: </span>{strat_returns}%
+                    <hr class="solid"></hr>
+                    <span style={{fontWeight: "bold"}}>Number of Long Trades: </span>{num_long_trades}
+                    <p style={{margin: "1px"}}></p>
+                    <span style={{fontWeight: "bold"}}>Number of Short Trades: </span>{num_short_trades}
+                </Modal.Body>
+            </Modal>
+        )
+            
     }
 }
 
