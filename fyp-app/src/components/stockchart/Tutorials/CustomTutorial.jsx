@@ -1,24 +1,25 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal, plotBar } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal, plotBar, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 
-function CustomTutorial({data, xScale, yScale, tutorial, performance, customData}) {
+function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, customData}) {
+    var allSignalData = []
+    
+    //////////////////////////////////////////////
+    ////////////// CHART PREPARATION /////////////
+    //////////////////////////////////////////////
 
-    if (tutorial === "custom") {
-        var allSignalData = []
+    // remove previous plot and append new plot
+    d3.select(".customtutorial").remove()
+    const svg = d3.select('.candlestickchart')
+        .append("g")
+        .attr("class", "customtutorial")
 
-        //////////////////////////////////////////////
-        ////////////// CHART PREPARATION /////////////
-        //////////////////////////////////////////////
 
-        // remove previous plot and append new plot
-        d3.select(".customtutorial").remove()
-        const svg = d3.select('.candlestickchart')
-            .append("g")
-            .attr("class", "customtutorial")
-        
-        //////////////////////////////////////////////
-        ////////////////// ANIMATIONS ////////////////
-        //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    ////////////////// ANIMATIONS ////////////////
+    //////////////////////////////////////////////
+
+    if (tutorial === "custom" && !performance) {
 
         if (customData['annotate'].variable !== "" && !customData['annotate'].indicatorChart) {
             const annotateData = customData['annotate']
@@ -90,6 +91,67 @@ function CustomTutorial({data, xScale, yScale, tutorial, performance, customData
             const plotBarData = customData['plotBar']
             plotBar({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:plotBarData['variable'], delayTime:parseInt(plotBarData['delayTime'])})
         }
+
+    
+    ////////////////////////
+    // TRADE PERFORMANCES //
+    ////////////////////////
+
+    } else if (tutorial === "custom" && performance) {
+        // Get signal data
+        if (customData['longSignal'].variable1 !== "" && !customData['longSignal'].indicatorChart) {
+            const longSignalData = customData['longSignal']
+            crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:longSignalData['variable1'], 
+                variable2:longSignalData['variable2'], longSignal:true, 
+                crossAbove:(longSignalData['crossAbove'] === 'Cross Above'), delayTime:parseInt(longSignalData['delayTime']), 
+                displayText:longSignalData['displayText'], delayTextTime:parseInt(longSignalData['delayTextTime']), 
+                displayTextTime:parseInt(longSignalData['displayTextTime']), allSignalData:allSignalData, performance:performance})
+        }
+
+        if (customData['shortSignal'].variable1 !== "" && !customData['shortSignal'].indicatorChart) {
+            const shortSignalData = customData['shortSignal']
+            crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:shortSignalData['variable1'], 
+                variable2:shortSignalData['variable2'], longSignal:false, 
+                crossAbove:(shortSignalData['crossAbove'] === 'Cross Above'), delayTime:parseInt(shortSignalData['delayTime']), 
+                displayText:shortSignalData['displayText'], delayTextTime:parseInt(shortSignalData['delayTextTime']), 
+                displayTextTime:parseInt(shortSignalData['displayTextTime']), allSignalData:allSignalData, performance:performance})
+        }
+
+        // sort long and short signals by trade date
+        allSignalData.sort(function(a, b) {
+            if (a.date < b.date) return -1;
+            if (a.date > b.date) return 1;
+            return 0;
+        })
+
+        // Stop loss
+        var stopLoss = -parseFloat(1)/100 /////////////// TO CHANGE
+        var takeProfit = parseFloat(1)/100
+        
+        // Calculate trade returns & annotate stop loss / take profit
+        var allSignalAndExitData = returnsAndExitTrade({svg:svg, xScale:xScale, yScale:yScale, data:data, allSignalData:allSignalData, stopLoss:stopLoss, takeProfit:takeProfit})
+
+        // Plot Profit
+        plotPath({svg:svg, data:data, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 
+            color:"#E2AB06", displayText:'', delayTime:0, speed:0, displayTextTime:0})
+
+        // Plot trade signals, unfilled for losing trades
+        plotWinningLosingTrades({svg:svg, data:data, xScale:xScale, yScale:yScale, allSignalAndExitData:allSignalAndExitData})
+
+        // Tooltip showing strategy proft / returns
+        var profitTooltipData = []
+        data.forEach(function(d, index) { 
+            profitTooltipData.push({
+                'date': d['date'],
+                'Profit ($)': d['strat_gross_profit'],
+                'Return (%)': d['strat_gross_cum_ret']*100,
+                'Trade Return (%)': d['trade_gross_cum_ret']*100
+            })
+        })  
+        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+
+        // Tooltip showing trade returns
+        annotateTradePerformance({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})
     }
 }
 

@@ -29,6 +29,8 @@ function Custom() {
 
     const [customData, setCustomData] = useState(null)
 
+    const [performance, setPerformance] = useState(false)
+
     const onSubmit = () => {
         setCustomData({
             'tutorialName': tutorialName,
@@ -111,12 +113,20 @@ function Custom() {
                     </Button>
                     <Button variant="primary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={onSubmit}>
                         Generate Tutorial
-                    </Button>
+                    </Button>                    
+                    {(customData != null) ?
+                        (customData['shortSignal'].variable1 !== "" && customData['longSignal'].variable1 !== "") ?
+                            <Button variant="secondary" style={{float:"left", width:"15%", marginRight:"20px"}} onClick={e => {setPerformance(!performance)}}>
+                                Performance
+                            </Button> :
+                            <div></div> 
+                        : <div></div>
+                    }
                 </div>
             </Form>
 
             <CustomisedTutorial customData={customData} indicatorChartState={indicatorChart} indicatorChartLabel={indicatorChartLabel} 
-            indicatorChartLower={indicatorChartLower} indicatorChartUpper={indicatorChartUpper}>
+            indicatorChartLower={indicatorChartLower} indicatorChartUpper={indicatorChartUpper} performance={performance}>
             </CustomisedTutorial>
         </div>
     );
