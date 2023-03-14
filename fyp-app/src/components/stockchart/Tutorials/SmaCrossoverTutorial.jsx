@@ -1,10 +1,13 @@
 import * as d3 from "d3";
 import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade} from './animationFramework';
-import { utcFormat } from 'd3';
-const formatDate = utcFormat('%B %-d, %Y');
+import React, { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
 const SMA = require('technicalindicators').SMA;
 
 function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, performance, stopLoss, takeProfit}) {
+    const [show, setShow] = useState(true);
+    const handleClose = () => setShow(false);
+
     //////////////////////////////////////////////
     ////////////// DATA PREPARATION //////////////
     //////////////////////////////////////////////
@@ -55,8 +58,6 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     ////////////////// ANIMATION /////////////////
     //////////////////////////////////////////////
 
-    console.log(smaData)
-
     // Plot and Animate SMA Crossover
     if (tutorial === "sma" && !performance) {
         // Annotate Close Prices
@@ -90,7 +91,8 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     // TRADE PERFORMANCES //
     ////////////////////////
 
-    } else if (tutorial === "sma" && performance) {
+    } else if (tutorial === "sma" && performance) {    
+
         // Get signal data from SMA crossover
         crossoverSignal({svg:svg, data:smaData, xScale:xScale, yScale:yScale, variable1:'smaShort', variable2:'smaLong', delayTime:4000,
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // long signal
@@ -132,6 +134,16 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})
+
+        // Pop-up showing trade summary
+        return (
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Performance</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Model Returns: </Modal.Body>
+            </Modal>
+        )
     }
 }
 
