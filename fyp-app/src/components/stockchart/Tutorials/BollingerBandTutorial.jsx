@@ -146,6 +146,7 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
         var profit = lastDay['strat_gross_profit'].toFixed(2)
         var num_long_trades = allSignalData.filter(d => d.signal === 1).length
         var num_short_trades = allSignalData.filter(d => d.signal === -1).length
+        var num_profit_trades = allSignalData.filter(d => d.profitable).length
 
         return (
             <Modal show={show} onHide={handleClose}>
@@ -153,13 +154,17 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
                 <Modal.Title style={{fontWeight: "bold"}}>Performance</Modal.Title>
                 </Modal.Header>
                 <Modal.Body style={{fontSize: "18px"}}>
-                    <span style={{fontWeight: "bold"}}>Profit: </span>${profit}
-                    <p style={{margin: "1px"}}></p>
-                    <span style={{fontWeight: "bold"}}>Strategy Returns: </span>{strat_returns}%
-                    <hr class="solid"></hr>
                     <span style={{fontWeight: "bold"}}>Number of Long Trades: </span>{num_long_trades}
                     <p style={{margin: "1px"}}></p>
                     <span style={{fontWeight: "bold"}}>Number of Short Trades: </span>{num_short_trades}
+                    <hr class="solid"></hr>
+                    <span style={{fontWeight: "bold"}}>Profit: </span>${profit}
+                    <p style={{margin: "1px"}}></p>
+                    <span style={{fontWeight: "bold"}}>Strategy Returns: </span>{strat_returns}%
+                    <p style={{margin: "1px"}}></p>
+                    <span style={{fontWeight: "bold"}}>Proportion of Profitable Trades: </span>{num_profit_trades}/{(num_long_trades+num_short_trades)}
+                    <hr class="solid"></hr>
+                    Consider adjusting <span style={{fontWeight: "bold"}}>trade parameters</span> or <span style={{fontWeight: "bold"}}>exit conditions</span> to improve the strategy's returns. 
                 </Modal.Body>
             </Modal>
         )
