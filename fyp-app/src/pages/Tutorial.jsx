@@ -6,7 +6,7 @@ import ToggleButton from 'react-bootstrap/ToggleButton';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {useNavigate} from 'react-router-dom';
 import SlidingPane from "react-sliding-pane";
-import "react-sliding-pane/dist/react-sliding-pane.css";
+import "react-sliding-pane/dist/react-sliding-pane-edited_v2.css";
 import { List } from 'react-bootstrap-icons';
 import Form from 'react-bootstrap/Form';
 import SidePanelCustomForm from '../components/SidePanelCustomForm';
@@ -94,6 +94,8 @@ function Tutorial() {
       // 👇️ navigate to /
       navigate('/custom-tutorial');
     };
+
+    
     return (
       <div>
         <div>
@@ -131,8 +133,8 @@ function Tutorial() {
 
         <SlidingPane
           isOpen={pane.isPaneOpen}
-          title="Tutorial"
           width="25%"
+          title="Tutorial Parameters"
           onRequestClose={() => setPane({ isPaneOpen: false })}
           style={{position: "absolute"}}
         >

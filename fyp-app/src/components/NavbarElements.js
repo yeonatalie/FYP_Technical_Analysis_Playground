@@ -5,6 +5,7 @@ import styled from "styled-components";
 export const Nav = styled.nav`
   background: #01164f;
   height: 10vh;
+  min-height: 60px;
   display: flex;
   justify-content: space-between;
   padding: 0.6rem 1.5vw;
