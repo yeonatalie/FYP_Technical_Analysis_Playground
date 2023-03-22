@@ -88,7 +88,7 @@ function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, 
 
         // Plot Profit
         plotPath({svg:svg, data:macdTutData, xScale:xScale, yScale:yProfitScale, variable:'strat_gross_profit', variableLabel:'', 
-            color:"#E2AB06", displayText:'', delayTime:0, speed:0, displayTextTime:0})
+            color:"#E2AB06", displayText:'Plot Trade Profits in Yellow', delayTime:0, speed:0, displayTextTime:10000})
 
         // Plot trade signals, unfilled for losing trades
         plotWinningLosingTrades({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, allSignalAndExitData:allSignalAndExitData})
