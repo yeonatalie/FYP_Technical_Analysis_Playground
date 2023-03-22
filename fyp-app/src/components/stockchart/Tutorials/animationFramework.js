@@ -201,6 +201,8 @@ export function crossoverSignal({svg, data, xScale, yScale, variable1, variable2
                     .delay(delayTime + (count * speed))
                     .transition()
                     .style("opacity", 1);
+            } else {
+                signalAnnotation.style("opacity", 1);
             }
         }
         prevPosition = position;

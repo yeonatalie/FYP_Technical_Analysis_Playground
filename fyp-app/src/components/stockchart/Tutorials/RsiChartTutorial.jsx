@@ -52,9 +52,10 @@ function RsiChartTutorial({data, xScale, yScale, tutorial, paramData, performanc
     // Plot and Animate RSI filter levels
     if (tutorial === "rsi") {
         const delayTime = performance ? 0 : (data.length * 50) + 1000 // wait for up down price mvoements to be animated
+        
         // Plot RSI
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'rsi', variableLabel:'', 
-            color:"black", displayText:`Plot ${period} day RSI`, delayTime:delayTime, displayTextTime:2000})
+            color:"black", animate:!performance, displayText:`Plot ${period} day RSI`, delayTime:delayTime, displayTextTime:2000})
         // Plot Filters
         plotPath({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable:'oversold', variableLabel:'Oversold', 
             color:"green", animate:false, dashed:true, displayText:`Plot ${period} day RSI`, delayTime:delayTime, displayTextTime:3000})
@@ -63,9 +64,9 @@ function RsiChartTutorial({data, xScale, yScale, tutorial, paramData, performanc
 
         // RSI Filter Signals
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'oversold', longSignal:true, crossAbove:false, delayTime:delayTime,
-            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // long signal
+            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // long signal
         crossoverSignal({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, variable1:'rsi', variable2:'overbought', longSignal:false, crossAbove:true, delayTime:delayTime,
-            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:false}) // short signal
+            displayText:`Long when RSI Crosses Below ${oversold}, Short when RSI Crosses Above ${overbought}`, delayTextTime:(delayTime + 4000), displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:rsiTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
