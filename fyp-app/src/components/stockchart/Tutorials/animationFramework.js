@@ -114,11 +114,11 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     }
 
     // label plot
-    var plot_delay_time = 0
+    var plot_delay_time = delayTime
     if (animate) {
         plot_delay_time = delayTime + (data.length * speed)
     } else {
-        plot_delay_time = 0
+        plot_delay_time = delayTime
     }
 
     const label = svg.append("text").text(variableLabel).style("opacity", 0)
