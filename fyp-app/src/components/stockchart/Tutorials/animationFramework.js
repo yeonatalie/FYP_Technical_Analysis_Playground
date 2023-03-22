@@ -114,6 +114,13 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     }
 
     // label plot
+    var plot_delay_time = 0
+    if (animate) {
+        plot_delay_time = delayTime + (data.length * speed)
+    } else {
+        plot_delay_time = 0
+    }
+
     const label = svg.append("text").text(variableLabel).style("opacity", 0)
     $.get(label).done(function () {
         const textLength = label.node().getComputedTextLength()    
@@ -123,7 +130,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
             .style("fill", color)
             .style("font-weight", "bold")
             .transition()
-            .delay(delayTime + (data.length * speed))
+            .delay(plot_delay_time)
             .transition()
             .style("opacity", 1);
     })
