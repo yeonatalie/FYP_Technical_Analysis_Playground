@@ -346,7 +346,7 @@ export const annotatePath = ({svg, variable, displayTime, displayText}) => {
 export const annotateSignal = ({svg, data, xScale, yScale, displayTime}) => {
     var tooltipSignal = svg.append("foreignObject")
             .attr("class", "tooltipSignal")
-            .attr("width", 160)
+            .attr("width", 170)
             .attr("height", 68)
             .style("opacity", 0)
             .style("pointer-events", "none")
