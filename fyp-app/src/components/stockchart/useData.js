@@ -7,7 +7,6 @@ export const useData = (stockData) => {
     useEffect(() => {
         const row = d => {
             d.date = new Date(d.date);
-            d.volume = +d.volume;
             d.open = +d.open;
             d.close = +d.close;
             d.high = +d.high;
