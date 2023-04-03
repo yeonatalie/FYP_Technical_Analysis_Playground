@@ -12,7 +12,7 @@ function CandlestickTooltip({data, xScale, yScale}) {
 
     var tooltip = svg.append("foreignObject")
                     .attr("class", "tooltip")
-                    .attr("width", 130)
+                    .attr("width", 150)
                     .attr("height", 300)
                     .style("opacity", 0)
                     .style("pointer-events", "none")
