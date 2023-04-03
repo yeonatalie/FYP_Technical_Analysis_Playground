@@ -63,14 +63,14 @@ function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, 
     if (tutorial === "macd" && !performance) {
         // Annotate Close Prices
         annotateChart({svg:svg, data:data, xScale:xScale, yScale:yScale, variable:'close', 
-            displayText:'Identify Close Prices', delayTime:5000, displayTextTime:5000})
+            displayText:'Identify Close Prices', delayTime:500, displayTextTime:2000})
     
     } else if (tutorial === "macd" && performance) {
         // Get signal data
-        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:true, crossAbove:true, delayTime:10000,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:30000, displayTextTime:15000, allSignalData:allSignalData, performance:performance}) // long signal
-        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:false, crossAbove:false, delayTime:10000,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:30000, displayTextTime:15000, allSignalData:allSignalData, performance:performance}) // short signal
+        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:true, crossAbove:true, delayTime:0,
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:0, displayTextTime:15000, allSignalData:allSignalData, performance:performance, speed:0}) // long signal
+        crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:false, crossAbove:false, delayTime:0,
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:0, displayTextTime:15000, allSignalData:allSignalData, performance:performance, speed:0}) // short signal
 
         // sort long and short signals by trade date
         allSignalData.sort(function(a, b) {
@@ -99,7 +99,8 @@ function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, 
             profitTooltipData.push({
                 'date': d['date'],
                 'Profit ($)': d['strat_gross_profit'],
-                'Return (%)': d['strat_gross_cum_ret']*100
+                'Return (%)': d['strat_gross_cum_ret']*100,
+                'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
         tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})

@@ -60,28 +60,34 @@ function Tutorial() {
     var indicatorRange = [0, 0]
     
     if (tutorial === 'sma') {
-      tutorialHeader = "SMA Crossover"
+      tutorialHeader = "Simple Moving Average (SMA) Crossover"
+      indicatorChartLabel = "SMA Crossover"
 
     } else if (tutorial === 'ema') {
-      tutorialHeader = "EMA Crossover"
+      tutorialHeader = "Exponential Moving Average (EMA) Crossover"
+      indicatorChartLabel = "EMA Crossover"
 
     } else if (tutorial === 'rsi') {
-      tutorialHeader = "RSI"
+      tutorialHeader = "Relative Strengh Index (RSI)"
       indicatorChartLabel = "RSI"
       indicatorRange = [0, 100]
 
     } else if (tutorial === 'macd') {
-      tutorialHeader = "MACD"
+      tutorialHeader = "Moving Average Convergence/Divergence (MACD)"
       indicatorChartLabel = "MACD"
       indicatorRange = [-5, 5]
 
     } else if (tutorial === 'bband') {
       tutorialHeader = "Bollinger Bands"
+      indicatorChartLabel = "Bollinger Bands"
 
     } else if (tutorial === 'pp') {
       tutorialHeader = "Pivot Points"
+      indicatorChartLabel = "Pivot Points"
+
     } else if (tutorial === 'custom') {
       tutorialHeader = "Custom Tutorial"
+      indicatorChartLabel = "Custom Tutorial"
     }
 
     if (performance) {
@@ -140,7 +146,7 @@ function Tutorial() {
           <h5>Tutorial</h5>
           <Dropdown>
             <Dropdown.Toggle style={{padding: '5px 10px', marginBottom: '10px', textAlign: 'left', backgroundColor:'#F9F9F9', color: 'black', width: "100%"}} variant="secondary">
-              {tutorialHeader === "Candlestick Chart" ? "Technical Indicator" : tutorialHeader.replace(" Trade Performance", "")}
+              {tutorialHeader === "Candlestick Chart" ? "Technical Indicator" : indicatorChartLabel}
             </Dropdown.Toggle>
             <Dropdown.Menu style={{width: "100%"}}>
               <Dropdown.Header>Trend Indicators</Dropdown.Header>

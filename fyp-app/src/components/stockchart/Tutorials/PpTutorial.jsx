@@ -83,9 +83,9 @@ function PpTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, 
         
         // Annotate Buy Sell Points
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'s2', longSignal:true, crossAbove:false, delayTime:9000,
-            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // long signal
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance, speed:240}) // long signal
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'r2', longSignal:false, crossAbove:true, delayTime:9000,
-            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // short signal
+            displayText:'Long / Short when Close Price Crosses Support / Resistance',delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance, speed:240}) // short signal
         
         // Tooltip
         tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale})
@@ -102,9 +102,9 @@ function PpTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, 
     } else if (tutorial === "pp" && performance) {
         // Get trade signals
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'s2', longSignal:true, crossAbove:false, delayTime:9000,
-            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // long signal
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // long signal
         crossoverSignal({svg:svg, data:data, xScale:xScale, yScale:yScale, variable1:'close', variable2:'r2', longSignal:false, crossAbove:true, delayTime:9000,
-            displayText:'Long / Short when Close Price Crosses Support / Resistance', speed:200, delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // short signal
+            displayText:'Long / Short when Close Price Crosses Support / Resistance', delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) // short signal
 
         // sort long and short signals by trade date
         allSignalData.sort(function(a, b) {
@@ -133,7 +133,8 @@ function PpTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, 
             profitTooltipData.push({
                 'date': d['date'],
                 'Profit ($)': d['strat_gross_profit'],
-                'Return (%)': d['strat_gross_cum_ret']*100
+                'Return (%)': d['strat_gross_cum_ret']*100,
+                'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
         tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})

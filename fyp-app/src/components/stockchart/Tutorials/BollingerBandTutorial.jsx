@@ -132,7 +132,8 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
             profitTooltipData.push({
                 'date': d['date'],
                 'Profit ($)': d['strat_gross_profit'],
-                'Return (%)': d['strat_gross_cum_ret']*100
+                'Return (%)': d['strat_gross_cum_ret']*100,
+                'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
         tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})

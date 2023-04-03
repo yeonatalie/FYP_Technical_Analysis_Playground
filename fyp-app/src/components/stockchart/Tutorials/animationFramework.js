@@ -139,7 +139,7 @@ export const plotPath = ({svg, data, xScale, yScale, variable, variableLabel, co
     displayTextFn(svg, displayText, delayTime, displayTextTime)
 }
 
-export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTime}) => {
+export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTime, animate=true}) => {
     var count = 0
     data.forEach(function(d, index) {
         count+=1
@@ -151,11 +151,15 @@ export const plotBar = ({svg, data, xScale, yScale, variable, speed=100, delayTi
             .attr("height", Math.abs(yScale(d[variable]) - yScale(0)))
             .attr("fill", color)
         
-        bar.style("opacity", 0);
-        bar.transition()
-            .delay(delayTime + (count * speed))
-            .transition()
-            .style("opacity", 0.3);
+        if (animate) {
+            bar.style("opacity", 0);
+            bar.transition()
+                .delay(delayTime + (count * speed))
+                .transition()
+                .style("opacity", 0.3);
+        } else {
+            bar.style("opacity", 0.3);
+        }
     })
 }
 
