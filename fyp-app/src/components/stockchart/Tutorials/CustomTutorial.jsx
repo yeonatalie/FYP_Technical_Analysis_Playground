@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal, plotBar, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltip, annotatePath, annotateSignal, plotBar, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 
 function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, stopLoss, takeProfit, customData}) {
     var allSignalData = []
@@ -69,7 +69,7 @@ function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performan
         }
 
         if (customData['tooltipIndicator'].tooltip === true && !customData['tooltipIndicator'].indicatorChart) {
-            tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale, indicatorChart:false})
+            tooltip({svg:svg, data:data, xScale:xScale, yScale:yScale, indicatorChart:false})
         }
 
         if (customData['annotatePath1'].variable !== "" && !customData['annotatePath1'].indicatorChart) {
@@ -148,7 +148,7 @@ function CustomTutorial({data, xScale, yScale, yProfitScale, tutorial, performan
                 'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
-        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:data, xScale:xScale, yScale:yScale, displayTime:3000})

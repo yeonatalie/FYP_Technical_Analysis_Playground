@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { plotPath, plotBar, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal } from './animationFramework';
+import { plotPath, plotBar, crossoverSignal, tooltip, annotatePath, annotateSignal } from './animationFramework';
 
 function MacdChartTutorial({data, xScale, yScale, tutorial, paramData, performance}) {
     
@@ -75,7 +75,7 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, paramData, performan
             displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:8000, displayTextTime:5000, allSignalData:allSignalData, performance:false, speed:speed}) // short signal
         
         // Tooltip
-        tooltipIndicator({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
+        tooltip({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
 
         // Annotate Path
         annotatePath({svg:svg, variable:'macd', displayTime:3000, displayText:`Difference between ${short} day EMA and ${long} day EMA`})

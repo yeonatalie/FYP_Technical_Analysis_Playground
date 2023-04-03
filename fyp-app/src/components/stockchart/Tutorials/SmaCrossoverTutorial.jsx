@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade} from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltip, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade} from './animationFramework';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 const SMA = require('technicalindicators').SMA;
@@ -81,7 +81,7 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
             displayText:'Long/Short when Short Term SMA Crosses Above/Below Long Term SMA', delayTextTime:7000, displayTextTime:2000, allSignalData:allSignalData, performance:performance}) // short signal
         
         // Tooltip
-        tooltipIndicator({svg:svg, data:smaData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:smaData, xScale:xScale, yScale:yScale})
 
         // Annotate Path
         annotatePath({svg:svg, variable:'smaShort', displayTime:3000, displayText:`Simple Moving Average of Close Prices the Last ${short} Days`})
@@ -134,7 +134,7 @@ function SmaCrossover({data, xScale, yScale, yProfitScale, tutorial, paramData, 
                 'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
-        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:smaData, xScale:xScale, yScale:yScale, displayTime:3000})

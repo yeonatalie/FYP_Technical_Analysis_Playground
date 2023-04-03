@@ -227,7 +227,7 @@ export function crossoverSignal({svg, data, xScale, yScale, variable1, variable2
     return allSignalData
 }
 
-export const tooltipIndicator = ({svg, data, xScale, yScale, indicatorChart=false}) => {
+export const tooltip = ({svg, data, xScale, yScale, indicatorChart=false}) => {
     if (!indicatorChart) {
         d3.selectAll('.tooltip').remove() // Hide candlestick's tooltip. Only 1 tooltip shown at once
     }

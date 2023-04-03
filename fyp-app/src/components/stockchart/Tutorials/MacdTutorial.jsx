@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, crossoverSignal, plotPath, tooltipIndicator, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
+import { annotateChart, crossoverSignal, plotPath, tooltip, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
@@ -103,7 +103,7 @@ function MacdTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData, 
                 'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
-        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, displayTime:3000})

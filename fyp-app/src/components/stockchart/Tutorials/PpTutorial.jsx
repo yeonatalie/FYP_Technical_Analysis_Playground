@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltip, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 import { schemePastel1 } from 'd3';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -93,7 +93,7 @@ function PpTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, 
             displayText:'Long / Short when Close Price Crosses Support / Resistance',delayTextTime:15000, displayTextTime:7000, allSignalData:allSignalData, performance:performance, speed:240}) // short signal
         
         // Tooltip
-        tooltipIndicator({svg:svg, data:pp_data, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:pp_data, xScale:xScale, yScale:yScale})
 
         // Annotate Path
         annotatePath({svg:svg, variable:'r2', displayTime:10000, displayText:"Resistance 2: Typical Price + (High Price - Low Price)"})
@@ -142,7 +142,7 @@ function PpTutorial({data, xScale, yScale, yProfitScale, tutorial, performance, 
                 'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
-        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:pp_data, xScale:xScale, yScale:yScale, displayTime:3000})

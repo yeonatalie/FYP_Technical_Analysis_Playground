@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltipIndicator, annotatePath, annotateSignal, plotBar } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, annotateUpDown, tooltip, annotatePath, annotateSignal, plotBar } from './animationFramework';
 
 function CustomChartTutorial({data, xScale, yScale, tutorial, customData}) {
     if (tutorial === "custom") {
@@ -67,7 +67,7 @@ function CustomChartTutorial({data, xScale, yScale, tutorial, customData}) {
         }
 
         if (customData['tooltipIndicator'].tooltip === true && customData['tooltipIndicator'].indicatorChart) {
-            tooltipIndicator({svg:svg, data:data, xScale:xScale, yScale:yScale, indicatorChart:true})
+            tooltip({svg:svg, data:data, xScale:xScale, yScale:yScale, indicatorChart:true})
         }
 
         if (customData['annotatePath1'].variable !== "" && customData['annotatePath1'].indicatorChart) {

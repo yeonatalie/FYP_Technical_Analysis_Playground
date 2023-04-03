@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { annotateChart, plotPath, crossoverSignal, tooltipIndicator, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
+import { annotateChart, plotPath, crossoverSignal, tooltip, annotatePath, annotateSignal, plotWinningLosingTrades, annotateTradePerformance, returnsAndExitTrade } from './animationFramework';
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 
@@ -85,7 +85,7 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
             displayText:'Long/Short when Prices Crosses Below/Above Lower/Upper Bollinger Band', delayTextTime:16000, displayTextTime:7000, allSignalData:allSignalData, performance:performance}) 
 
         // Tooltip
-        tooltipIndicator({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale})
 
         // Annotate Path
         annotatePath({svg:svg, variable:'middle', displayTime:3000, displayText:'Middle Bollinger Band'})
@@ -136,7 +136,7 @@ function BbandTutorial({data, xScale, yScale, yProfitScale, tutorial, paramData,
                 'Trade Return (%)': d['trade_gross_cum_ret']*100
             })
         })  
-        tooltipIndicator({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
+        tooltip({svg:svg, data:profitTooltipData, xScale:xScale, yScale:yScale})
 
         // Tooltip showing trade returns
         annotateTradePerformance({svg:svg, data:bbandTutData, xScale:xScale, yScale:yScale, displayTime:3000})
