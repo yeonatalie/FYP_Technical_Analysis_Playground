@@ -1,9 +1,6 @@
-import { utcFormat, format, schemeSet1, style } from 'd3';
+import { schemeSet1 } from 'd3';
 import * as d3 from "d3";
 
-const formatDate = utcFormat('%B %-d, %Y');
-const formatValue = format('.2f');
-const formatString = format('.3s');
 
 function CandlestickMarks({data, xScale, yScale, lightenCandlestick}) {
     // Functions for Tutorial Chart
@@ -47,44 +44,3 @@ function CandlestickMarks({data, xScale, yScale, lightenCandlestick}) {
 }
 
 export default CandlestickMarks;
-
-// function annotateOHLCFn() {
-//     // Annotate Open
-//     if(annotateOHLC['open']) {
-//         svg.selectAll()
-//             .data(data).enter()
-//             .append("circle")
-//             .attr("r", 3)
-//             .attr("cx", function(d) { return xScale(d.date); })
-//             .attr("cy", function(d) { return yScale(d.open); });
-//     }
-//     // Annotate High
-//     if(annotateOHLC['high']) {
-//         svg.selectAll()
-//             .data(data).enter()
-//             .append("circle")
-//             .attr("r", 3)
-//             .attr("cx", function(d) { return xScale(d.date); })
-//             .attr("cy", function(d) { return yScale(d.high); });
-//     }
-
-//     // Annotate Low
-//     if(annotateOHLC['low']) {
-//         svg.selectAll()
-//             .data(data).enter()
-//             .append("circle")
-//             .attr("r", 3)
-//             .attr("cx", function(d) { return xScale(d.date); })
-//             .attr("cy", function(d) { return yScale(d.low); });
-//     }
-
-//     // Annotate Close
-//     if(annotateOHLC['close']) {
-//         svg.selectAll()
-//             .data(data).enter()
-//             .append("circle")
-//             .attr("r", 3.5)
-//             .attr("cx", function(d) { return xScale(d.date); })
-//             .attr("cy", function(d) { return yScale(d.close); });
-//     }
-// }

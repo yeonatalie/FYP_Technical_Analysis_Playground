@@ -1,9 +1,8 @@
-import { utcFormat, format, schemePastel1, style } from 'd3';
+import { utcFormat, format, schemePastel1 } from 'd3';
 import * as d3 from "d3";
 
 const formatDate = utcFormat('%B %-d, %Y');
 const formatValue = format('.2f');
-const formatString = format('.3s');
 
 function CandlestickTooltip({data, xScale, yScale}) {
 

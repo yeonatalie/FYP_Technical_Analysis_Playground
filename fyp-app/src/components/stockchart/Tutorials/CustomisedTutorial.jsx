@@ -1,8 +1,6 @@
 import { StockChart } from '../StockChart'
 import React, { useState } from 'react';
-import Dropdown from 'react-bootstrap/Dropdown';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useLocation, useNavigate } from 'react-router-dom';
 
 const CustomisedTutorial = ({customData, indicatorChartState, indicatorChartLabel, indicatorChartLower, indicatorChartUpper, performance, stopLoss, takeProfit}) => {
   const chartSpecs = {

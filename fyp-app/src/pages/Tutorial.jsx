@@ -75,7 +75,7 @@ function Tutorial() {
     } else if (tutorial === 'macd') {
       tutorialHeader = "Moving Average Convergence/Divergence (MACD)"
       indicatorChartLabel = "MACD"
-      indicatorRange = [-5, 5]
+      indicatorRange = [-10, 10]
 
     } else if (tutorial === 'bband') {
       tutorialHeader = "Bollinger Bands"

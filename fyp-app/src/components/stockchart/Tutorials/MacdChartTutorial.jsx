@@ -38,9 +38,9 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, paramData, performan
 
     var allSignalData = []
 
-    // //////////////////////////////////////////////
-    // ////////////// CHART PREPARATION /////////////
-    // //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    ////////////// CHART PREPARATION /////////////
+    //////////////////////////////////////////////
 
     // remove previous plot and append new plot
     d3.select(".macdChart").remove()
@@ -48,9 +48,9 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, paramData, performan
         .append("g")
         .attr("class", "macdChart")
 
-    // //////////////////////////////////////////////
-    // ////////////////// ANIMATION /////////////////
-    // //////////////////////////////////////////////
+    //////////////////////////////////////////////
+    ////////////////// ANIMATION /////////////////
+    //////////////////////////////////////////////
 
     // Plot and Animate MACD
     if (tutorial === "macd") {
@@ -70,9 +70,9 @@ function MacdChartTutorial({data, xScale, yScale, tutorial, paramData, performan
 
         // MACD Signals
         crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:true, crossAbove:true, delayTime:delayTime,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:8000, displayTextTime:5000, allSignalData:allSignalData, performance:false, speed:speed}) // long signal
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:8500, displayTextTime:5000, allSignalData:allSignalData, performance:false, speed:speed}) // long signal
         crossoverSignal({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, variable1:'macd', variable2:'signal', longSignal:false, crossAbove:false, delayTime:delayTime,
-            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:8000, displayTextTime:5000, allSignalData:allSignalData, performance:false, speed:speed}) // short signal
+            displayText:'Long / Short when MACD Crosses Above / Below Signal Line', delayTextTime:8500, displayTextTime:5000, allSignalData:allSignalData, performance:false, speed:speed}) // short signal
         
         // Tooltip
         tooltip({svg:svg, data:macdTutData, xScale:xScale, yScale:yScale, indicatorChart: true})
